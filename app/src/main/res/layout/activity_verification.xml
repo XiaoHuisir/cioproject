@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.acivity.login.VerifyActivity">
+
+    <ImageView
+        android:id="@+id/fan"
+        android:layout_width="@dimen/dp_20"
+        android:layout_height="@dimen/dp_20"
+        android:layout_marginLeft="@dimen/dp_15"
+        android:layout_marginTop="@dimen/dp_14"
+        android:src="@mipmap/ic_launcher" />
+
+    <TextView
+        android:layout_width="@dimen/dp_123"
+        android:layout_height="@dimen/dp_23"
+        android:layout_marginLeft="@dimen/dp_56"
+        android:layout_marginTop="@dimen/dp_106"
+        android:text="@string/verification"
+        android:textSize="@dimen/dp_20" />
+
+    <TextView
+        android:id="@+id/enclosed"
+        android:layout_width="@dimen/dp_261"
+        android:layout_height="@dimen/dp_18"
+        android:layout_marginLeft="@dimen/dp_56"
+        android:layout_marginTop="@dimen/dp_144" />
+
+    <LinearLayout
+        android:id="@+id/ll_verification"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_64"
+        android:layout_marginTop="@dimen/dp_208"
+        android:layout_marginRight="@dimen/dp_56"
+        android:orientation="horizontal">
+        <EditText
+            android:id="@+id/edit_first"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:inputType="number"
+            android:maxLength="1"
+            android:textAlignment="center"
+            android:textColor="@color/colorAccent"
+            android:textCursorDrawable="@null"
+            android:textSize="@dimen/dp_20" />
+        <EditText
+            android:id="@+id/edit_first1"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp_70"
+            android:layout_margin="@dimen/dp_5"
+            android:layout_weight="1"
+
+            android:inputType="number"
+            android:maxLength="1"
+            android:textAlignment="center"
+            android:textColor="@color/colorAccent"
+            android:textCursorDrawable="@null"
+            android:textSize="@dimen/dp_20" />
+
+        <EditText
+            android:id="@+id/edit_first2"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp_70"
+            android:layout_margin="@dimen/dp_5"
+            android:layout_weight="1"
+
+            android:inputType="number"
+            android:maxLength="1"
+            android:textAlignment="center"
+            android:textColor="@color/colorAccent"
+            android:textCursorDrawable="@null"
+            android:textSize="@dimen/dp_20" />
+
+        <EditText
+            android:id="@+id/edit_second"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp_70"
+            android:layout_margin="@dimen/dp_5"
+            android:layout_weight="1"
+            android:inputType="number"
+            android:maxLength="1"
+            android:textAlignment="center"
+            android:textColor="@color/colorAccent"
+            android:textCursorDrawable="@null"
+            android:textSize="@dimen/dp_20" />
+
+        <EditText
+            android:id="@+id/edit_third"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp_70"
+            android:layout_margin="@dimen/dp_5"
+            android:layout_weight="1"
+            android:inputType="number"
+            android:maxLength="1"
+            android:textAlignment="center"
+            android:textColor="@color/colorAccent"
+            android:textCursorDrawable="@null"
+            android:textSize="@dimen/dp_20" />
+
+        <EditText
+            android:id="@+id/edit_fourth"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp_70"
+            android:layout_margin="@dimen/dp_5"
+            android:layout_weight="1"
+            android:inputType="number"
+            android:maxLength="1"
+            android:textAlignment="center"
+            android:textColor="@color/colorAccent"
+            android:textCursorDrawable="@null"
+            android:textSize="@dimen/dp_20" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/anew"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ll_verification"
+        android:layout_marginLeft="@dimen/dp_64"
+        android:layout_marginTop="@dimen/dp_15"
+        android:text="重新获取验证码"
+        android:textColor="@color/colorbul" />
+
+    <Button
+        android:id="@+id/bt_landing"
+        android:layout_width="@dimen/dp_311"
+        android:layout_height="@dimen/dp_40"
+        android:layout_marginLeft="@dimen/dp_32"
+        android:layout_marginTop="@dimen/dp_330"
+        android:layout_marginRight="@dimen/dp_32"
+        android:background="@drawable/shop"
+        android:text="登陆" />
+
+    <TextView
+        android:layout_width="@dimen/dp_229"
+        android:layout_height="@dimen/dp_18"
+        android:layout_below="@id/bt_landing"
+        android:layout_marginLeft="@dimen/dp_73"
+        android:layout_marginTop="@dimen/dp_256"
+        android:text="@string/warning" />
+</RelativeLayout>

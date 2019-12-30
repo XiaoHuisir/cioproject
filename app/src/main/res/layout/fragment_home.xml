@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".ui.fragment.HomeFragment">
+
+
+    <RelativeLayout
+        android:id="@+id/cons"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_32"
+        android:background="#FFFFFFFF">
+
+        <TextView
+            android:id="@+id/txt_course_1"
+            android:layout_width="@dimen/dp_64"
+            android:layout_height="@dimen/dp_20"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:text="@string/training"
+            android:textColor="@color/red"
+            android:textSize="@dimen/sp_16"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txt_course_2"
+            android:layout_width="@dimen/dp_64"
+            android:layout_height="@dimen/dp_20"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_108"
+            android:text="@string/beyond_campus"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/sp_16"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </RelativeLayout>
+
+
+    <FrameLayout
+        android:id="@+id/fragmentBox"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/cons"
+        android:layout_marginTop="@dimen/dp_3"></FrameLayout>
+
+
+</RelativeLayout>
