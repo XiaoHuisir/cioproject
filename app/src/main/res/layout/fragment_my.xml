@@ -19,7 +19,7 @@
             android:layout_marginTop="@dimen/dp_16">
 
             <ImageView
-                android:id="@+id/iv"
+                android:id="@+id/iv_buddha"
                 android:layout_width="@dimen/dp_48"
                 android:layout_height="@dimen/dp_48"
                 android:layout_marginLeft="@dimen/dp_16"
@@ -36,7 +36,7 @@
                 android:text="张宣"
                 android:textColor="@color/whites"
                 android:textSize="@dimen/sp_18"
-                app:layout_constraintLeft_toRightOf="@id/iv"
+                app:layout_constraintLeft_toRightOf="@id/iv_buddha"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
@@ -49,7 +49,7 @@
                 android:text="处长"
                 android:textColor="@color/whites"
                 android:textSize="@dimen/sp_12"
-                app:layout_constraintLeft_toRightOf="@id/iv"
+                app:layout_constraintLeft_toRightOf="@id/iv_buddha"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
@@ -61,7 +61,7 @@
                 android:text="国家信息中心信息资源开发部开发处"
                 android:textColor="@color/whites"
                 android:textSize="@dimen/sp_12"
-                app:layout_constraintLeft_toRightOf="@id/iv"
+                app:layout_constraintLeft_toRightOf="@id/iv_buddha"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
@@ -75,6 +75,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
+                android:id="@+id/iv_setting"
                 android:layout_width="@dimen/dp_30"
                 android:layout_height="@dimen/dp_30"
                 android:layout_marginLeft="@dimen/dp_16"
@@ -246,6 +247,7 @@
     </android.support.constraint.ConstraintLayout>
 
     <LinearLayout
+        android:id="@+id/line2"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_124"
         android:layout_alignParentTop="true"
@@ -294,5 +296,213 @@
             android:layout_height="@dimen/dp_60"
             android:layout_marginTop="@dimen/dp_8"
             android:background="@color/whites" />
+
     </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/line4"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_112"
+        android:layout_below="@id/line2"
+        android:layout_marginTop="@dimen/dp_16"
+        android:background="@color/whites"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_40"
+            android:background="@color/whites">
+
+            <TextView
+                android:id="@+id/txt_exercise"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dp_16"
+                android:text="我的练习"
+                android:textColor="#FF000000"
+                android:textSize="@dimen/dp_16" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dp_206"
+                android:layout_toRightOf="@id/txt_exercise"
+                android:text="查看全部"
+                android:textColor="#FF75788C"
+                android:textSize="@dimen/sp_12" />
+
+            <ImageView
+                android:layout_width="@dimen/dp_8"
+                android:layout_height="@dimen/dp_8"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dp_256"
+                android:layout_toRightOf="@id/txt_exercise"
+                android:src="@mipmap/item_arrows" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_8"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:layout_width="@dimen/dp_104"
+                android:layout_height="@dimen/dp_48"
+                android:background="@color/whites">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="@dimen/dp_8"
+                    android:layout_marginTop="@dimen/dp_8"
+                    android:text="已做习题"
+                    android:textColor="#FF75788C"
+                    android:textSize="@dimen/sp_12" />
+
+                <TextView
+                    android:id="@+id/txt_sixteen"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="@dimen/dp_8"
+                    android:layout_marginTop="@dimen/dp_24"
+                    android:text="16"
+                    android:textColor="#FF333333"
+                    android:textSize="@dimen/sp_16" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_4"
+                    android:layout_marginTop="@dimen/dp_28"
+                    android:layout_toRightOf="@id/txt_sixteen"
+                    android:text="道"
+                    android:textColor="#FF75788C"
+                    android:textSize="@dimen/sp_10" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="@dimen/dp_104"
+                android:layout_height="@dimen/dp_48"
+                android:background="@color/whites">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="@dimen/dp_8"
+                    android:layout_marginTop="@dimen/dp_8"
+                    android:text="已通过"
+                    android:textColor="#FF75788C"
+                    android:textSize="@dimen/sp_12" />
+
+                <TextView
+                    android:id="@+id/txt_fifteen"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="@dimen/dp_8"
+                    android:layout_marginTop="@dimen/dp_24"
+                    android:text="15"
+                    android:textColor="#FF333333"
+                    android:textSize="@dimen/sp_16" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_4"
+                    android:layout_marginTop="@dimen/dp_28"
+                    android:layout_toRightOf="@id/txt_fifteen"
+                    android:text="道"
+                    android:textColor="#FF75788C"
+                    android:textSize="@dimen/sp_10" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="@dimen/dp_104"
+                android:layout_height="@dimen/dp_48"
+                android:background="@color/whites">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="@dimen/dp_8"
+                    android:layout_marginTop="@dimen/dp_8"
+                    android:text="未通过"
+                    android:textColor="#FF75788C"
+                    android:textSize="@dimen/sp_12" />
+
+                <TextView
+                    android:id="@+id/txt_one"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="@dimen/dp_8"
+                    android:layout_marginTop="@dimen/dp_24"
+                    android:text="1"
+                    android:textColor="#FF333333"
+                    android:textSize="@dimen/sp_16" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_4"
+                    android:layout_marginTop="@dimen/dp_28"
+                    android:layout_toRightOf="@id/txt_one"
+                    android:text="道"
+                    android:textColor="#FF75788C"
+                    android:textSize="@dimen/sp_10" />
+            </RelativeLayout>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_48"
+        android:layout_below="@id/line4"
+        android:background="#FFFFFFFF">
+
+        <TextView
+            android:id="@+id/txt_download"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/sp_16"
+            android:text="我的下载"
+            android:textColor="#FF000000"
+            android:textSize="@dimen/sp_16" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_186"
+            android:layout_toRightOf="@id/txt_download"
+            android:text="2个材料文件"
+            android:textColor="#FF75788C"
+            android:textSize="@dimen/sp_12" />
+
+        <ImageView
+            android:layout_width="@dimen/dp_8"
+            android:layout_height="@dimen/dp_8"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_256"
+            android:layout_toRightOf="@id/txt_download"
+            android:src="@mipmap/item_arrows" />
+    </RelativeLayout>
 </RelativeLayout>
