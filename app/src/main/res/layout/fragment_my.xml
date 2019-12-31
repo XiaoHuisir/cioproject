@@ -34,7 +34,7 @@
                 android:layout_height="@dimen/dp_20"
                 android:layout_marginLeft="@dimen/dp_8"
                 android:layout_marginTop="@dimen/dp_21"
-                android:text="张宣"
+                android:text=""
                 android:textColor="@color/whites"
                 android:textSize="@dimen/sp_18"
                 app:layout_constraintLeft_toRightOf="@id/iv_buddha"
@@ -254,7 +254,7 @@
     <LinearLayout
         android:id="@+id/line2"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_124"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_marginTop="@dimen/dp_244"
         android:orientation="vertical">
@@ -299,7 +299,7 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/re_record"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_60"
+            android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_8"
             android:background="@color/whites" />
     </LinearLayout>

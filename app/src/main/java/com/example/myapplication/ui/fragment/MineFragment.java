@@ -3,6 +3,7 @@ package com.example.myapplication.ui.fragment;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -30,7 +31,7 @@ public class MineFragment extends BaseFragment implements UsercenterConstract.Vi
     @BindView(R.id.iv_setting)
     ImageView ivsetting;
     @BindView(R.id.iv_word)
-    TextView ivword;
+    ImageView ivword;
     @BindView(R.id.txt_dutyname)
     TextView txtdutyname;
     @BindView(R.id.iv_buddha)
@@ -52,6 +53,8 @@ public class MineFragment extends BaseFragment implements UsercenterConstract.Vi
     private ArrayList<UserCenterBean.DataBean.HistoryBean> historyBeans;
     private RecordAdapter recordAdapter;
 
+    UserCenterBean userCenterBean;
+
     @Override
     protected IBasePresenter getPresenter() {
         return new UserCenterPresenter();
@@ -64,9 +67,13 @@ public class MineFragment extends BaseFragment implements UsercenterConstract.Vi
 
     @OnClick({R.id.iv_setting, R.id.iv_word})
     public void onClick(View view) {
+        if(userCenterBean == null) return;
         switch (view.getId()) {
             case R.id.iv_setting: //设置
                 Intent intent = new Intent();
+                intent.putExtra("nickname",userCenterBean.getData().getNickname());
+                intent.putExtra("avatar",userCenterBean.getData().getAvatar());
+                intent.putExtra("zw",userCenterBean.getData().getZw());
                 intent.setClass(getActivity(), SettingActivity.class);
                 startActivity(intent);
                 break;
@@ -90,48 +97,49 @@ public class MineFragment extends BaseFragment implements UsercenterConstract.Vi
     @Override
     protected void initData() {
         super.initData();
-        ((UserCenterPresenter) mPresenter).usercenter(Constant.mobiles, Constant.passwords);
+        ((UserCenterPresenter) mPresenter).usercenter();
 
     }
 
     @Override
     public void UserCenterReturn(UserCenterBean result) {
         if (result.getStatus() == Constant.STATUS) {
+            userCenterBean = result;
             mydata(result);
         }
     }
 
     private void mydata(UserCenterBean result) {
         String nickname = result.getData().getNickname();
-        if (nickname != null) {
+        if (!TextUtils.isEmpty(nickname)) {
             txtdutyname.setText(nickname);
         } else {
             txtdutyname.setText("***");
         }
         String avatar = result.getData().getAvatar();
-        if (avatar != null) {
+        if (!TextUtils.isEmpty(avatar)) {
             Glide.with(getActivity()).load(avatar).into(ivBuddha);
         } else {
             Toast.makeText(getActivity(), "空", Toast.LENGTH_LONG).show();
         }
         String zw = result.getData().getZw();
-        if (zw != null) {
+        if (!TextUtils.isEmpty(zw)) {
             txttitlename.setText(zw);
         } else {
             Toast.makeText(getActivity(), "空", Toast.LENGTH_LONG).show();
         }
 
-        if (result.getData().getMechanism() != null) {
+        if (!TextUtils.isEmpty(result.getData().getMechanism())) {
             txtreferral.setText(result.getData().getMechanism());
         }
         if (result.getData().getKcpx_time() >= 0) {
-            kcpxtime.setText(result.getData().getKcpx_time());
+            kcpxtime.setText(String.valueOf(result.getData().getKcpx_time()));
         }
         if (result.getData().getKcpx_num() >= 0) {
-            kcpxnum.setText(result.getData().getKcpx_num());
+            kcpxnum.setText(String.valueOf(result.getData().getKcpx_num()));
         }
         if (result.getData().getKwxx_time() >= 0) {
-            kwxxtime.setText(result.getData().getKwxx_time());
+            kwxxtime.setText(String.valueOf(result.getData().getKwxx_time()));
         }
         if (result.getData().getKwxx_num() >= 0) {
             kwxxnum.setText(result.getData().getKwxx_num() + "门");

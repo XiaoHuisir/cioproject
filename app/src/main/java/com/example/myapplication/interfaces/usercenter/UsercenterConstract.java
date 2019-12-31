@@ -2,6 +2,7 @@ package com.example.myapplication.interfaces.usercenter;
 
 import com.example.myapplication.bean.LoginBean;
 import com.example.myapplication.bean.UserCenterBean;
+import com.example.myapplication.bean.UserInfoUpdateBean;
 import com.example.myapplication.interfaces.IBasePresenter;
 import com.example.myapplication.interfaces.IBaseView;
 import com.example.myapplication.interfaces.contract.LoginContract;
@@ -14,8 +15,17 @@ public interface UsercenterConstract {
     }
 
     interface Presenter extends IBasePresenter<UsercenterConstract.View> {
-        void usercenter(String mobile, String password);
+        void usercenter();
 
+    }
+
+
+    interface UpdateView extends IBaseView{
+        void updateUserInfoReturn(UserInfoUpdateBean result);
+    }
+
+    interface UpdatePresenter extends IBasePresenter<UpdateView>{
+        void updateUserInfo(String nickname,String zw,String avatar);
     }
 
 }

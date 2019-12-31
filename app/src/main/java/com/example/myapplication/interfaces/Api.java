@@ -8,6 +8,7 @@ import com.example.myapplication.bean.IndexBean;
 import com.example.myapplication.bean.LoginBean;
 import com.example.myapplication.bean.TypeIndexBean;
 import com.example.myapplication.bean.UserCenterBean;
+import com.example.myapplication.bean.UserInfoUpdateBean;
 
 import java.util.Map;
 
@@ -47,8 +48,11 @@ public interface Api {
 
     //个人中心
     @POST("index/train/user_center")
+    Flowable<UserCenterBean> usercenter(@Header("x-access-token") String token);
+
+    @POST("index/train/userinfo_update")
     @FormUrlEncoded
-    Flowable<UserCenterBean> usercenter(@Header("x-access-token") String token, @Field("mobile") String mobile, @Field("password") String password);
+    Flowable<UserInfoUpdateBean> updateUserInfo(@Header("x-access-token") String token, @Field("nickname") String nickname, @Field("zw") String zw,@Field("avatar") String avatar);
 
 
 }

@@ -14,8 +14,8 @@ import com.example.myapplication.utils.RxUtils;
 public class UserCenterPresenter extends BasePresenter<UsercenterConstract.View> implements UsercenterConstract.Presenter {
 
     @Override
-    public void usercenter(String mobile, String password) {
-        addSubscribe(HttpUtils.getMyServer(Constant.BaseUrl).usercenter(Constant.token, mobile, password)
+    public void usercenter() {
+        addSubscribe(HttpUtils.getMyServer(Constant.BaseUrl).usercenter(Constant.token)
                 .compose(RxUtils.<UserCenterBean>rxScheduler())
                 .subscribeWith(new CommonSubscriber<UserCenterBean>(mView) {
                     @Override

@@ -29,11 +29,11 @@ public class RecordAdapter extends BaseAdapter {
         UserCenterBean.DataBean.HistoryBean data = (UserCenterBean.DataBean.HistoryBean) mDatas.get(positon);
         TextView titles = (TextView) holder.getView(R.id.txt_titles);
         TextView times = (TextView) holder.getView(R.id.txt_times);
-        ImageView imgicon = (ImageView) holder.getView(R.id.img_icon);
+        ImageView imgicon = (ImageView) holder.getView(R.id.img_icons);
         Glide.with(mContext).load(data.getLog())
                 .transform(new RoundedCorners(5))
                 .into(imgicon);
-        times.setText(data.getLen());
+        times.setText(String.valueOf(data.getLen()));
         titles.setText(data.getTitle());
     }
 
