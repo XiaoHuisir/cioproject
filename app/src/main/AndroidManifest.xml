@@ -18,6 +18,7 @@
         <activity
             android:name=".MainActivity"
             android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity android:name=".ui.acivity.course.CourseActivity"/>
         <activity
             android:name=".ui.acivity.login.VerifyActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"

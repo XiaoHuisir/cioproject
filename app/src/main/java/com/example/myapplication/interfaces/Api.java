@@ -2,6 +2,7 @@ package com.example.myapplication.interfaces;
 
 
 import com.example.myapplication.bean.CurriculumBean;
+import com.example.myapplication.bean.EvaluationSubmitBean;
 import com.example.myapplication.bean.ExercisesBean;
 import com.example.myapplication.bean.IndexBean;
 import com.example.myapplication.bean.LoginBean;
@@ -38,6 +39,10 @@ public interface Api {
     @POST("index/train/evaluation_show")
     @FormUrlEncoded
     Flowable<ExercisesBean> getEvaluation(@Header("x-access-token") String token, @Field("curriculum_id") String curriculum_id);
+
+    @POST("index/train/evaluation_submit")
+    @FormUrlEncoded
+    Flowable<EvaluationSubmitBean> submitEvaluation(@Header("x-access-token") String token, @Field("curriculum_id") String curriculum_id, @Field("answer") String answer);
 
 
     //个人中心

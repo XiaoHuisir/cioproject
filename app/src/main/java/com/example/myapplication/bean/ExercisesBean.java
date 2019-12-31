@@ -112,6 +112,8 @@ public class ExercisesBean {
             private int id;
             private String title;
 
+            public boolean select;
+
             public int getId() {
                 return id;
             }
