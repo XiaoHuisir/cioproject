@@ -18,6 +18,7 @@ import com.example.myapplication.bean.IndexBean;
 import com.example.myapplication.interfaces.IBasePresenter;
 import com.example.myapplication.interfaces.contract.IndexConstract;
 import com.example.myapplication.presenter.home.IndexPresenter;
+import com.example.myapplication.ui.acivity.course.CourseActivity;
 import com.example.myapplication.ui.acivity.video.VideoActivity;
 import com.example.myapplication.widgets.DrawableCenterTextView;
 import com.youth.banner.Banner;
@@ -68,9 +69,9 @@ public class CourseFragment extends BaseFragment implements IndexConstract.View,
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         recyclerView.setAdapter(indexAdapter);
 
-        curType = Constant.STUDY_TYPE_1;
+        /*curType = Constant.STUDY_TYPE_1;
         resetTypeTxt();
-        txtType1.setTextColor(getResources().getColor(R.color.red));
+        txtType1.setTextColor(getResources().getColor(R.color.red));*/
         getIndex();
     }
 
@@ -81,19 +82,22 @@ public class CourseFragment extends BaseFragment implements IndexConstract.View,
                 curType = Constant.STUDY_TYPE_1;
                 resetTypeTxt();
                 txtType1.setTextColor(getResources().getColor(R.color.red));
-                getIndex();
+                //getIndex();
+                openCourseActivity(curType,"智慧课堂");
                 break;
             case R.id.txt_type_2:
                 curType = Constant.STUDY_TYPE_2;
                 resetTypeTxt();
                 txtType2.setTextColor(getResources().getColor(R.color.red));
-                getIndex();
+                //getIndex();
+                openCourseActivity(curType,"内部培训");
                 break;
             case R.id.txt_type_3:
                 curType = Constant.STUDY_TYPE_3;
                 resetTypeTxt();
                 txtType3.setTextColor(getResources().getColor(R.color.red));
-                getIndex();
+                //getIndex();
+                openCourseActivity(curType,"其他培训");
                 break;
         }
 
@@ -114,6 +118,13 @@ public class CourseFragment extends BaseFragment implements IndexConstract.View,
         banners(result);
         indexAdapter.notifyDataSetChanged();
 
+    }
+
+    private void openCourseActivity(int type,String title){
+        Intent intent = new Intent(context, CourseActivity.class);
+        intent.putExtra("type",type);
+        intent.putExtra("title",title);
+        startActivity(intent);
     }
 
     private void banners(IndexBean result) {

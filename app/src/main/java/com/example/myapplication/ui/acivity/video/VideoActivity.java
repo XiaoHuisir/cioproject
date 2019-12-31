@@ -2,8 +2,12 @@ package com.example.myapplication.ui.acivity.video;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.Color;
 import android.hardware.SensorManager;
 import android.media.MediaPlayer;
+import android.os.Build;
+import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -61,6 +65,12 @@ public class VideoActivity extends BaseActivity implements CurriculumConstract.V
     ImageView imgTeacher;
     @BindView(R.id.txt_evalua)
     TextView txtEvalau;
+    @BindView(R.id.txt_score)
+    TextView txtScore;
+    @BindView(R.id.img_material)
+    ImageView imgMaterial;
+
+    private static final int CODE_EXERCISES = 100;
 
     String curriulumId;
     CurriculumBean curriculumBean;
@@ -99,6 +109,7 @@ public class VideoActivity extends BaseActivity implements CurriculumConstract.V
         ((CurriculumPresenter) mPresenter).getCurriculum(curriulumId);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void getCurriculumReturn(CurriculumBean bean) {
         curriculumBean = bean;
@@ -119,14 +130,29 @@ public class VideoActivity extends BaseActivity implements CurriculumConstract.V
         txtTitle.setText(curriculumBean.getData().getCurriculum_data().getTitle());
         txtName.setText(curriculumBean.getData().getCurriculum_data().getTeacher());
         txtWork.setText(curriculumBean.getData().getCurriculum_data().getGs());
-        pdfList.clear();
-        pdfList.addAll(bean.getData().getFile_data());
-        pdfAdapter.notifyDataSetChanged();
 
+        if(curriculumBean.getData().getFile_data().size() == 0){
+            imgMaterial.setVisibility(View.VISIBLE);
+        }else{
+            imgMaterial.setVisibility(View.GONE);
+            pdfList.clear();
+            pdfList.addAll(bean.getData().getFile_data());
+            pdfAdapter.notifyDataSetChanged();
+        }
 
+        int fraction = curriculumBean.getData().getRecord_data().getFraction();
+        String str = "";
+        if(curriculumBean.getData().getRecord_data().getIs_pass() == 1){
+            str = fraction+"分 已通过";
+            txtScore.setTextColor(Color.parseColor("#C7C7C7"));
+        }else{
+            str = "未通过";
+            txtScore.setTextColor(Color.parseColor("#FF0000"));
+        }
+        txtScore.setText(str);
     }
 
-    @OnClick({R.id.txt_sound, R.id.txt_video, R.id.txt_detail, R.id.txt_evalua})
+    @OnClick({R.id.txt_sound, R.id.txt_video, R.id.txt_detail, R.id.txt_evalua,R.id.layout_exercises})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.txt_sound:
@@ -145,6 +171,13 @@ public class VideoActivity extends BaseActivity implements CurriculumConstract.V
                 break;
             case R.id.txt_evalua:
                 evaluats();
+                break;
+            case R.id.layout_exercises:
+                if(curriculumBean.getData().getRecord_data().getIs_pass() == 0){
+                    openExercises();
+                }else{
+                    Toast.makeText(context, "已通过测试", Toast.LENGTH_SHORT).show();
+                }
                 break;
         }
     }
@@ -200,6 +233,24 @@ public class VideoActivity extends BaseActivity implements CurriculumConstract.V
             }
         }
         mediaPlayer.start();
+    }
+
+    /**
+     * 跳转答题页
+     */
+    private void openExercises(){
+        Intent intent = new Intent();
+        intent.setClass(this,ExercisesActivity.class);
+        intent.putExtra("evaluat_curriulum_id",curriculumBean.getData().getCurriculum_data().getId());
+        startActivityForResult(intent,CODE_EXERCISES);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == CODE_EXERCISES){
+
+        }
     }
 
     @Override

@@ -21,6 +21,8 @@
     <color name="line_gray">#ECE9E9</color>
     <color name="beige">#FFD7AB70</color>
     <color name="col_round_bg">#800F0F0F</color>
+    <color name="col_blue">#2196F3</color>
+    <color name="col_score">#FF0000</color>
+    <color name="col_answer_type">#E9AF5C</color>
 
-∂
 </resources>
