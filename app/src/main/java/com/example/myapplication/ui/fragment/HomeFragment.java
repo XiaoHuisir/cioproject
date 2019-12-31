@@ -2,6 +2,7 @@ package com.example.myapplication.ui.fragment;
 
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.myapplication.R;

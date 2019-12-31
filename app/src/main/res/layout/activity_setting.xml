@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.acivity.setting.SettingActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/tb"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_48"
+        android:layout_marginTop="@dimen/dp_30"
+        android:background="#E6FFFFFF"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="@dimen/dp_24"
+            android:layout_height="@dimen/dp_24"
+            android:layout_marginLeft="@dimen/dp_16"
+            android:layout_marginTop="@dimen/dp_12"
+            android:src="@mipmap/back_black" />
+
+        <TextView
+            android:layout_width="@dimen/dp_72"
+            android:layout_height="@dimen/dp_20"
+            android:text="账号设置"
+            android:textColor="#FF212121"
+            android:textSize="@dimen/sp_16" />
+    </android.support.v7.widget.Toolbar>
+
+    <RelativeLayout
+        android:id="@+id/rl1"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_64"
+        android:layout_marginTop="@dimen/dp_16"
+        android:background="@color/whites"
+        app:layout_constraintTop_toBottomOf="@+id/tb">
+
+        <TextView
+            android:id="@+id/txt_hander"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_16"
+            android:text="头像"
+            android:textColor="#FF000000"
+            android:textSize="@dimen/sp_16" />
+
+        <ImageView
+            android:id="@+id/iv_hander"
+            android:layout_width="@dimen/dp_40"
+            android:layout_height="@dimen/dp_40"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_242"
+            android:layout_toRightOf="@id/txt_hander"
+            android:src="@color/red" />
+
+        <ImageView
+            android:layout_width="@dimen/dp_10"
+            android:layout_height="@dimen/dp_10"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_4"
+            android:layout_toRightOf="@id/iv_hander"
+            android:src="@mipmap/item_arrows" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="@dimen/dp_328"
+        android:layout_height="@dimen/dp_1"
+        android:background="#FFF5F5F5"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rl1" />
+
+    <RelativeLayout
+        android:id="@+id/rl2"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_44"
+        android:layout_marginTop="@dimen/dp_1"
+        android:background="#FFFFFFFF"
+        app:layout_constraintTop_toBottomOf="@id/rl1">
+
+        <TextView
+            android:id="@+id/txt_monicker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_16"
+            android:text="姓名"
+            android:textColor="#FF000000"
+            android:textSize="@dimen/sp_16" />
+
+        <TextView
+            android:id="@+id/txt_ture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_250"
+            android:layout_toRightOf="@id/txt_monicker"
+            android:text="张宣"
+            android:textColor="#FF666666"
+            android:textSize="@dimen/sp_16" />
+
+        <ImageView
+            android:layout_width="@dimen/dp_10"
+            android:layout_height="@dimen/dp_10"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_4"
+            android:layout_toRightOf="@id/txt_ture"
+            android:src="@mipmap/item_arrows" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/txt_data"
+        android:layout_width="@dimen/dp_343"
+        android:layout_height="@dimen/dp_16"
+        android:layout_marginLeft="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_20"
+        android:text="国家信息中心信息资源开发部开发处"
+        android:textColor="#FF9CA0B5"
+        android:textSize="@dimen/sp_14"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rl2" />
+
+    <RelativeLayout
+        android:id="@+id/rl3"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_44"
+        android:layout_marginTop="@dimen/dp_8"
+        android:background="#FFFFFFFF"
+        app:layout_constraintTop_toBottomOf="@id/txt_data">
+
+        <TextView
+            android:id="@+id/txt_duty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_16"
+            android:text="职务"
+            android:textColor="#FF000000"
+            android:textSize="@dimen/sp_16" />
+
+        <TextView
+            android:id="@+id/txt_post"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_250"
+            android:layout_toRightOf="@id/txt_duty"
+            android:text="处长"
+            android:textColor="#FF666666"
+            android:textSize="@dimen/sp_16" />
+
+        <ImageView
+            android:layout_width="@dimen/dp_10"
+            android:layout_height="@dimen/dp_10"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_4"
+            android:layout_toRightOf="@id/txt_post"
+            android:src="@mipmap/item_arrows" />
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_46"
+        android:padding="@dimen/dp_14"
+        android:text="退出登录"
+        android:textColor="#FFEB2121"
+        android:textSize="@dimen/sp_16"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rl3" />
+
+</android.support.constraint.ConstraintLayout>
