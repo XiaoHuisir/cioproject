@@ -10,6 +10,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.myapplication.R;
 import com.example.myapplication.adaper.RecordAdapter;
 import com.example.myapplication.app.Constant;
@@ -18,6 +20,8 @@ import com.example.myapplication.bean.UserCenterBean;
 import com.example.myapplication.interfaces.IBasePresenter;
 import com.example.myapplication.interfaces.usercenter.UsercenterConstract;
 import com.example.myapplication.presenter.usercenter.UserCenterPresenter;
+import com.example.myapplication.ui.acivity.PorfolioActivity;
+import com.example.myapplication.ui.acivity.PracticeActivity;
 import com.example.myapplication.ui.acivity.setting.SettingActivity;
 
 import java.util.ArrayList;
@@ -50,6 +54,10 @@ public class MineFragment extends BaseFragment implements UsercenterConstract.Vi
     TextView kwxxtime;
     @BindView(R.id.kwxx_num)
     TextView kwxxnum;
+    @BindView(R.id.txt_study_all)
+    TextView txtStudyAll;
+    @BindView(R.id.txt_check_all)
+    TextView txtCheckAll;
     private ArrayList<UserCenterBean.DataBean.HistoryBean> historyBeans;
     private RecordAdapter recordAdapter;
 
@@ -65,19 +73,29 @@ public class MineFragment extends BaseFragment implements UsercenterConstract.Vi
         return R.layout.fragment_my;
     }
 
-    @OnClick({R.id.iv_setting, R.id.iv_word})
+    @OnClick({R.id.iv_setting, R.id.iv_word, R.id.txt_study_all, R.id.txt_check_all})
     public void onClick(View view) {
-        if(userCenterBean == null) return;
+        if (userCenterBean == null) return;
         switch (view.getId()) {
             case R.id.iv_setting: //设置
                 Intent intent = new Intent();
-                intent.putExtra("nickname",userCenterBean.getData().getNickname());
-                intent.putExtra("avatar",userCenterBean.getData().getAvatar());
-                intent.putExtra("zw",userCenterBean.getData().getZw());
+                intent.putExtra("nickname", userCenterBean.getData().getNickname());
+                intent.putExtra("avatar", userCenterBean.getData().getAvatar());
+                intent.putExtra("zw", userCenterBean.getData().getZw());
                 intent.setClass(getActivity(), SettingActivity.class);
                 startActivity(intent);
                 break;
             case R.id.iv_word:  //消息
+                break;
+            case R.id.txt_study_all:
+                Intent intentall = new Intent();
+                intentall.setClass(getActivity(), PorfolioActivity.class);
+                startActivity(intentall);
+                break;
+            case R.id.txt_check_all:
+                Intent intentcheckall = new Intent();
+                intentcheckall.setClass(getActivity(), PracticeActivity.class);
+                startActivity(intentcheckall);
                 break;
         }
     }
@@ -118,7 +136,7 @@ public class MineFragment extends BaseFragment implements UsercenterConstract.Vi
         }
         String avatar = result.getData().getAvatar();
         if (!TextUtils.isEmpty(avatar)) {
-            Glide.with(getActivity()).load(avatar).into(ivBuddha);
+            Glide.with(getActivity()).load(avatar).apply(RequestOptions.bitmapTransform(new CircleCrop())).into(ivBuddha);
         } else {
             Toast.makeText(getActivity(), "空", Toast.LENGTH_LONG).show();
         }
@@ -132,16 +150,16 @@ public class MineFragment extends BaseFragment implements UsercenterConstract.Vi
         if (!TextUtils.isEmpty(result.getData().getMechanism())) {
             txtreferral.setText(result.getData().getMechanism());
         }
-        if (result.getData().getKcpx_time() >= 0) {
+        if (result.getData().getKcpx_time() >= Constant.ZERO) {
             kcpxtime.setText(String.valueOf(result.getData().getKcpx_time()));
         }
-        if (result.getData().getKcpx_num() >= 0) {
+        if (result.getData().getKcpx_num() >= Constant.ZERO) {
             kcpxnum.setText(String.valueOf(result.getData().getKcpx_num()));
         }
-        if (result.getData().getKwxx_time() >= 0) {
-            kwxxtime.setText(String.valueOf(result.getData().getKwxx_time()));
+        if (result.getData().getKwxx_time() >= Constant.ZERO) {
+            kwxxtime.setText(String.valueOf(result.getData().getKwxx_time()) + " 分钟");
         }
-        if (result.getData().getKwxx_num() >= 0) {
+        if (result.getData().getKwxx_num() >= Constant.ZERO) {
             kwxxnum.setText(result.getData().getKwxx_num() + "门");
         }
 

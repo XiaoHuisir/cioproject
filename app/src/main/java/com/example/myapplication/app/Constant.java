@@ -22,7 +22,7 @@ public class Constant {
     public static  String passwords = "";
 
     public static  final  int STATUS=1;
-
+    public  static  final  int ZERO=0;
     public static final int COURSE_TYPE_1 = 1; //课外学习
     public static final int COURSE_TYPE_2 = 2; //培训
 

@@ -28,8 +28,9 @@
         <TextView
             android:id="@+id/txt_titles"
             android:layout_width="@dimen/dp_128"
-            android:layout_height="@dimen/dp_32"
+            android:layout_height="wrap_content"
             android:maxLines="2"
+            android:ellipsize = "end"
             android:text="新一代信息技术与企业数字化的转型"
             android:textColor="#FF333333"
             android:textSize="@dimen/sp_14"

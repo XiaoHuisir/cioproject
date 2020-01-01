@@ -14,13 +14,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.acivity.setting.SetNameActivity"></activity>
+        <activity android:name=".ui.acivity.PracticeActivity"></activity>
+        <activity android:name=".ui.acivity.PorfolioActivity" />
+        <activity android:name=".ui.acivity.setting.SetNameActivity" />
         <activity android:name=".ui.acivity.setting.SettingActivity" />
         <activity android:name=".ui.acivity.exercises.ExercisesActivity" />
         <activity
             android:name=".MainActivity"
             android:windowSoftInputMode="adjustPan|stateHidden" />
-        <activity android:name=".ui.acivity.course.CourseActivity"/>
+        <activity android:name=".ui.acivity.course.CourseActivity" />
         <activity
             android:name=".ui.acivity.login.VerifyActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"

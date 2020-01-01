@@ -91,29 +91,29 @@ public class ExercisesActivity extends BaseActivity implements ExercisesConstrac
 
     @Override
     protected void initData() {
-        curriculumId = String.valueOf(getIntent().getIntExtra("evaluat_curriulum_id",0));
+        curriculumId = String.valueOf(getIntent().getIntExtra("evaluat_curriulum_id", 0));
         ((ExercisesPresenter) mPresenter).getEvaluation(curriculumId);
     }
 
-    @OnClick({R.id.layout_next,R.id.txt_prev})
-    public void onClick(View view){
-        switch (view.getId()){
+    @OnClick({R.id.layout_next, R.id.txt_prev})
+    public void onClick(View view) {
+        switch (view.getId()) {
             case R.id.layout_next:
-                if(currentExercises != null){
+                if (currentExercises != null) {
                     //检查是否选择答案
                     boolean bool = checkAnswer();
-                    if(!bool){
+                    if (!bool) {
                         showDialog("请选择习题答案");
                         return;
                     }
 
                     currentPos++;
                     //如果是最后一条就交卷
-                    if(currentPos > currentExercises.getData().size() && txtNext.getText().equals("交卷")){
+                    if (currentPos > currentExercises.getData().size() && txtNext.getText().equals("交卷")) {
                         currentPos = currentExercises.getData().size();
                         try {
                             String answer = getAnswers();
-                            if(answer.length() > 0) {
+                            if (answer.length() > 0) {
                                 ((ExercisesPresenter) mPresenter).submitEvaluation(curriculumId, answer);
                             }
                         } catch (JSONException e) {
@@ -128,7 +128,7 @@ public class ExercisesActivity extends BaseActivity implements ExercisesConstrac
                 break;
             case R.id.txt_prev:
                 currentPos--;
-                if(currentPos < 1){
+                if (currentPos < 1) {
                     currentPos = 1;
                     return;
                 }
@@ -142,61 +142,61 @@ public class ExercisesActivity extends BaseActivity implements ExercisesConstrac
     public void getEvaluationReturn(ExercisesBean bean) {
         if (bean.getCode() == 10000) {
             currentExercises = bean;
-            if(currentExercises.getData().size() > 0){
+            if (currentExercises.getData().size() > 0) {
                 currentPos = 1;
                 updateExercises(currentPos);
                 updateCurrentNum(currentPos);
-            }else{
-                Toast.makeText(this,"没有答题数据",Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "没有答题数据", Toast.LENGTH_SHORT).show();
             }
         }
     }
 
-    private void updateExercises(int pos){
-        ExercisesBean.DataBean dataBean = currentExercises.getData().get(pos-1);
+    private void updateExercises(int pos) {
+        ExercisesBean.DataBean dataBean = currentExercises.getData().get(pos - 1);
         txtTitle.setText(dataBean.getTitle());
-        txtScore.setText(String.valueOf(dataBean.getFraction())+"分");
-        if(dataBean.getType() == 1){
+        txtScore.setText(String.valueOf(dataBean.getFraction()) + "分");
+        if (dataBean.getType() == 1) {
             txtAnswerType.setText("多选题");
             txtAnswerType.setBackgroundResource(R.drawable.txt_roundborder_org);
-        }else{
+        } else {
             txtAnswerType.setText("单选题");
             txtAnswerType.setBackgroundResource(R.drawable.txt_roundborder_blue);
         }
         answerList.clear();
         answerList.addAll(dataBean.getOption());
         exercisesAdapter.notifyDataSetChanged();
-        if(pos > 1 && txtPrev.getVisibility() == View.GONE){
+        if (pos > 1 && txtPrev.getVisibility() == View.GONE) {
             txtPrev.setVisibility(View.VISIBLE);
             txtNext.setText("下一题");
-        }else if(pos == 1){
+        } else if (pos == 1) {
             txtPrev.setVisibility(View.GONE);
             txtNext.setText("下一题");
-        }else if(pos == currentExercises.getData().size()){
+        } else if (pos == currentExercises.getData().size()) {
             txtNext.setText("交卷");
         }
     }
 
-    private void updateCurrentNum(int pos){
+    private void updateCurrentNum(int pos) {
         txtRate.setText(String.valueOf(pos));
-        txtTotal.setText("/"+currentExercises.getData().size());
+        txtTotal.setText("/" + currentExercises.getData().size());
     }
 
     @Override
     public void onItemClick(View v, int position) {
-        ExercisesBean.DataBean dataBean = currentExercises.getData().get(currentPos-1);
-        if(position < dataBean.getOption().size()){
+        ExercisesBean.DataBean dataBean = currentExercises.getData().get(currentPos - 1);
+        if (position < dataBean.getOption().size()) {
             //先判断当前选项是否选中,如果当前选中，直接取消
-            if(dataBean.getOption().get(position).select){
+            if (dataBean.getOption().get(position).select) {
                 dataBean.getOption().get(position).select = false;
                 exercisesAdapter.notifyDataSetChanged();
-            }else{
+            } else {
                 //如果当前没有选中，需要判断是单选还是多选
-                if(dataBean.getType() == 1){
+                if (dataBean.getType() == 1) {
                     dataBean.getOption().get(position).select = true;
                     exercisesAdapter.notifyDataSetChanged();
-                }else{
-                    for(ExercisesBean.DataBean.OptionBean item:dataBean.getOption()){
+                } else {
+                    for (ExercisesBean.DataBean.OptionBean item : dataBean.getOption()) {
                         item.select = false;
                     }
                     dataBean.getOption().get(position).select = true;
@@ -208,47 +208,49 @@ public class ExercisesActivity extends BaseActivity implements ExercisesConstrac
 
     /**
      * 提交答案返回
+     *
      * @param result
      */
     @Override
     public void submitEvaluationReturn(EvaluationSubmitBean result) {
-        if(result.getCode() == 10000){
+        if (result.getCode() == 10000) {
 
         }
     }
 
     /**
      * 封装提交答案的数据对象
+     *
      * @return
      * @throws JSONException
      */
     private String getAnswers() throws JSONException {
         JSONObject jsonObject = new JSONObject();
         JSONArray jsonArray = new JSONArray();
-        for(ExercisesBean.DataBean dataBean:currentExercises.getData()){
+        for (ExercisesBean.DataBean dataBean : currentExercises.getData()) {
             JSONObject item = new JSONObject();
             StringBuilder sb = new StringBuilder();
             sb.append('"');
             sb.append(dataBean.getId());
             sb.append('"');
-            item.put("id",sb.toString());
+            item.put("id", sb.toString());
             JSONArray answers = new JSONArray();
-            for(ExercisesBean.DataBean.OptionBean optionBean:dataBean.getOption()){
-                if(optionBean.select){
+            for (ExercisesBean.DataBean.OptionBean optionBean : dataBean.getOption()) {
+                if (optionBean.select) {
                     answers.put(optionBean.getId());
                 }
             }
-            item.put("select",answers.toString());
+            item.put("select", answers.toString());
             jsonArray.put(item);
         }
-        jsonObject.put("answer",jsonArray.toString());
+        jsonObject.put("answer", jsonArray.toString());
         return jsonObject.toString();
     }
 
     /**
      * 提示显示习题答案
      */
-    private void showDialog(String string){
+    private void showDialog(String string) {
         AlertDialog alertDialog = new AlertDialog.Builder(this)
                 .setMessage(string)
                 .create();
@@ -257,13 +259,14 @@ public class ExercisesActivity extends BaseActivity implements ExercisesConstrac
 
     /**
      * 检查是否选择答案
+     *
      * @return
      */
-    private boolean checkAnswer(){
+    private boolean checkAnswer() {
         boolean bool = false;
-        ExercisesBean.DataBean dataBean = currentExercises.getData().get(currentPos-1);
-        for(ExercisesBean.DataBean.OptionBean item:dataBean.getOption()){
-            if(item.select){
+        ExercisesBean.DataBean dataBean = currentExercises.getData().get(currentPos - 1);
+        for (ExercisesBean.DataBean.OptionBean item : dataBean.getOption()) {
+            if (item.select) {
                 bool = true;
                 break;
             }

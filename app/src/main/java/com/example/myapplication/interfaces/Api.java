@@ -6,6 +6,8 @@ import com.example.myapplication.bean.EvaluationSubmitBean;
 import com.example.myapplication.bean.ExercisesBean;
 import com.example.myapplication.bean.IndexBean;
 import com.example.myapplication.bean.LoginBean;
+import com.example.myapplication.bean.PorfolioBean;
+import com.example.myapplication.bean.ToadayBean;
 import com.example.myapplication.bean.TypeIndexBean;
 import com.example.myapplication.bean.UserCenterBean;
 import com.example.myapplication.bean.UserInfoUpdateBean;
@@ -52,9 +54,12 @@ public interface Api {
 
     @POST("index/train/userinfo_update")
     @FormUrlEncoded
-    Flowable<UserInfoUpdateBean> updateUserInfo(@Header("x-access-token") String token, @Field("nickname") String nickname, @Field("zw") String zw,@Field("avatar") String avatar);
+    Flowable<UserInfoUpdateBean> updateUserInfo(@Header("x-access-token") String token, @Field("nickname") String nickname, @Field("zw") String zw, @Field("avatar") String avatar);
 
 
+    @POST("index/train/study_record")
+    @FormUrlEncoded
+    Flowable<ToadayBean> porfolio(@Header("x-access-token") String token, @Field("type") String type, @Field("page") String page);
 }
 
 

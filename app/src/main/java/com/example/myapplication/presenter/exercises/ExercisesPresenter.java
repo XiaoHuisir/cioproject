@@ -29,12 +29,13 @@ public class ExercisesPresenter extends BasePresenter<ExercisesConstract.View> i
 
     /**
      * 提交答题
+     *
      * @param curriculumId
      * @param answer
      */
     @Override
     public void submitEvaluation(String curriculumId, String answer) {
-        addSubscribe(HttpUtils.getMyServer(Constant.BaseUrl).submitEvaluation(Constant.token, curriculumId,answer)
+        addSubscribe(HttpUtils.getMyServer(Constant.BaseUrl).submitEvaluation(Constant.token, curriculumId, answer)
                 .compose(RxUtils.<EvaluationSubmitBean>rxScheduler())
                 .subscribeWith(new CommonSubscriber<EvaluationSubmitBean>(mView) {
                     @Override

@@ -276,7 +276,7 @@
                 android:textSize="@dimen/sp_16" />
 
             <TextView
-                android:id="@+id/txt_all"
+                android:id="@+id/txt_study_all"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -291,7 +291,7 @@
                 android:layout_height="@dimen/dp_8"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/dp_2"
-                android:layout_toRightOf="@id/txt_all"
+                android:layout_toRightOf="@id/txt_study_all"
                 android:background="@mipmap/item_arrows"
                 android:drawableBottom="@null" />
         </RelativeLayout>
@@ -330,6 +330,7 @@
                 android:textSize="@dimen/dp_16" />
 
             <TextView
+                android:id="@+id/txt_check_all"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -446,7 +447,7 @@
                     android:layout_marginLeft="@dimen/dp_8"
                     android:layout_marginTop="@dimen/dp_8"
                     android:text="未通过"
-                    android:textColor="#FF75788C"
+                    android:textColor="#FFEB2121"
                     android:textSize="@dimen/sp_12" />
 
                 <TextView
@@ -458,7 +459,7 @@
                     android:layout_marginLeft="@dimen/dp_8"
                     android:layout_marginTop="@dimen/dp_24"
                     android:text="1"
-                    android:textColor="#FF333333"
+                    android:textColor="#FFEB2121"
                     android:textSize="@dimen/sp_16" />
 
                 <TextView
