@@ -31,7 +31,9 @@
             android:name=".ui.acivity.video.VideoActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.acivity.login.LoginActivity">
+        <activity android:name=".ui.acivity.login.LoginActivity"
+            android:launchMode="singleTask"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

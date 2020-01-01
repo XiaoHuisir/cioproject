@@ -11,6 +11,7 @@ import android.widget.Toast;
 import com.example.myapplication.R;
 import com.example.myapplication.adaper.IndexAdapter;
 import com.example.myapplication.adaper.TodayAdapter;
+import com.example.myapplication.app.Constant;
 import com.example.myapplication.base.BaseFragment;
 import com.example.myapplication.bean.PorfolioBean;
 import com.example.myapplication.bean.ToadayBean;
@@ -65,10 +66,7 @@ public class AllTypseFragment extends BaseFragment implements PorfolioConstract.
 
     @Override
     protected void initData() {
-        HashMap<String, String> map = new HashMap<>();
-        map.put("page", "1");
-        map.put("type", "2");
-        ((PorfolioPresenter) mPresenter).getPorfolio("2","1");
+        ((PorfolioPresenter) mPresenter).getPorfolio(Constant.CURTYPE ,"1");
     }
 
 

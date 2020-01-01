@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide;
 import com.example.myapplication.R;
 import com.example.myapplication.base.BaseActivity;
 import com.example.myapplication.interfaces.IBasePresenter;
+import com.example.myapplication.ui.acivity.login.LoginActivity;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -30,6 +31,8 @@ public class SettingActivity extends BaseActivity {
     ImageView ivHeader;
     @BindView(R.id.txt_zwName)
     TextView txtZwName;
+    @BindView(R.id.txt_logout)
+    TextView txtlogout;
 
     String avatar;
     String nickname;
@@ -62,7 +65,7 @@ public class SettingActivity extends BaseActivity {
         }
     }
 
-    @OnClick({R.id.txt_nickname,R.id.txt_zwName})
+    @OnClick({R.id.txt_nickname,R.id.txt_zwName ,R.id.txt_logout})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.txt_nickname: //设置名称
@@ -80,6 +83,13 @@ public class SettingActivity extends BaseActivity {
                 intentZw.putExtra("nickname",nickname);
                 intentZw.putExtra("zw",zw);
                 startActivityForResult(intentZw,EDIT_ZW);
+                break;
+            case R.id.txt_logout:
+                Intent intent1 = new Intent();
+                intent1.setClass(context, LoginActivity.class);
+//                intent1.addFlags(intent1.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(intent1);
+                finish();
                 break;
 
         }

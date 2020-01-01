@@ -13,7 +13,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/iv_today"
+            android:id="@+id/iv_lesson"
             android:layout_width="@dimen/dp_88"
             android:scaleType="fitXY"
             android:layout_height="@dimen/dp_122"
@@ -25,13 +25,13 @@
             android:src="@color/red" />
 
         <TextView
-            android:id="@+id/text_data"
+            android:id="@+id/text_data1"
             android:layout_width="@dimen/dp_228"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_marginLeft="@dimen/dp_12"
             android:layout_marginTop="@dimen/sp_16"
-            android:layout_toRightOf="@id/iv_today"
+            android:layout_toRightOf="@id/iv_lesson"
             android:ellipsize="end"
             android:maxLines="2"
             android:text="新一代信息技术与企业数字化的转型"
@@ -39,49 +39,49 @@
             android:textSize="@dimen/sp_16" />
 
         <TextView
-            android:id="@+id/text_name"
+            android:id="@+id/text_name1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/text_data"
+            android:layout_below="@id/text_data1"
             android:layout_marginLeft="@dimen/dp_12"
             android:layout_marginTop="@dimen/dp_8"
-            android:layout_toRightOf="@id/iv_today"
+            android:layout_toRightOf="@id/iv_lesson"
             android:text="姚乐"
             android:textColor="#FF7A81A3"
             android:textSize="@dimen/sp_14" />
 
         <TextView
-            android:id="@+id/text_gs"
+            android:id="@+id/text_gs1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/text_data"
+            android:layout_below="@id/text_data1"
             android:layout_marginLeft="@dimen/dp_4"
             android:layout_marginTop="@dimen/dp_8"
-            android:layout_toRightOf="@id/text_name"
+            android:layout_toRightOf="@id/text_name1"
             android:text="CIO时代学院院长"
             android:textColor="#FF9CA0B5"
             android:textSize="@dimen/sp_14" />
 
         <TextView
-            android:id="@+id/text_time"
+            android:id="@+id/text_time1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/text_gs"
+            android:layout_below="@id/text_gs1"
             android:layout_marginLeft="@dimen/dp_16"
             android:layout_marginTop="@dimen/dp_19"
-            android:layout_toRightOf="@id/iv_today"
+            android:layout_toRightOf="@id/iv_lesson"
             android:text="培训课程"
             android:textColor="#FFD7AB70"
             android:textSize="@dimen/sp_12" />
 
         <TextView
-            android:id="@+id/text_watchtime"
+            android:id="@+id/text_watchtime1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/text_gs"
+            android:layout_below="@+id/text_gs1"
             android:layout_marginLeft="@dimen/dp_16"
             android:layout_marginTop="@dimen/dp_19"
-            android:layout_toRightOf="@id/text_time"
+            android:layout_toRightOf="@id/text_time1"
             android:text="观看至 04分25秒"
             android:textColor="#FF9CA0B5"
             android:textSize="@dimen/sp_12" />

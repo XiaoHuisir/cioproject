@@ -16,6 +16,8 @@ public class Constant {
 
     public static String token = "";
 
+
+
     public static int CourseType = 2;
 
     public static  String mobiles = "";
@@ -29,5 +31,11 @@ public class Constant {
     public static final int STUDY_TYPE_1 = 0; //智慧课堂
     public static final int STUDY_TYPE_2 = 1; //内部培训
     public static final int STUDY_TYPE_3 = 2; //其他培训
+
+
+    public static String CURTYPE = "";
+    public  static  final  String  STUD_TYPE_0="0";
+    public  static  final  String  STUD_TYPE_1="1";
+    public  static  final  String  STUD_TYPE_2="2";
 
 }
