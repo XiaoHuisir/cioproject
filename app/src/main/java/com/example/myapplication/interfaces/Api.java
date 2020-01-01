@@ -6,6 +6,7 @@ import com.example.myapplication.bean.EvaluationSubmitBean;
 import com.example.myapplication.bean.ExercisesBean;
 import com.example.myapplication.bean.IndexBean;
 import com.example.myapplication.bean.LoginBean;
+import com.example.myapplication.bean.MyfilelistBean;
 import com.example.myapplication.bean.PorfolioBean;
 import com.example.myapplication.bean.ToadayBean;
 import com.example.myapplication.bean.TypeIndexBean;
@@ -60,6 +61,11 @@ public interface Api {
     @POST("index/train/study_record")
     @FormUrlEncoded
     Flowable<ToadayBean> porfolio(@Header("x-access-token") String token, @Field("type") String type, @Field("page") String page);
+
+    @POST("index/train/my_file_list")
+    @FormUrlEncoded
+    Flowable<MyfilelistBean> myfilelist(@Header("x-access-token") String token, @Field("page") String page);
+
 }
 
 

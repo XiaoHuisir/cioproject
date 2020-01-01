@@ -22,6 +22,7 @@ import com.example.myapplication.interfaces.usercenter.UsercenterConstract;
 import com.example.myapplication.presenter.usercenter.UserCenterPresenter;
 import com.example.myapplication.ui.acivity.PorfolioActivity;
 import com.example.myapplication.ui.acivity.PracticeActivity;
+import com.example.myapplication.ui.acivity.mine.MyfilelistActivity;
 import com.example.myapplication.ui.acivity.setting.SettingActivity;
 
 import java.util.ArrayList;
@@ -58,6 +59,8 @@ public class MineFragment extends BaseFragment implements UsercenterConstract.Vi
     TextView txtStudyAll;
     @BindView(R.id.txt_check_all)
     TextView txtCheckAll;
+    @BindView(R.id.txt_myfilelist)
+    TextView txtMyfilelist;
     private ArrayList<UserCenterBean.DataBean.HistoryBean> historyBeans;
     private RecordAdapter recordAdapter;
 
@@ -73,7 +76,7 @@ public class MineFragment extends BaseFragment implements UsercenterConstract.Vi
         return R.layout.fragment_my;
     }
 
-    @OnClick({R.id.iv_setting, R.id.iv_word, R.id.txt_study_all, R.id.txt_check_all})
+    @OnClick({R.id.iv_setting, R.id.iv_word, R.id.txt_study_all, R.id.txt_check_all,R.id.txt_myfilelist})
     public void onClick(View view) {
         if (userCenterBean == null) return;
         switch (view.getId()) {
@@ -96,6 +99,11 @@ public class MineFragment extends BaseFragment implements UsercenterConstract.Vi
                 Intent intentcheckall = new Intent();
                 intentcheckall.setClass(getActivity(), PracticeActivity.class);
                 startActivity(intentcheckall);
+                break;
+            case R.id.txt_myfilelist:
+                Intent intentMyfilelist = new Intent();
+                intentMyfilelist.setClass(getActivity(), MyfilelistActivity.class);
+                startActivity(intentMyfilelist);
                 break;
         }
     }
