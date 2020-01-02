@@ -8,12 +8,18 @@ import android.widget.TextView;
 import com.example.myapplication.R;
 import com.example.myapplication.app.Constant;
 import com.example.myapplication.base.BaseFragment;
+import com.example.myapplication.bean.IndexBean;
+import com.example.myapplication.bean.SearchBean;
 import com.example.myapplication.interfaces.IBasePresenter;
+import com.example.myapplication.interfaces.contract.IndexConstract;
+import com.example.myapplication.presenter.home.SearchPresenter;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class HomeFragment extends BaseFragment {
+public class HomeFragment extends BaseFragment{
 
     @BindView(R.id.txt_course_1)
     TextView txt_course_1;
@@ -21,7 +27,7 @@ public class HomeFragment extends BaseFragment {
     TextView txt_course_2;
 
     int curCourse = 2;
-
+    int page = 1;
 
     private CourseFragment courseFragment;
     private StudyFragment studyFragment;
@@ -85,5 +91,13 @@ public class HomeFragment extends BaseFragment {
     private void resetCourseTxt() {
         txt_course_1.setTextColor(getResources().getColor(R.color.black));
         txt_course_2.setTextColor(getResources().getColor(R.color.black));
+    }
+
+    public void searchResult(List<IndexBean.DataBean.CurriculumDataBean> result) {
+        if(Constant.CourseType == Constant.COURSE_TYPE_1){
+            studyFragment.showSearch(result);
+        }else if(Constant.CourseType == Constant.COURSE_TYPE_2){
+            courseFragment.showSearch(result);
+        }
     }
 }

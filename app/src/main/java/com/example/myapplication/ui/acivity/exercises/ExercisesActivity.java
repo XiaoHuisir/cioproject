@@ -225,14 +225,15 @@ public class ExercisesActivity extends BaseActivity implements ExercisesConstrac
      * @throws JSONException
      */
     private String getAnswers() throws JSONException {
-        JSONObject jsonObject = new JSONObject();
+        StringBuilder builder = new StringBuilder();
+        builder.append("\"");
+        builder.append("answer");
+        builder.append("\":");
         JSONArray jsonArray = new JSONArray();
         for (ExercisesBean.DataBean dataBean : currentExercises.getData()) {
             JSONObject item = new JSONObject();
             StringBuilder sb = new StringBuilder();
-            sb.append('"');
             sb.append(dataBean.getId());
-            sb.append('"');
             item.put("id", sb.toString());
             JSONArray answers = new JSONArray();
             for (ExercisesBean.DataBean.OptionBean optionBean : dataBean.getOption()) {
@@ -240,11 +241,11 @@ public class ExercisesActivity extends BaseActivity implements ExercisesConstrac
                     answers.put(optionBean.getId());
                 }
             }
-            item.put("select", answers.toString());
+            item.put("select", answers);
             jsonArray.put(item);
         }
-        jsonObject.put("answer", jsonArray.toString());
-        return jsonObject.toString();
+        builder.append(jsonArray.toString());
+        return builder.toString();
     }
 
     /**

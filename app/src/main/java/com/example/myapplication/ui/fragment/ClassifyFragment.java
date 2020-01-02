@@ -15,9 +15,12 @@ import com.example.myapplication.R;
 import com.example.myapplication.adaper.CourseAdapter;
 import com.example.myapplication.adaper.StudyAdapter;
 import com.example.myapplication.adaper.TypeAdapter;
+import com.example.myapplication.app.Constant;
 import com.example.myapplication.base.BaseFragment;
+import com.example.myapplication.bean.IndexBean;
 import com.example.myapplication.bean.TypeIndexBean;
 import com.example.myapplication.interfaces.IBasePresenter;
+import com.example.myapplication.interfaces.contract.IndexConstract;
 import com.example.myapplication.interfaces.contract.TypeIndexConstact;
 import com.example.myapplication.presenter.classify.ClassifyPresenter;
 import com.example.myapplication.ui.acivity.video.VideoActivity;
@@ -171,5 +174,23 @@ public class ClassifyFragment extends BaseFragment implements TypeIndexConstact.
         intent.setClass(context, VideoActivity.class);
         intent.putExtra("curriulum_id", String.valueOf(id));
         startActivity(intent);
+    }
+
+    public void searchResult(List<IndexBean.DataBean.CurriculumDataBean> result) {
+        curriculumList.clear();
+
+        for(IndexBean.DataBean.CurriculumDataBean item:result){
+            TypeIndexBean.DataBean.CurriculumDataBean bean = new TypeIndexBean.DataBean.CurriculumDataBean();
+            bean.setId(item.getId());
+            bean.setTitle(item.getTitle());
+            bean.setTeacher(item.getTeacher());
+            bean.setGs(item.getGs());
+            bean.setLog(item.getLog());
+            bean.setUp_new(item.getUp_new());
+            bean.setLen(item.getLen());
+            bean.setJd(item.getJd());
+            curriculumList.add(bean);
+        }
+        typeAdapter.notifyDataSetChanged();
     }
 }

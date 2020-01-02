@@ -9,6 +9,7 @@ import com.example.myapplication.bean.LoginBean;
 import com.example.myapplication.bean.MyfilelistBean;
 import com.example.myapplication.bean.NoticeListBean;
 import com.example.myapplication.bean.PorfolioBean;
+import com.example.myapplication.bean.SearchBean;
 import com.example.myapplication.bean.ToadayBean;
 import com.example.myapplication.bean.TypeIndexBean;
 import com.example.myapplication.bean.UnredNoticeBean;
@@ -76,6 +77,10 @@ public interface Api {
     @POST("index/train/notice_list")
     @FormUrlEncoded
     Flowable<NoticeListBean> noticeList(@Header("x-access-token") String token, @Field("page") String page);
+
+    @POST("index/train/curriculum_serach")
+    @FormUrlEncoded
+    Flowable<SearchBean> search(@Header("x-access-token") String token, @Field("keyword") String keyword, @Field("type") String type, @Field("page") String page);
 
 
 }

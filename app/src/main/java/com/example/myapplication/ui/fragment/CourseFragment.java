@@ -14,6 +14,7 @@ import com.example.myapplication.R;
 import com.example.myapplication.adaper.IndexAdapter;
 import com.example.myapplication.app.Constant;
 import com.example.myapplication.base.BaseFragment;
+import com.example.myapplication.bean.CurriculumBean;
 import com.example.myapplication.bean.IndexBean;
 import com.example.myapplication.interfaces.IBasePresenter;
 import com.example.myapplication.interfaces.contract.IndexConstract;
@@ -118,6 +119,16 @@ public class CourseFragment extends BaseFragment implements IndexConstract.View,
         banners(result);
         indexAdapter.notifyDataSetChanged();
 
+    }
+
+    /**
+     * 显示搜索结果
+     * @param result
+     */
+    public void showSearch(List<IndexBean.DataBean.CurriculumDataBean> result){
+        list.clear();
+        list.addAll(result);
+        indexAdapter.notifyDataSetChanged();
     }
 
     private void openCourseActivity(int type,String title){
