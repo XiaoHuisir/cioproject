@@ -4,6 +4,7 @@ import com.example.myapplication.app.Constant;
 import com.example.myapplication.base.BasePresenter;
 import com.example.myapplication.bean.ExercisesBean;
 import com.example.myapplication.bean.LoginBean;
+import com.example.myapplication.bean.UnredNoticeBean;
 import com.example.myapplication.bean.UserCenterBean;
 import com.example.myapplication.interfaces.contract.ExercisesConstract;
 import com.example.myapplication.interfaces.usercenter.UsercenterConstract;
@@ -28,6 +29,22 @@ public class UserCenterPresenter extends BasePresenter<UsercenterConstract.View>
                     }
                 }));
 
+    }
+
+    @Override
+    public void getUnredNotice() {
+        addSubscribe(HttpUtils.getMyServer(Constant.BaseUrl).unreadNotice(Constant.token)
+                .compose(RxUtils.<UnredNoticeBean>rxScheduler())
+                .subscribeWith(new CommonSubscriber<UnredNoticeBean>(mView) {
+                    @Override
+                    public void onNext(UnredNoticeBean result) {
+                        if (result != null) {
+                            if (mView != null) {
+                                mView.getUnredNoticeReturn(result);
+                            }
+                        }
+                    }
+                }));
     }
 
 }

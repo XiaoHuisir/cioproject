@@ -7,9 +7,11 @@ import com.example.myapplication.bean.ExercisesBean;
 import com.example.myapplication.bean.IndexBean;
 import com.example.myapplication.bean.LoginBean;
 import com.example.myapplication.bean.MyfilelistBean;
+import com.example.myapplication.bean.NoticeListBean;
 import com.example.myapplication.bean.PorfolioBean;
 import com.example.myapplication.bean.ToadayBean;
 import com.example.myapplication.bean.TypeIndexBean;
+import com.example.myapplication.bean.UnredNoticeBean;
 import com.example.myapplication.bean.UserCenterBean;
 import com.example.myapplication.bean.UserInfoUpdateBean;
 
@@ -65,6 +67,16 @@ public interface Api {
     @POST("index/train/my_file_list")
     @FormUrlEncoded
     Flowable<MyfilelistBean> myfilelist(@Header("x-access-token") String token, @Field("page") String page);
+
+
+    @POST("index/train/get_unread_notice_num")
+    @FormUrlEncoded
+    Flowable<UnredNoticeBean> unreadNotice(@Header("x-access-token") String token);
+
+    @POST("index/train/notice_list")
+    @FormUrlEncoded
+    Flowable<NoticeListBean> noticeList(@Header("x-access-token") String token, @Field("page") String page);
+
 
 }
 

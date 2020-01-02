@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="@dimen/dp_328"
+        android:layout_height="@dimen/dp_132"
+        android:layout_marginLeft="@dimen/dp_16"
+        android:layout_marginRight="@dimen/dp_16"
+        android:background="#FFFFFFFF"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/txt_terrace"
+            android:layout_width="@dimen/dp_296"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="@dimen/dp_16"
+            android:layout_marginTop="@dimen/dp_16"
+            android:text="教务平台"
+            android:textColor="#FF333333"
+            android:textSize="@dimen/sp_16" />
+
+        <TextView
+            android:id="@+id/txt_matter"
+            android:layout_width="@dimen/dp_296"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txt_terrace"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="@dimen/dp_16"
+            android:layout_marginTop="@dimen/dp_8"
+            android:ellipsize="end"
+            android:maxLines="3"
+            android:text="培训课程上线：《互联网趋势下CIO应成为企业转型升级的赋能者》在完成学时的基础上还需通过习题测评，得分80分以上方可通过，希望…"
+            android:textColor="#FF333333"
+            android:textSize="@dimen/sp_14" />
+
+        <TextView
+            android:id="@+id/txt_notice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txt_matter"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="@dimen/dp_16"
+            android:layout_marginTop="@dimen/dp_8"
+            android:text="查看详情"
+            android:textColor="#FF7D8198"
+            android:textSize="@dimen/sp_14" />
+
+        <ImageView
+            android:layout_width="@dimen/dp_8"
+            android:layout_height="@dimen/dp_8"
+            android:layout_below="@id/txt_matter"
+            android:layout_marginLeft="@dimen/dp_4"
+            android:layout_marginTop="@dimen/dp_12"
+            android:layout_toRightOf="@id/txt_notice"
+            android:src="@mipmap/item_arrows" />
+
+    </RelativeLayout>
+</android.support.constraint.ConstraintLayout>

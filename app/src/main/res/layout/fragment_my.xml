@@ -66,24 +66,37 @@
                 app:layout_constraintLeft_toRightOf="@id/iv_buddha"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
-                android:id="@+id/iv_word"
-                android:layout_width="@dimen/dp_30"
-                android:layout_height="@dimen/dp_30"
-                android:layout_marginLeft="@dimen/dp_8"
+            <RelativeLayout
+                android:layout_width="@dimen/dp_35"
+                android:layout_height="@dimen/dp_35"
                 android:layout_marginTop="@dimen/dp_25"
-                android:src="@mipmap/icon_message_white"
-                app:layout_constraintLeft_toRightOf="@id/txt_title_name"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:layout_marginRight="@dimen/dp_12"
+                app:layout_constraintRight_toLeftOf="@+id/iv_setting"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/iv_word"
+                    android:layout_width="@dimen/dp_30"
+                    android:layout_height="@dimen/dp_30"
+                    android:src="@mipmap/icon_message_white" />
+
+                <com.example.myapplication.utils.NumView
+                    android:id="@+id/num_view"
+                    android:layout_width="@dimen/dp_15"
+                    android:layout_height="@dimen/dp_15"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true" />
+            </RelativeLayout>
+
 
             <ImageView
                 android:id="@+id/iv_setting"
                 android:layout_width="@dimen/dp_30"
                 android:layout_height="@dimen/dp_30"
-                android:layout_marginLeft="@dimen/dp_16"
                 android:layout_marginTop="@dimen/dp_25"
+                android:layout_marginRight="@dimen/dp_16"
                 android:src="@mipmap/icon_set_white"
-                app:layout_constraintLeft_toRightOf="@id/iv_word"
+                app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
         </android.support.constraint.ConstraintLayout>
 
@@ -269,8 +282,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
+                android:layout_alignParentTop="true"
                 android:layout_marginLeft="@dimen/dp_16"
+                android:layout_marginTop="@dimen/dp_16"
                 android:text="学习记录"
                 android:textColor="@color/blacks"
                 android:textSize="@dimen/sp_16" />
@@ -279,19 +293,22 @@
                 android:id="@+id/txt_study_all"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/dp_206"
-                android:layout_toRightOf="@id/txt_record"
+                android:layout_alignParentBottom="true"
+                android:layout_marginRight="@dimen/dp_2"
+                android:layout_marginBottom="@dimen/dp_7"
+                android:layout_toLeftOf="@+id/btn_1"
                 android:text="查看全部"
                 android:textColor="@color/grays"
                 android:textSize="@dimen/sp_12" />
 
             <Button
+                android:id="@+id/btn_1"
                 android:layout_width="@dimen/dp_8"
                 android:layout_height="@dimen/dp_8"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/dp_2"
-                android:layout_toRightOf="@id/txt_study_all"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginRight="@dimen/dp_16"
+                android:layout_marginBottom="@dimen/dp_10"
                 android:background="@mipmap/item_arrows"
                 android:drawableBottom="@null" />
         </RelativeLayout>
@@ -323,8 +340,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
+                android:layout_alignParentTop="true"
                 android:layout_marginLeft="@dimen/dp_16"
+                android:layout_marginTop="@dimen/dp_16"
                 android:text="我的练习"
                 android:textColor="#FF000000"
                 android:textSize="@dimen/dp_16" />
@@ -333,19 +351,22 @@
                 android:id="@+id/txt_check_all"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/dp_206"
-                android:layout_toRightOf="@id/txt_exercise"
+                android:layout_alignParentBottom="true"
+                android:layout_marginRight="@dimen/dp_2"
+                android:layout_marginBottom="@dimen/dp_7"
+                android:layout_toLeftOf="@id/iv1"
                 android:text="查看全部"
                 android:textColor="#FF75788C"
                 android:textSize="@dimen/sp_12" />
 
             <ImageView
+                android:id="@+id/iv1"
                 android:layout_width="@dimen/dp_8"
                 android:layout_height="@dimen/dp_8"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/dp_256"
-                android:layout_toRightOf="@id/txt_exercise"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginRight="@dimen/dp_16"
+                android:layout_marginBottom="@dimen/dp_10"
                 android:src="@mipmap/item_arrows" />
         </RelativeLayout>
 
@@ -487,8 +508,10 @@
             android:id="@+id/txt_download"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
             android:layout_marginLeft="@dimen/sp_16"
+            android:layout_marginTop="@dimen/dp_16"
             android:text="我的下载"
             android:textColor="#FF000000"
             android:textSize="@dimen/sp_16" />
@@ -497,19 +520,22 @@
             android:id="@+id/txt_myfilelist"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/dp_186"
-            android:layout_toRightOf="@id/txt_download"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="@dimen/dp_2"
+            android:layout_marginBottom="@dimen/dp_7"
+            android:layout_toLeftOf="@id/iv_3"
             android:text="2个材料文件"
             android:textColor="#FF75788C"
             android:textSize="@dimen/sp_12" />
 
         <ImageView
+            android:id="@+id/iv_3"
             android:layout_width="@dimen/dp_8"
             android:layout_height="@dimen/dp_8"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/dp_256"
-            android:layout_toRightOf="@id/txt_download"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginRight="@dimen/dp_16"
+            android:layout_marginBottom="@dimen/dp_10"
             android:src="@mipmap/item_arrows" />
     </RelativeLayout>
 </RelativeLayout>

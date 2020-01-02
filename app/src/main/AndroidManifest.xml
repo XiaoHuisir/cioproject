@@ -14,7 +14,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.acivity.mine.MyfilelistActivity"></activity>
+        <activity android:name=".ui.acivity.mine.NoticeListAcitivity"></activity>
+        <activity android:name=".ui.acivity.mine.MyfilelistActivity" />
         <activity android:name=".ui.acivity.PracticeActivity" />
         <activity android:name=".ui.acivity.PorfolioActivity" />
         <activity android:name=".ui.acivity.setting.SetNameActivity" />

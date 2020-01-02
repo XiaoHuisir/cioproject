@@ -16,6 +16,7 @@ import com.example.myapplication.R;
 import com.example.myapplication.adaper.RecordAdapter;
 import com.example.myapplication.app.Constant;
 import com.example.myapplication.base.BaseFragment;
+import com.example.myapplication.bean.UnredNoticeBean;
 import com.example.myapplication.bean.UserCenterBean;
 import com.example.myapplication.interfaces.IBasePresenter;
 import com.example.myapplication.interfaces.usercenter.UsercenterConstract;
@@ -23,7 +24,9 @@ import com.example.myapplication.presenter.usercenter.UserCenterPresenter;
 import com.example.myapplication.ui.acivity.PorfolioActivity;
 import com.example.myapplication.ui.acivity.PracticeActivity;
 import com.example.myapplication.ui.acivity.mine.MyfilelistActivity;
+import com.example.myapplication.ui.acivity.mine.NoticeListAcitivity;
 import com.example.myapplication.ui.acivity.setting.SettingActivity;
+import com.example.myapplication.utils.NumView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,6 +64,8 @@ public class MineFragment extends BaseFragment implements UsercenterConstract.Vi
     TextView txtCheckAll;
     @BindView(R.id.txt_myfilelist)
     TextView txtMyfilelist;
+    @BindView(R.id.num_view)
+    NumView numView;
     private ArrayList<UserCenterBean.DataBean.HistoryBean> historyBeans;
     private RecordAdapter recordAdapter;
 
@@ -76,7 +81,7 @@ public class MineFragment extends BaseFragment implements UsercenterConstract.Vi
         return R.layout.fragment_my;
     }
 
-    @OnClick({R.id.iv_setting, R.id.iv_word, R.id.txt_study_all, R.id.txt_check_all,R.id.txt_myfilelist})
+    @OnClick({R.id.iv_setting, R.id.iv_word, R.id.txt_study_all, R.id.txt_check_all, R.id.txt_myfilelist})
     public void onClick(View view) {
         if (userCenterBean == null) return;
         switch (view.getId()) {
@@ -89,6 +94,9 @@ public class MineFragment extends BaseFragment implements UsercenterConstract.Vi
                 startActivity(intent);
                 break;
             case R.id.iv_word:  //消息
+                Intent intent1 = new Intent();
+                intent1.setClass(context, NoticeListAcitivity.class);
+                startActivity(intent1);
                 break;
             case R.id.txt_study_all:
                 Intent intentall = new Intent();
@@ -110,22 +118,23 @@ public class MineFragment extends BaseFragment implements UsercenterConstract.Vi
 
     @Override
     protected void initView() {
-        super.initView();
         historyBeans = new ArrayList<>();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
         record.setLayoutManager(linearLayoutManager);
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         recordAdapter = new RecordAdapter(historyBeans);
         record.setAdapter(recordAdapter);
-
+        numView.setNum(6);
     }
 
     @Override
     protected void initData() {
         super.initData();
         ((UserCenterPresenter) mPresenter).usercenter();
+//        ((UserCenterPresenter) mPresenter).getUnredNotice();
 
     }
+
 
     @Override
     public void UserCenterReturn(UserCenterBean result) {
@@ -134,6 +143,7 @@ public class MineFragment extends BaseFragment implements UsercenterConstract.Vi
             mydata(result);
         }
     }
+
 
     private void mydata(UserCenterBean result) {
         String nickname = result.getData().getNickname();
@@ -179,4 +189,15 @@ public class MineFragment extends BaseFragment implements UsercenterConstract.Vi
     }
 
 
+    //TODO
+    @Override
+    public void getUnredNoticeReturn(UnredNoticeBean bean) {
+//        if (bean.getStatus() == 1) {
+//            String notice_num = bean.getData().getNotice_num();
+//            NumView numView = new NumView(context);
+////            Integer.valueOf(notice_num).intValue();
+//            int i = Integer.parseInt(notice_num);
+//            numView.setNum(i);
+//        }
+    }
 }

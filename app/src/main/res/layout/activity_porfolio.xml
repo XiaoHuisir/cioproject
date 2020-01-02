@@ -53,7 +53,7 @@
             android:layout_marginLeft="@dimen/dp_16"
             android:background="@drawable/bg_red_button"
             android:text="全部类型"
-            android:textColor="@color/whites"
+            android:textColor="@color/col_grays"
             android:textSize="@dimen/sp_14" />
 
         <Button
@@ -65,7 +65,7 @@
             android:layout_marginLeft="@dimen/dp_96"
             android:background="@drawable/bg_red_button"
             android:text="培训课程"
-            android:textColor="@color/whites"
+            android:textColor="@color/col_grays"
             android:textSize="@dimen/sp_14" />
 
         <Button
@@ -77,7 +77,7 @@
             android:layout_marginLeft="@dimen/dp_176"
             android:background="@drawable/bg_red_button"
             android:text="课外学习"
-            android:textColor="@color/whites"
+            android:textColor="@color/col_grays"
             android:textSize="@dimen/sp_14" />
     </RelativeLayout>
 

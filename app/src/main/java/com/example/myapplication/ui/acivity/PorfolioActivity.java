@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myapplication.R;
@@ -76,17 +77,16 @@ public class PorfolioActivity extends BaseActivity {
                 break;
             case R.id.btn_types_all:
                 Constant.CURTYPE = Constant.STUD_TYPE_0;
-                Toast.makeText(context,"1",Toast.LENGTH_LONG).show();
+
                 allTypes();
                 break;
             case R.id.btn_types_train:
                 Constant.CURTYPE = Constant.STUD_TYPE_1;
-                Toast.makeText(context,"2",Toast.LENGTH_LONG).show();
+
                 trainTypes();
                 break;
             case R.id.btn_types_lesson:
                 Constant.CURTYPE = Constant.STUD_TYPE_2;
-                Toast.makeText(context,"3",Toast.LENGTH_LONG).show();
                 lessonTypes();
                 break;
         }
