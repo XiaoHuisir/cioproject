@@ -1,6 +1,5 @@
 package com.example.myapplication.ui.acivity.mine;
 
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -10,9 +9,8 @@ import com.example.myapplication.R;
 import com.example.myapplication.base.BaseActivity;
 import com.example.myapplication.bean.NoticeListBean;
 import com.example.myapplication.interfaces.IBasePresenter;
-import com.example.myapplication.interfaces.contract.NoticeListAdaper;
+import com.example.myapplication.adaper.NoticeListAdaper;
 import com.example.myapplication.interfaces.contract.NoticeListConstract;
-import com.example.myapplication.interfaces.contract.UnredNoticeConstract;
 import com.example.myapplication.presenter.noticelist.NoticeListPresenter;
 
 

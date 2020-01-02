@@ -1,4 +1,4 @@
-package com.example.myapplication.interfaces.contract;
+package com.example.myapplication.adaper;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
