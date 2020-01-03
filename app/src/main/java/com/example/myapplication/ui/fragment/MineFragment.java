@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -69,6 +70,8 @@ public class MineFragment extends BaseFragment implements UsercenterConstract.Vi
     TextView txtMyfilelist;
     @BindView(R.id.num_view)
     NumView numView;
+    @BindView(R.id.relative_soos)
+    RelativeLayout relativesoos;
     private ArrayList<UserCenterBean.DataBean.HistoryBean> historyBeans;
     private RecordAdapter recordAdapter;
 
@@ -135,7 +138,6 @@ public class MineFragment extends BaseFragment implements UsercenterConstract.Vi
         super.initData();
         ((UserCenterPresenter) mPresenter).usercenter();
         ((UserCenterPresenter) mPresenter).getUnredNotice();
-//        ((UserCenterPresenter) mPresenter).getUnredNotice();
 
     }
 
@@ -154,8 +156,9 @@ public class MineFragment extends BaseFragment implements UsercenterConstract.Vi
         if (bean.getStatus() == 1) {
 
             String notice_num = bean.getData().getNotice_num();
-//        int noticenum = Integer.valueOf(notice_num).intValue();
+//          int noticenum = Integer.valueOf(notice_num).intValue();
             int notice_nums = Integer.parseInt(notice_num);
+            Constant.NUM_VIEW = String.valueOf(notice_nums);
             numView.setNum(notice_nums);
         }
 

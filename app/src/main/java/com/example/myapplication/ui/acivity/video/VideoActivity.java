@@ -14,10 +14,13 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.myapplication.R;
 import com.example.myapplication.adaper.PdfAdapter;
 import com.example.myapplication.base.BaseActivity;
@@ -69,6 +72,18 @@ public class VideoActivity extends BaseActivity implements CurriculumConstract.V
     TextView txtScore;
     @BindView(R.id.img_material)
     ImageView imgMaterial;
+    @BindView(R.id.linear_details)
+    LinearLayout lineardetails;
+    @BindView(R.id.image_log)
+    ImageView imageLog;
+    @BindView(R.id.txt_teacher)
+    TextView txTeacher;
+    @BindView(R.id.txt_gs)
+    TextView txtGs;
+    @BindView(R.id.text_title)
+    TextView texTitle;
+    @BindView(R.id.txt_content)
+    TextView txtContent;
 
     private static final int CODE_EXERCISES = 100;
 
@@ -113,7 +128,6 @@ public class VideoActivity extends BaseActivity implements CurriculumConstract.V
     @Override
     public void getCurriculumReturn(CurriculumBean bean) {
         curriculumBean = bean;
-
         String video_url = curriculumBean.getData().getCurriculum_data().getVideo_url_code();
         if (!TextUtils.isEmpty(video_url)) {
 
@@ -131,9 +145,9 @@ public class VideoActivity extends BaseActivity implements CurriculumConstract.V
         txtName.setText(curriculumBean.getData().getCurriculum_data().getTeacher());
         txtWork.setText(curriculumBean.getData().getCurriculum_data().getGs());
 
-        if(curriculumBean.getData().getFile_data().size() == 0){
+        if (curriculumBean.getData().getFile_data().size() == 0) {
             imgMaterial.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             imgMaterial.setVisibility(View.GONE);
             pdfList.clear();
             pdfList.addAll(bean.getData().getFile_data());
@@ -142,17 +156,17 @@ public class VideoActivity extends BaseActivity implements CurriculumConstract.V
 
         int fraction = curriculumBean.getData().getRecord_data().getFraction();
         String str = "";
-        if(curriculumBean.getData().getRecord_data().getIs_pass() == 1){
-            str = fraction+"分 已通过";
+        if (curriculumBean.getData().getRecord_data().getIs_pass() == 1) {
+            str = fraction + "分 已通过";
             txtScore.setTextColor(Color.parseColor("#C7C7C7"));
-        }else{
+        } else {
             str = "未通过";
             txtScore.setTextColor(Color.parseColor("#FF0000"));
         }
         txtScore.setText(str);
     }
 
-    @OnClick({R.id.txt_sound, R.id.txt_video, R.id.txt_detail, R.id.txt_evalua,R.id.layout_exercises})
+    @OnClick({R.id.txt_sound, R.id.txt_video, R.id.txt_detail, R.id.txt_evalua, R.id.layout_exercises, R.id.txt_intro})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.txt_sound:
@@ -165,17 +179,24 @@ public class VideoActivity extends BaseActivity implements CurriculumConstract.V
             case R.id.txt_detail:
                 txtIntro.setVisibility(View.VISIBLE);
                 txtDetail.setVisibility(View.INVISIBLE);
+                pdfRecyclerview.setVisibility(View.INVISIBLE);
+                lineardetails.setVisibility(View.VISIBLE);
+                detail();
                 break;
             case R.id.txt_intro:
+                txtIntro.setVisibility(View.INVISIBLE);
+                txtDetail.setVisibility(View.VISIBLE);
+                pdfRecyclerview.setVisibility(View.VISIBLE);
+                lineardetails.setVisibility(View.INVISIBLE);
                 detail();
                 break;
             case R.id.txt_evalua:
                 evaluats();
                 break;
             case R.id.layout_exercises:
-                if(curriculumBean.getData().getRecord_data().getIs_pass() == 0){
+                if (curriculumBean.getData().getRecord_data().getIs_pass() == 0) {
                     openExercises();
-                }else{
+                } else {
                     Toast.makeText(context, "已通过测试", Toast.LENGTH_SHORT).show();
                 }
                 break;
@@ -189,10 +210,17 @@ public class VideoActivity extends BaseActivity implements CurriculumConstract.V
         startActivity(intent);
     }
 
-    //TODO
     private void detail() {
-        txtIntro.setVisibility(View.INVISIBLE);
-        txtDetail.setVisibility(View.VISIBLE);
+        CurriculumBean.DataBean.CurriculumDataBean details = curriculumBean.getData().getCurriculum_data();
+        if (details.getContent()!=null){
+            txtContent.setText(details.getContent());
+        }else {
+            txtContent.setText("暂无内容！！！-");
+        }
+        txtGs.setText(details.getGs());
+        Glide.with(context).load(details.getLog()).apply(RequestOptions.bitmapTransform(new CircleCrop())).into(imageLog);
+        txTeacher.setText(details.getTeacher());
+        texTitle.setText(details.getTitle());
 
     }
 
@@ -238,17 +266,17 @@ public class VideoActivity extends BaseActivity implements CurriculumConstract.V
     /**
      * 跳转答题页
      */
-    private void openExercises(){
+    private void openExercises() {
         Intent intent = new Intent();
-        intent.setClass(this,ExercisesActivity.class);
-        intent.putExtra("evaluat_curriulum_id",curriculumBean.getData().getCurriculum_data().getId());
-        startActivityForResult(intent,CODE_EXERCISES);
+        intent.setClass(this, ExercisesActivity.class);
+        intent.putExtra("evaluat_curriulum_id", curriculumBean.getData().getCurriculum_data().getId());
+        startActivityForResult(intent, CODE_EXERCISES);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == CODE_EXERCISES){
+        if (requestCode == CODE_EXERCISES) {
 
         }
     }

@@ -19,7 +19,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class HomeFragment extends BaseFragment{
+public class HomeFragment extends BaseFragment {
 
     @BindView(R.id.txt_course_1)
     TextView txt_course_1;
@@ -94,9 +94,9 @@ public class HomeFragment extends BaseFragment{
     }
 
     public void searchResult(List<IndexBean.DataBean.CurriculumDataBean> result) {
-        if(Constant.CourseType == Constant.COURSE_TYPE_1){
+        if (Constant.CourseType == Constant.COURSE_TYPE_1) {
             studyFragment.showSearch(result);
-        }else if(Constant.CourseType == Constant.COURSE_TYPE_2){
+        } else if (Constant.CourseType == Constant.COURSE_TYPE_2) {
             courseFragment.showSearch(result);
         }
     }
