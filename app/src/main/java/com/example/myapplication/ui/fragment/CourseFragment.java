@@ -83,21 +83,18 @@ public class CourseFragment extends BaseFragment implements IndexConstract.View,
                 curType = Constant.STUDY_TYPE_1;
                 resetTypeTxt();
                 txtType1.setTextColor(getResources().getColor(R.color.red));
-                //getIndex();
                 openCourseActivity(curType, "智慧课堂");
                 break;
             case R.id.txt_type_2:
                 curType = Constant.STUDY_TYPE_2;
                 resetTypeTxt();
                 txtType2.setTextColor(getResources().getColor(R.color.red));
-                //getIndex();
                 openCourseActivity(curType, "内部培训");
                 break;
             case R.id.txt_type_3:
                 curType = Constant.STUDY_TYPE_3;
                 resetTypeTxt();
                 txtType3.setTextColor(getResources().getColor(R.color.red));
-                //getIndex();
                 openCourseActivity(curType, "其他培训");
                 break;
         }

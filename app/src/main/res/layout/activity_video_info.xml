@@ -75,6 +75,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dp_16"
             android:layout_marginTop="@dimen/dp_16"
+            android:ellipsize="end"
             android:maxLines="2"
             android:text="国籍"
             android:textColor="#FF333333"
@@ -155,17 +156,18 @@
         android:layout_marginRight="@dimen/dp_20"
         app:layout_constraintBottom_toTopOf="@id/layout_bottom"
         app:layout_constraintTop_toBottomOf="@id/txt_study_title" />
+
     <ImageView
         android:id="@+id/img_material"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
         android:src="@mipmap/null_material"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@id/layout_bottom"
-        app:layout_constraintTop_toBottomOf="@id/txt_study_title"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:scaleType="centerCrop"
-        android:visibility="gone"/>
+        app:layout_constraintTop_toBottomOf="@id/txt_study_title" />
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/layout_bottom"

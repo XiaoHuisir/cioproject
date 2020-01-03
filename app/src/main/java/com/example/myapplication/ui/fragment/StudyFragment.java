@@ -29,7 +29,7 @@ public class StudyFragment extends BaseFragment implements IndexConstract.View {
 
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
-    @BindView(R.id.banner)
+    @BindView(R.id.banner_learn)
     Banner banners;
 
     private int courseType = 1;
@@ -77,7 +77,11 @@ public class StudyFragment extends BaseFragment implements IndexConstract.View {
     public void getIndexReturn(IndexBean result) {
         list.clear();
         list.addAll(result.getData().getCurriculum_data());
+        setBanner(result);
         indexAdapter.notifyDataSetChanged();
+    }
+
+    private void setBanner(IndexBean result) {
         List<IndexBean.DataBean.LbDataBean> lb_data = result.getData().getLb_data();
         if (lb_data.size() > 0) {
             ArrayList<String> strings = new ArrayList<>();
@@ -93,6 +97,7 @@ public class StudyFragment extends BaseFragment implements IndexConstract.View {
                     .setBannerAnimation(Transformer.Accordion).start();
         }
     }
+
     class MyLoader extends ImageLoader {
         @Override
         public void displayImage(Context context, Object path, ImageView imageView) {
