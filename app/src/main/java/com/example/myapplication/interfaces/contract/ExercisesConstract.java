@@ -5,6 +5,8 @@ import com.example.myapplication.bean.ExercisesBean;
 import com.example.myapplication.interfaces.IBasePresenter;
 import com.example.myapplication.interfaces.IBaseView;
 
+import org.json.JSONArray;
+
 public interface ExercisesConstract {
     interface View extends IBaseView {
         void getEvaluationReturn(ExercisesBean bean);
@@ -16,6 +18,6 @@ public interface ExercisesConstract {
     interface Presenter extends IBasePresenter<ExercisesConstract.View> {
         void getEvaluation(String curriculum_id);
 
-        void submitEvaluation(String curriculumId,String answer);
+        void submitEvaluation(String curriculumId, JSONArray answer);
     }
 }

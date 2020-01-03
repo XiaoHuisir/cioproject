@@ -112,7 +112,7 @@ public class ExercisesActivity extends BaseActivity implements ExercisesConstrac
                     if (currentPos > currentExercises.getData().size() && txtNext.getText().equals("交卷")) {
                         currentPos = currentExercises.getData().size();
                         try {
-                            String answer = getAnswers();
+                            JSONArray answer = getAnswers();
                             if (answer.length() > 0) {
                                 ((ExercisesPresenter) mPresenter).submitEvaluation(curriculumId, answer);
                             }
@@ -224,17 +224,12 @@ public class ExercisesActivity extends BaseActivity implements ExercisesConstrac
      * @return
      * @throws JSONException
      */
-    private String getAnswers() throws JSONException {
-        StringBuilder builder = new StringBuilder();
-        builder.append("\"");
-        builder.append("answer");
-        builder.append("\":");
+    private JSONArray getAnswers() throws JSONException {
+
         JSONArray jsonArray = new JSONArray();
         for (ExercisesBean.DataBean dataBean : currentExercises.getData()) {
             JSONObject item = new JSONObject();
-            StringBuilder sb = new StringBuilder();
-            sb.append(dataBean.getId());
-            item.put("id", sb.toString());
+            item.put("id", String.valueOf(dataBean.getId()));
             JSONArray answers = new JSONArray();
             for (ExercisesBean.DataBean.OptionBean optionBean : dataBean.getOption()) {
                 if (optionBean.select) {
@@ -244,8 +239,7 @@ public class ExercisesActivity extends BaseActivity implements ExercisesConstrac
             item.put("select", answers);
             jsonArray.put(item);
         }
-        builder.append(jsonArray.toString());
-        return builder.toString();
+        return jsonArray;
     }
 
     /**

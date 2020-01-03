@@ -8,6 +8,12 @@ import com.example.myapplication.interfaces.contract.ExercisesConstract;
 import com.example.myapplication.utils.CommonSubscriber;
 import com.example.myapplication.utils.HttpUtils;
 import com.example.myapplication.utils.RxUtils;
+import com.google.gson.JsonArray;
+
+import org.json.JSONArray;
+
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 
 public class ExercisesPresenter extends BasePresenter<ExercisesConstract.View> implements ExercisesConstract.Presenter {
     @Override
@@ -34,8 +40,9 @@ public class ExercisesPresenter extends BasePresenter<ExercisesConstract.View> i
      * @param answer
      */
     @Override
-    public void submitEvaluation(String curriculumId, String answer) {
-        addSubscribe(HttpUtils.getMyServer(Constant.BaseUrl).submitEvaluation(Constant.token, curriculumId, answer)
+    public void submitEvaluation(String curriculumId, JSONArray answer) {
+
+        addSubscribe(HttpUtils.getMyServer(Constant.BaseUrl).submitEvaluation(Constant.token, curriculumId,answer)
                 .compose(RxUtils.<EvaluationSubmitBean>rxScheduler())
                 .subscribeWith(new CommonSubscriber<EvaluationSubmitBean>(mView) {
                     @Override

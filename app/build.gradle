@@ -58,10 +58,9 @@ dependencies {
     implementation 'org.greenrobot:eventbus:3.0.0'
     implementation 'org.jsoup:jsoup:1.10.2'
     implementation 'me.yatoooon:screenadaptation:1.1.1'
-
     //垂直的tablayout
     implementation 'q.rorbin:VerticalTabLayout:1.2.5'
     implementation 'cn.jzvd:jiaozivideoplayer:6.2.9'
 
-
+    implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.4.2'
 }

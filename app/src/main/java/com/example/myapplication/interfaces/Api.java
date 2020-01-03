@@ -16,13 +16,18 @@ import com.example.myapplication.bean.UnredNoticeBean;
 import com.example.myapplication.bean.UserCenterBean;
 import com.example.myapplication.bean.UserInfoUpdateBean;
 
+import org.json.JSONArray;
+
 import java.util.Map;
 
 import io.reactivex.Flowable;
+import okhttp3.RequestBody;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.Header;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 
 public interface Api {
@@ -49,7 +54,7 @@ public interface Api {
 
     @POST("index/train/evaluation_submit")
     @FormUrlEncoded
-    Flowable<EvaluationSubmitBean> submitEvaluation(@Header("x-access-token") String token, @Field("curriculum_id") String curriculum_id, @Field("answer") String answer);
+    Flowable<EvaluationSubmitBean> submitEvaluation(@Header("x-access-token") String token, @Field("curriculum_id") String curriculum_id, @Field("answer") JSONArray answer);
 
 
     //个人中心

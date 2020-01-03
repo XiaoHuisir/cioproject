@@ -33,6 +33,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import cn.jzvd.JZMediaManager;
 import cn.jzvd.JZVideoPlayer;
 import cn.jzvd.JZVideoPlayerStandard;
 
@@ -80,6 +81,7 @@ public class VideoActivity extends BaseActivity implements CurriculumConstract.V
     private SensorManager sensorManager;
     MediaPlayer mediaPlayer;
     private boolean inxdler = true;
+    long curPos;
 
     @Override
     protected IBasePresenter getPresenter() {
@@ -202,6 +204,7 @@ public class VideoActivity extends BaseActivity implements CurriculumConstract.V
         txtSound.setVisibility(View.GONE);
         if (videoplayer.isCurrentPlay()) {
             JZVideoPlayerStandard.goOnPlayOnPause();
+            curPos = JZMediaManager.getCurrentPosition();
         }
         playSound();
     }
@@ -211,7 +214,14 @@ public class VideoActivity extends BaseActivity implements CurriculumConstract.V
         layoutSound.setVisibility(View.INVISIBLE);
         txtSound.setVisibility(View.VISIBLE);
         if (mediaPlayer != null) {
-            mediaPlayer.pause();
+            if(mediaPlayer.isPlaying()){
+                curPos = mediaPlayer.getCurrentPosition();
+                mediaPlayer.pause();
+            }
+        }
+        if(curPos > 0){
+            JZMediaManager.seekTo(curPos);
+            curPos = 0;
         }
     }
 
@@ -231,8 +241,18 @@ public class VideoActivity extends BaseActivity implements CurriculumConstract.V
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            mediaPlayer.setOnSeekCompleteListener(new MediaPlayer.OnSeekCompleteListener() {
+                @Override
+                public void onSeekComplete(MediaPlayer mp) {
+                    curPos = mp.getCurrentPosition();
+                }
+            });
         }
         mediaPlayer.start();
+        if(curPos > 0){
+            mediaPlayer.seekTo((int) curPos);
+            curPos = 0;
+        }
     }
 
     /**
@@ -254,11 +274,26 @@ public class VideoActivity extends BaseActivity implements CurriculumConstract.V
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        if (videoplayer != null && videoplayer.isCurrentPlay()) {
+            JZVideoPlayerStandard.goOnPlayOnPause();
+        }
+
+        if (mediaPlayer != null) {
+            if (mediaPlayer.isPlaying()) {
+                mediaPlayer.stop();
+            }
+        }
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         if (videoplayer != null && videoplayer.isCurrentPlay()) {
             JZVideoPlayerStandard.goOnPlayOnPause();
         }
+
         if (mediaPlayer != null) {
             if (mediaPlayer.isPlaying()) {
                 mediaPlayer.stop();
