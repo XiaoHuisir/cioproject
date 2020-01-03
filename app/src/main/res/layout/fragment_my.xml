@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/whites"
+    android:id="@+id/relative_soos"
     tools:context=".ui.fragment.MineFragment">
 
     <RelativeLayout

@@ -83,22 +83,19 @@ public class CourseFragment extends BaseFragment implements IndexConstract.View,
                 curType = Constant.STUDY_TYPE_1;
                 resetTypeTxt();
                 txtType1.setTextColor(getResources().getColor(R.color.red));
-                //getIndex();
-                openCourseActivity(curType,"智慧课堂");
+                openCourseActivity(curType, "智慧课堂");
                 break;
             case R.id.txt_type_2:
                 curType = Constant.STUDY_TYPE_2;
                 resetTypeTxt();
                 txtType2.setTextColor(getResources().getColor(R.color.red));
-                //getIndex();
-                openCourseActivity(curType,"内部培训");
+                openCourseActivity(curType, "内部培训");
                 break;
             case R.id.txt_type_3:
                 curType = Constant.STUDY_TYPE_3;
                 resetTypeTxt();
                 txtType3.setTextColor(getResources().getColor(R.color.red));
-                //getIndex();
-                openCourseActivity(curType,"其他培训");
+                openCourseActivity(curType, "其他培训");
                 break;
         }
 
@@ -123,18 +120,19 @@ public class CourseFragment extends BaseFragment implements IndexConstract.View,
 
     /**
      * 显示搜索结果
+     *
      * @param result
      */
-    public void showSearch(List<IndexBean.DataBean.CurriculumDataBean> result){
+    public void showSearch(List<IndexBean.DataBean.CurriculumDataBean> result) {
         list.clear();
         list.addAll(result);
         indexAdapter.notifyDataSetChanged();
     }
 
-    private void openCourseActivity(int type,String title){
+    private void openCourseActivity(int type, String title) {
         Intent intent = new Intent(context, CourseActivity.class);
-        intent.putExtra("type",type);
-        intent.putExtra("title",title);
+        intent.putExtra("type", type);
+        intent.putExtra("title", title);
         startActivity(intent);
     }
 

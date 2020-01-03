@@ -4,17 +4,18 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
+    <!--    android:icon="@mipmap/ic_launcher"-->
     <application
         android:name=".app.MyApp"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/icon_logo"
         android:label="@string/app_name"
         android:networkSecurityConfig="@xml/network_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.acivity.mine.NoticeListAcitivity"></activity>
+        <activity android:name=".ui.acivity.mine.NoticeDetailsActivity" />
+        <activity android:name=".ui.acivity.mine.NoticeListAcitivity" />
         <activity android:name=".ui.acivity.mine.MyfilelistActivity" />
         <activity android:name=".ui.acivity.PracticeActivity" />
         <activity android:name=".ui.acivity.PorfolioActivity" />

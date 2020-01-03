@@ -63,12 +63,6 @@ public class PorfolioActivity extends BaseActivity {
         allTypes();
     }
 
-    @Override
-    protected void initData() {
-
-    }
-
-
     @OnClick({R.id.image_return, R.id.btn_types_all, R.id.btn_types_train, R.id.btn_types_lesson})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -77,12 +71,10 @@ public class PorfolioActivity extends BaseActivity {
                 break;
             case R.id.btn_types_all:
                 Constant.CURTYPE = Constant.STUD_TYPE_0;
-
                 allTypes();
                 break;
             case R.id.btn_types_train:
                 Constant.CURTYPE = Constant.STUD_TYPE_1;
-
                 trainTypes();
                 break;
             case R.id.btn_types_lesson:
@@ -98,9 +90,6 @@ public class PorfolioActivity extends BaseActivity {
                 .hide(trainTypesFragment)
                 .hide(lessonTypesFragment)
                 .commit();
-//        transaction1.replace(R.id.fragmentBin,allTypseFragment).commit();
-
-
     }
 
     private void trainTypes() {
@@ -109,7 +98,6 @@ public class PorfolioActivity extends BaseActivity {
                 .hide(allTypseFragment)
                 .hide(lessonTypesFragment)
                 .commit();
-//        transaction1.replace(R.id.fragmentBin,trainTypesFragment).commit();
     }
 
     private void lessonTypes() {
@@ -118,7 +106,6 @@ public class PorfolioActivity extends BaseActivity {
                 .hide(allTypseFragment)
                 .hide(trainTypesFragment)
                 .commit();
-//        transaction1.replace(R.id.fragmentBin,lessonTypesFragment).commit();
     }
 
 }

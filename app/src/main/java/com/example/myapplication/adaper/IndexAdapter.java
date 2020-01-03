@@ -1,4 +1,5 @@
 package com.example.myapplication.adaper;
+
 import android.support.constraint.ConstraintLayout;
 import android.support.design.shape.RoundedCornerTreatment;
 import android.view.View;
@@ -31,7 +32,7 @@ public class IndexAdapter extends BaseAdapter {
         IndexBean.DataBean.CurriculumDataBean bean = (IndexBean.DataBean.CurriculumDataBean) mDatas.get(positon);
         TextView txt_title = (TextView) holder.getView(R.id.txt_title);
         txt_title.setText(bean.getTitle());
-        ImageView img_icon = (ImageView)holder.getView(R.id.img_icon);
+        ImageView img_icon = (ImageView) holder.getView(R.id.img_icon);
         Glide.with(mContext).load(bean.getLog())
                 .transform(new RoundedCorners(5))
                 .into(img_icon);
@@ -41,8 +42,8 @@ public class IndexAdapter extends BaseAdapter {
         TextView txt_work = (TextView) holder.getView(R.id.txt_work);
         txt_work.setText(bean.getGs());
 
-        TextView txt_study_state = (TextView)holder.getView(R.id.txt_study_state);
-        String progress = ((int)(Float.valueOf(bean.getJd())*100))+"%";
+        TextView txt_study_state = (TextView) holder.getView(R.id.txt_study_state);
+        String progress = ((int) (Float.valueOf(bean.getJd()) * 100)) + "%";
         txt_study_state.setText(progress);
 
         ConstraintLayout layout = (ConstraintLayout) holder.getView(R.id.layout_item);
@@ -51,7 +52,7 @@ public class IndexAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 String id = (String) v.getTag();
-                if(itemClick != null){
+                if (itemClick != null) {
                     itemClick.click(id);
                 }
             }
@@ -59,7 +60,7 @@ public class IndexAdapter extends BaseAdapter {
     }
 
 
-    public interface IndexItemClick{
+    public interface IndexItemClick {
         void click(String id);
     }
 

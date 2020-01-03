@@ -8,12 +8,17 @@ import android.widget.TextView;
 import com.example.myapplication.R;
 import com.example.myapplication.base.BaseAdapter;
 import com.example.myapplication.bean.NoticeListBean;
+import com.example.myapplication.bean.TypeIndexBean;
 
 import java.util.List;
 
 public class NoticeListAdaper extends BaseAdapter {
-    public NoticeListAdaper(List<NoticeListBean.DataBean> mDatas) {
+
+    NoticeItemClick itemClick;
+
+    public NoticeListAdaper(List<NoticeListBean.DataBean> mDatas, NoticeItemClick itemClick) {
         super(mDatas);
+        this.itemClick = itemClick;
     }
 
     @Override
@@ -29,8 +34,22 @@ public class NoticeListAdaper extends BaseAdapter {
         NoticeListBean.DataBean data = (NoticeListBean.DataBean) mDatas.get(positon);
         txtmatter.setText(data.getContent());
         terrace.setText(data.getTitle());
+        holder.itemView.setTag(data);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                NoticeListBean.DataBean title = (NoticeListBean.DataBean) v.getTag();
+                if (itemClick != null) {
+                    itemClick.noticeClick(title);
+                }
+            }
+        });
 
     }
 
+    public interface NoticeItemClick {
+        void noticeClick(NoticeListBean.DataBean title);
+    }
 
 }

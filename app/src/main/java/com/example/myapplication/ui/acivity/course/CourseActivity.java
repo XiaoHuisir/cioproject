@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -25,8 +26,9 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
-public class CourseActivity extends BaseActivity implements IndexConstract.View,IndexAdapter.IndexItemClick {
+public class CourseActivity extends BaseActivity implements IndexConstract.View, IndexAdapter.IndexItemClick {
 
     @BindView(R.id.img_return)
     ImageView imgReturn;
@@ -40,6 +42,15 @@ public class CourseActivity extends BaseActivity implements IndexConstract.View,
     IndexAdapter indexAdapter;
     List<IndexBean.DataBean.CurriculumDataBean> list;
     int curType;
+
+    @OnClick({R.id.img_return})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.img_return:
+                finish();
+                break;
+        }
+    }
 
     @Override
     protected IBasePresenter getPresenter() {
@@ -63,7 +74,7 @@ public class CourseActivity extends BaseActivity implements IndexConstract.View,
 
     @Override
     protected void initData() {
-        curType = getIntent().getIntExtra("type",0);
+        curType = getIntent().getIntExtra("type", 0);
         String title = getIntent().getStringExtra("title");
         txtTitle.setText(title);
         getIndex();

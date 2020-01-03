@@ -16,15 +16,15 @@ public class Constant {
 
     public static String token = "";
 
-
+    public static String NUM_VIEW = "";
 
     public static int CourseType = 2;
 
-    public static  String mobiles = "";
-    public static  String passwords = "";
+    public static String mobiles = "";
+    public static String passwords = "";
 
-    public static  final  int STATUS=1;
-    public  static  final  int ZERO=0;
+    public static final int STATUS = 1;
+    public static final int ZERO = 0;
     public static final int COURSE_TYPE_1 = 1; //课外学习
     public static final int COURSE_TYPE_2 = 2; //培训
 
@@ -34,8 +34,8 @@ public class Constant {
 
 
     public static String CURTYPE = "";
-    public  static  final  String  STUD_TYPE_0="0";
-    public  static  final  String  STUD_TYPE_1="1";
-    public  static  final  String  STUD_TYPE_2="2";
+    public static final String STUD_TYPE_0 = "0";
+    public static final String STUD_TYPE_1 = "1";
+    public static final String STUD_TYPE_2 = "2";
 
 }

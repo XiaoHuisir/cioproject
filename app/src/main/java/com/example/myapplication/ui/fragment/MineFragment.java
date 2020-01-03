@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +35,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+
+import static cn.jzvd.JZUtils.TAG;
 
 public class MineFragment extends BaseFragment implements UsercenterConstract.View {
 
@@ -66,6 +70,8 @@ public class MineFragment extends BaseFragment implements UsercenterConstract.Vi
     TextView txtMyfilelist;
     @BindView(R.id.num_view)
     NumView numView;
+    @BindView(R.id.relative_soos)
+    RelativeLayout relativesoos;
     private ArrayList<UserCenterBean.DataBean.HistoryBean> historyBeans;
     private RecordAdapter recordAdapter;
 
@@ -124,14 +130,14 @@ public class MineFragment extends BaseFragment implements UsercenterConstract.Vi
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         recordAdapter = new RecordAdapter(historyBeans);
         record.setAdapter(recordAdapter);
-        numView.setNum(6);
+
     }
 
     @Override
     protected void initData() {
         super.initData();
         ((UserCenterPresenter) mPresenter).usercenter();
-//        ((UserCenterPresenter) mPresenter).getUnredNotice();
+        ((UserCenterPresenter) mPresenter).getUnredNotice();
 
     }
 
@@ -142,6 +148,20 @@ public class MineFragment extends BaseFragment implements UsercenterConstract.Vi
             userCenterBean = result;
             mydata(result);
         }
+    }
+
+    //TODO
+    @Override
+    public void getUnredNoticeReturn(UnredNoticeBean bean) {
+        if (bean.getStatus() == 1) {
+
+            String notice_num = bean.getData().getNotice_num();
+//          int noticenum = Integer.valueOf(notice_num).intValue();
+            int notice_nums = Integer.parseInt(notice_num);
+            Constant.NUM_VIEW = String.valueOf(notice_nums);
+            numView.setNum(notice_nums);
+        }
+
     }
 
 
@@ -189,15 +209,4 @@ public class MineFragment extends BaseFragment implements UsercenterConstract.Vi
     }
 
 
-    //TODO
-    @Override
-    public void getUnredNoticeReturn(UnredNoticeBean bean) {
-//        if (bean.getStatus() == 1) {
-//            String notice_num = bean.getData().getNotice_num();
-//            NumView numView = new NumView(context);
-////            Integer.valueOf(notice_num).intValue();
-//            int i = Integer.parseInt(notice_num);
-//            numView.setNum(i);
-//        }
-    }
 }
