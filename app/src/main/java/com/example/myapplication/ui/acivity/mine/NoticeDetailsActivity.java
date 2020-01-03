@@ -39,16 +39,9 @@ public class NoticeDetailsActivity extends BaseActivity {
     @Override
     protected void initData() {
         String contents = getIntent().getStringExtra("contents");
-        String add_times = getIntent().getStringExtra("add_times");
         String titles = getIntent().getStringExtra("titles");
-        txtNotName.setText("发布人："+titles);
-        if (contents!=null){
-
+        txtNotName.setText("发布人：" + titles);
         txtNotData.setText(contents);
-        }else {
-            Toast.makeText(context,"空值",Toast.LENGTH_LONG).show();
-        }
-        txtNotTiem.setText(add_times);
     }
 
     @Override
@@ -57,10 +50,9 @@ public class NoticeDetailsActivity extends BaseActivity {
     }
 
 
-
     @OnClick({R.id.iv_notice_break})
     public void onViewClicked(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.iv_notice_break:
                 finish();
                 break;

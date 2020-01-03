@@ -5,6 +5,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.myapplication.R;
 import com.example.myapplication.adaper.MyfilelistAdapter;
@@ -21,7 +22,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MyfilelistActivity extends BaseActivity implements MyfilelistConstract.View {
+public class MyfilelistActivity extends BaseActivity implements MyfilelistConstract.View, MyfilelistAdapter.MyfilelistClick {
 
 
     @BindView(R.id.iv_myreturn)
@@ -46,19 +47,19 @@ public class MyfilelistActivity extends BaseActivity implements MyfilelistConstr
     protected void initView() {
         dataBeanslist = new ArrayList<>();
         recyclerMy.setLayoutManager(new LinearLayoutManager(context));
-        myfilelistAdapter = new MyfilelistAdapter(dataBeanslist);
+        myfilelistAdapter = new MyfilelistAdapter(dataBeanslist, this);
         recyclerMy.setAdapter(myfilelistAdapter);
 
     }
 
     @Override
     protected void initData() {
-        ((MyfilelistPresenter)mPresenter).getMyfilelist("1");
+        ((MyfilelistPresenter) mPresenter).getMyfilelist("1");
     }
 
     @Override
     public void getMyfilelistReturn(MyfilelistBean result) {
-        if (result.getStatus()==1){
+        if (result.getStatus() == 1) {
             List<MyfilelistBean.DataBean> data = result.getData();
             dataBeanslist.clear();
             dataBeanslist.addAll(data);
@@ -77,5 +78,9 @@ public class MyfilelistActivity extends BaseActivity implements MyfilelistConstr
     }
 
 
+    @Override
+    public void myfilelistClick(String getCurriculum_id, String filename, String fileurl, String filesize) {
+Toast.makeText(context,""+getCurriculum_id,Toast.LENGTH_LONG).show();
+    }
 }
 

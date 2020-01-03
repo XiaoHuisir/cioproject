@@ -78,14 +78,12 @@ public class NoticeListAcitivity extends BaseActivity implements NoticeListConst
 
 
     @Override
-    public void noticeClick(String conten,String  addtime,String title) {
-        if (conten != null|addtime!=null|title!=null) {
-            Toast.makeText(context, "notice详情id" + conten, Toast.LENGTH_LONG).show();
+    public void noticeClick(String conten,  String title) {
+        if (conten != null  | title != null) {
             Intent intent = new Intent();
-            intent.setClass(context,NoticeDetailsActivity.class);
-            intent.putExtra("contents",conten);
-            intent.putExtra("add_times",addtime);
-            intent.putExtra("titles",title);
+            intent.setClass(context, NoticeDetailsActivity.class);
+            intent.putExtra("contents", conten);
+            intent.putExtra("titles", title);
             startActivity(intent);
         }
     }

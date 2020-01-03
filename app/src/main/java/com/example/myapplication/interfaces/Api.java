@@ -2,6 +2,7 @@ package com.example.myapplication.interfaces;
 
 
 import com.example.myapplication.bean.CurriculumBean;
+import com.example.myapplication.bean.DownFileBean;
 import com.example.myapplication.bean.EvaluationSubmitBean;
 import com.example.myapplication.bean.ExercisesBean;
 import com.example.myapplication.bean.IndexBean;
@@ -71,8 +72,8 @@ public interface Api {
 
 
     @POST("index/train/get_unread_notice_num")
-    @FormUrlEncoded
     Flowable<UnredNoticeBean> unreadNotice(@Header("x-access-token") String token);
+
 
     @POST("index/train/notice_list")
     @FormUrlEncoded
@@ -82,6 +83,12 @@ public interface Api {
     @FormUrlEncoded
     Flowable<SearchBean> search(@Header("x-access-token") String token, @Field("keyword") String keyword, @Field("type") String type, @Field("page") String page);
 
+    /**
+     * 下载文件  未完成
+     */
+    @POST("index/train/down_file")
+    @FormUrlEncoded
+    Flowable<DownFileBean> downfile(@Header("x-access-token") String token, @FieldMap Map<String, String> map);
 
 }
 

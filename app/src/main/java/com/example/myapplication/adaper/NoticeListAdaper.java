@@ -41,10 +41,9 @@ public class NoticeListAdaper extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 String content = (String) v.getTag();
-                String addtime = (String) v.getTag();
                 String title = (String) v.getTag();
                 if(itemClick != null){
-                    itemClick.noticeClick(content,addtime,title);
+                    itemClick.noticeClick(content,title);
                 }
             }
         });
@@ -52,7 +51,7 @@ public class NoticeListAdaper extends BaseAdapter {
 
     }
     public interface NoticeItemClick{
-        void noticeClick(String content,String  addtime,String title);
+        void noticeClick(String content,String title);
     }
 
 }
