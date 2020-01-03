@@ -39,9 +39,11 @@ public class NoticeDetailsActivity extends BaseActivity {
     @Override
     protected void initData() {
         String contents = getIntent().getStringExtra("contents");
-        String titles = getIntent().getStringExtra("titles");
+        String titles = getIntent().getStringExtra("title1");
+        int add_time = getIntent().getIntExtra("add_time", 0);
         txtNotName.setText("发布人：" + titles);
         txtNotData.setText(contents);
+        txtNotTiem.setText(String.valueOf(add_time));
     }
 
     @Override

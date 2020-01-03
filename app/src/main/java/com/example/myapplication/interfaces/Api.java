@@ -83,9 +83,7 @@ public interface Api {
     @FormUrlEncoded
     Flowable<SearchBean> search(@Header("x-access-token") String token, @Field("keyword") String keyword, @Field("type") String type, @Field("page") String page);
 
-    /**
-     * 下载文件  未完成
-     */
+
     @POST("index/train/down_file")
     @FormUrlEncoded
     Flowable<DownFileBean> downfile(@Header("x-access-token") String token, @FieldMap Map<String, String> map);

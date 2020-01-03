@@ -39,20 +39,13 @@ public class MyfilelistAdapter extends BaseAdapter {
         txtTitle.setText(data.getTitle());
 
 
-        holder.itemView.setTag(String.valueOf(data.getCurriculum_id()));
-        holder.itemView.setTag(data.getFile_name());
-        holder.itemView.setTag(data.getFile_url());
-        holder.itemView.setTag(data.getFile_size());
-
+        holder.itemView.setTag(data);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String getCurriculum_id = (String) v.getTag();
-                String filename = (String) v.getTag();
-                String fileurl = (String) v.getTag();
-                String filesize = (String) v.getTag();
+                MyfilelistBean.DataBean datas = (MyfilelistBean.DataBean) v.getTag();
                 if (itemClick != null) {
-                    itemClick.myfilelistClick(getCurriculum_id, filename, fileurl, filesize);
+                    itemClick.myfilelistClick(datas);
                 }
             }
         });
@@ -60,7 +53,7 @@ public class MyfilelistAdapter extends BaseAdapter {
 
 
     public interface MyfilelistClick {
-        void myfilelistClick(String getCurriculum_id, String filename, String fileurl, String filesize);
+        void myfilelistClick(MyfilelistBean.DataBean datas);
 
 
     }

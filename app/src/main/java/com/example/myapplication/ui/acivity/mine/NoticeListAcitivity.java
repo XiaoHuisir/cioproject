@@ -78,12 +78,16 @@ public class NoticeListAcitivity extends BaseActivity implements NoticeListConst
 
 
     @Override
-    public void noticeClick(String conten,  String title) {
-        if (conten != null  | title != null) {
+    public void noticeClick(NoticeListBean.DataBean title) {
+        if (title != null) {
+            String content = title.getContent();
+            String title1 = title.getTitle();
+            int add_time = title.getAdd_time();
             Intent intent = new Intent();
             intent.setClass(context, NoticeDetailsActivity.class);
-            intent.putExtra("contents", conten);
-            intent.putExtra("titles", title);
+            intent.putExtra("contents", content);
+            intent.putExtra("title1", title1);
+            intent.putExtra("add_time", add_time);
             startActivity(intent);
         }
     }

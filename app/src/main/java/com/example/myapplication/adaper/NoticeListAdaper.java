@@ -15,7 +15,8 @@ import java.util.List;
 public class NoticeListAdaper extends BaseAdapter {
 
     NoticeItemClick itemClick;
-    public NoticeListAdaper(List<NoticeListBean.DataBean> mDatas,NoticeItemClick itemClick) {
+
+    public NoticeListAdaper(List<NoticeListBean.DataBean> mDatas, NoticeItemClick itemClick) {
         super(mDatas);
         this.itemClick = itemClick;
     }
@@ -33,25 +34,22 @@ public class NoticeListAdaper extends BaseAdapter {
         NoticeListBean.DataBean data = (NoticeListBean.DataBean) mDatas.get(positon);
         txtmatter.setText(data.getContent());
         terrace.setText(data.getTitle());
-
-        holder.itemView.setTag(data.getContent());
-        holder.itemView.setTag(data.getAdd_time());
-        holder.itemView.setTag(data.getTitle());
+        holder.itemView.setTag(data);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String content = (String) v.getTag();
-                String title = (String) v.getTag();
-                if(itemClick != null){
-                    itemClick.noticeClick(content,title);
+
+                NoticeListBean.DataBean title = (NoticeListBean.DataBean) v.getTag();
+                if (itemClick != null) {
+                    itemClick.noticeClick(title);
                 }
             }
         });
 
-
     }
-    public interface NoticeItemClick{
-        void noticeClick(String content,String title);
+
+    public interface NoticeItemClick {
+        void noticeClick(NoticeListBean.DataBean title);
     }
 
 }

@@ -62,5 +62,6 @@
     <string name="identity">请选择身份</string>
     <string name="enterthename">请输入姓名</string>
     <string name="mesg">接收呼播信息</string>
-    //---------------
+
+
 </resources>
