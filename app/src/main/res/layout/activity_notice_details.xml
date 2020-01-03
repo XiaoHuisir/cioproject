@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.acivity.mine.NoticeDetailsActivity">
+
+    <RelativeLayout
+        android:id="@+id/not_relative"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_48"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:background="#E6FFFFFF">
+
+        <ImageView
+            android:id="@+id/iv_notice_break"
+            android:layout_width="@dimen/dp_24"
+            android:layout_height="@dimen/dp_24"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_16"
+            android:src="@mipmap/back_black" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@dimen/dp_8"
+            android:layout_toRightOf="@id/iv_notice_break"
+            android:text="消息详情"
+            android:textColor="#FF212121"
+            android:textSize="@dimen/sp_18" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/txt_not_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/not_relative"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_16"
+        android:text="发件人：教务平台"
+        android:textColor="#FF333333"
+        android:textSize="@dimen/sp_14" />
+
+    <TextView
+        android:id="@+id/txt_not_tiem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txt_not_name"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_5"
+        android:text="2019 02-26 18:14"
+        android:textColor="#FF3F3F3F"
+        android:textSize="@dimen/sp_14" />
+
+    <TextView
+        android:id="@+id/txt_not_data"
+        android:layout_width="@dimen/dp_328"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txt_not_tiem"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_16"
+        android:ellipsize="end"
+        android:text="培训课程上线：《互联网趋势下CIO应成为企业转型升级的赋能者》
+        在完成学时的基础上还需通过习题测评，得分80分以上方可通过，希望大家在学习视频之余结合实际作答。
+        课程培训累计学习时长以及习题完成度将纳入年终考核，希望大家严肃对待！"
+        android:textColor="#FF333333"
+        android:textSize="@dimen/sp_16" />
+</RelativeLayout>

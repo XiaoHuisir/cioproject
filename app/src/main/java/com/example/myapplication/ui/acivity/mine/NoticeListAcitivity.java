@@ -1,9 +1,11 @@
 package com.example.myapplication.ui.acivity.mine;
 
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.myapplication.R;
 import com.example.myapplication.base.BaseActivity;
@@ -21,7 +23,7 @@ import butterknife.BindView;
 
 import butterknife.OnClick;
 
-public class NoticeListAcitivity extends BaseActivity implements NoticeListConstract.View {
+public class NoticeListAcitivity extends BaseActivity implements NoticeListConstract.View, NoticeListAdaper.NoticeItemClick {
 
 
     @BindView(R.id.image_break)
@@ -40,7 +42,7 @@ public class NoticeListAcitivity extends BaseActivity implements NoticeListConst
     protected void initView() {
         noticelist = new ArrayList<>();
         rvNoticelist.setLayoutManager(new LinearLayoutManager(context));
-        noticeListAdaper = new NoticeListAdaper(noticelist);
+        noticeListAdaper = new NoticeListAdaper(noticelist, this);
         rvNoticelist.setAdapter(noticeListAdaper);
     }
 
@@ -71,6 +73,20 @@ public class NoticeListAcitivity extends BaseActivity implements NoticeListConst
             noticelist.clear();
             noticelist.addAll(data);
             noticeListAdaper.notifyDataSetChanged();
+        }
+    }
+
+
+    @Override
+    public void noticeClick(String conten,String  addtime,String title) {
+        if (conten != null|addtime!=null|title!=null) {
+            Toast.makeText(context, "notice详情id" + conten, Toast.LENGTH_LONG).show();
+            Intent intent = new Intent();
+            intent.setClass(context,NoticeDetailsActivity.class);
+            intent.putExtra("contents",conten);
+            intent.putExtra("add_times",addtime);
+            intent.putExtra("titles",title);
+            startActivity(intent);
         }
     }
 }
