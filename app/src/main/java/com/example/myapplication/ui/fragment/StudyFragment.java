@@ -63,4 +63,14 @@ public class StudyFragment extends BaseFragment implements IndexConstract.View {
         list.addAll(result.getData().getCurriculum_data());
         indexAdapter.notifyDataSetChanged();
     }
+
+    /**
+     * 显示搜索结果
+     * @param result
+     */
+    public void showSearch(List<IndexBean.DataBean.CurriculumDataBean> result){
+        list.clear();
+        list.addAll(result);
+        indexAdapter.notifyDataSetChanged();
+    }
 }
