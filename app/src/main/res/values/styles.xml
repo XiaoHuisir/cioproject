@@ -8,5 +8,9 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-
+    <style name="demoStyle">
+        <item name="android:button">@null</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:textColor">@drawable/bg_red_buttons</item>
+    </style>
 </resources>

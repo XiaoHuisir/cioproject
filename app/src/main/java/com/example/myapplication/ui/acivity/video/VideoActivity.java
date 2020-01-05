@@ -177,12 +177,13 @@ public class VideoActivity extends BaseActivity implements CurriculumConstract.V
             case R.id.txt_video:
                 selectVideo();
                 break;
-            //TODO
             case R.id.txt_detail:
                 txtIntro.setVisibility(View.VISIBLE);
                 txtDetail.setVisibility(View.INVISIBLE);
                 pdfRecyclerview.setVisibility(View.INVISIBLE);
                 lineardetails.setVisibility(View.VISIBLE);
+                imgMaterial.setVisibility(View.INVISIBLE);
+
                 detail();
                 break;
             case R.id.txt_intro:
@@ -190,6 +191,9 @@ public class VideoActivity extends BaseActivity implements CurriculumConstract.V
                 txtDetail.setVisibility(View.VISIBLE);
                 pdfRecyclerview.setVisibility(View.VISIBLE);
                 lineardetails.setVisibility(View.INVISIBLE);
+                if (curriculumBean.getData().getFile_data().size() == 0) {
+                imgMaterial.setVisibility(View.VISIBLE);
+            }
                 detail();
                 break;
             case R.id.txt_evalua:
@@ -214,9 +218,9 @@ public class VideoActivity extends BaseActivity implements CurriculumConstract.V
 
     private void detail() {
         CurriculumBean.DataBean.CurriculumDataBean details = curriculumBean.getData().getCurriculum_data();
-        if (details.getContent()!=null){
+        if (details.getContent() != null) {
             txtContent.setText(details.getContent());
-        }else {
+        } else {
             txtContent.setText("暂无内容！！！-");
         }
         txtGs.setText(details.getGs());
@@ -242,12 +246,12 @@ public class VideoActivity extends BaseActivity implements CurriculumConstract.V
         layoutSound.setVisibility(View.INVISIBLE);
         txtSound.setVisibility(View.VISIBLE);
         if (mediaPlayer != null) {
-            if(mediaPlayer.isPlaying()){
+            if (mediaPlayer.isPlaying()) {
                 curPos = mediaPlayer.getCurrentPosition();
                 mediaPlayer.pause();
             }
         }
-        if(curPos > 0){
+        if (curPos > 0) {
             JZMediaManager.seekTo(curPos);
             curPos = 0;
         }
@@ -277,7 +281,7 @@ public class VideoActivity extends BaseActivity implements CurriculumConstract.V
             });
         }
         mediaPlayer.start();
-        if(curPos > 0){
+        if (curPos > 0) {
             mediaPlayer.seekTo((int) curPos);
             curPos = 0;
         }

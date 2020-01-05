@@ -3,6 +3,7 @@ package com.example.myapplication.ui.acivity;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.support.v4.app.FragmentManager;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -25,17 +26,17 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 public class PorfolioActivity extends BaseActivity {
-
+  public  boolean  inxdler=false;
+  public  boolean  inxdler1=false;
+  public  boolean  inxdler2=false;
     @BindView(R.id.image_return)
     ImageView imageReturn;
     @BindView(R.id.btn_types_all)
-    Button btnAlltypes;
+    TextView btnAlltypes;
     @BindView(R.id.btn_types_train)
-    Button btnTrc;
+    TextView btnTrc;
     @BindView(R.id.btn_types_lesson)
-    Button btnBeyond;
-    //    @BindView(R.id.fragmentBin)
-//    FrameLayout fragmentBin;
+    TextView btnBeyond;
     private AllTypseFragment allTypseFragment;
     private TrainTypesFragment trainTypesFragment;
     private LessonTypesFragment lessonTypesFragment;
@@ -71,6 +72,7 @@ public class PorfolioActivity extends BaseActivity {
                 break;
             case R.id.btn_types_all:
                 Constant.CURTYPE = Constant.STUD_TYPE_0;
+
                 allTypes();
                 break;
             case R.id.btn_types_train:
@@ -85,6 +87,13 @@ public class PorfolioActivity extends BaseActivity {
     }
 
     private void allTypes() {
+        if (inxdler==false) {
+            btnAlltypes.setBackgroundResource(R.drawable.bg_red_button);
+            inxdler=true;
+        } else {
+            btnAlltypes.setBackgroundResource(R.drawable.bg_red_buttons);
+            inxdler=false;
+        }
         android.support.v4.app.FragmentTransaction transaction1 = getSupportFragmentManager().beginTransaction();
         transaction1.show(allTypseFragment)
                 .hide(trainTypesFragment)
@@ -93,6 +102,13 @@ public class PorfolioActivity extends BaseActivity {
     }
 
     private void trainTypes() {
+        if (inxdler1==false) {
+            btnTrc.setBackgroundResource(R.drawable.bg_red_button);
+            inxdler1=true;
+        } else {
+            btnTrc.setBackgroundResource(R.drawable.bg_red_buttons);
+            inxdler1=false;
+        }
         android.support.v4.app.FragmentTransaction transaction1 = getSupportFragmentManager().beginTransaction();
         transaction1.show(trainTypesFragment)
                 .hide(allTypseFragment)
@@ -101,6 +117,13 @@ public class PorfolioActivity extends BaseActivity {
     }
 
     private void lessonTypes() {
+        if (inxdler2==false) {
+            btnBeyond.setBackgroundResource(R.drawable.bg_red_button);
+            inxdler2=true;
+        } else {
+            btnBeyond.setBackgroundResource(R.drawable.bg_red_buttons);
+            inxdler2=false;
+        }
         android.support.v4.app.FragmentTransaction transaction1 = getSupportFragmentManager().beginTransaction();
         transaction1.show(lessonTypesFragment)
                 .hide(allTypseFragment)
