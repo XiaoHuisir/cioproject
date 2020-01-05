@@ -20,7 +20,7 @@ public interface IndexConstract {
     }
 
     interface SearchView extends IBaseView{
-        void searchResult(List<IndexBean.DataBean.CurriculumDataBean> result);
+        void searchResult(List<SearchBean.DataBean.CurriculumDataBean> result);
     }
 
     interface SearchPresenter extends IBasePresenter<SearchView>{

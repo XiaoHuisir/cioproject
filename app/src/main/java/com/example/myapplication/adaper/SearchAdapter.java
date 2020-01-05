@@ -1,7 +1,6 @@
 package com.example.myapplication.adaper;
 
 import android.support.constraint.ConstraintLayout;
-import android.support.design.shape.RoundedCornerTreatment;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -12,14 +11,13 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.myapplication.R;
 import com.example.myapplication.base.BaseAdapter;
 import com.example.myapplication.bean.IndexBean;
+import com.example.myapplication.bean.SearchBean;
 
 import java.util.List;
 
-public class IndexAdapter extends BaseAdapter {
+public class SearchAdapter extends BaseAdapter {
 
-    public IndexItemClick itemClick;
-
-    public IndexAdapter(List mDatas) {
+    public SearchAdapter(List mDatas){
         super(mDatas);
     }
 
@@ -29,8 +27,8 @@ public class IndexAdapter extends BaseAdapter {
     }
 
     @Override
-    protected void bindData(BaseAdapter.BaseViewHolder holder, int positon, Object o) {
-        IndexBean.DataBean.CurriculumDataBean bean = (IndexBean.DataBean.CurriculumDataBean) mDatas.get(positon);
+    protected void bindData(BaseViewHolder holder, int positon, Object o) {
+        SearchBean.DataBean.CurriculumDataBean bean = (SearchBean.DataBean.CurriculumDataBean) mDatas.get(positon);
         TextView txt_title = (TextView) holder.getView(R.id.txt_title);
         txt_title.setText(bean.getTitle());
         ImageView img_icon = (ImageView) holder.getView(R.id.img_icon);
@@ -49,20 +47,5 @@ public class IndexAdapter extends BaseAdapter {
 
         ConstraintLayout layout = (ConstraintLayout) holder.getView(R.id.layout_item);
         layout.setTag(String.valueOf(bean.getId()));
-        layout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String id = (String) v.getTag();
-                if (itemClick != null) {
-                    itemClick.click(id);
-                }
-            }
-        });
     }
-
-
-    public interface IndexItemClick {
-        void click(String id);
-    }
-
 }

@@ -9,6 +9,8 @@ public class Constant {
     public static final String BaseUrl = "http://123.206.58.124:8025/";
     public static final String IndexBaseUrl = "http://www.sosoapi.com/pass/mock/";
 
+    public static final String ResUrl = "http://images.ciotimes.com/"; //七牛图片地址
+
     //网络缓存的地址
     public static final String PATH_DATA = MyApp.mApp.getCacheDir().getAbsolutePath() + File.separator + "data";
 

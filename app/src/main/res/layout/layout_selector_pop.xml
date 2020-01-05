@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <TextView
+        android:id="@+id/txt_title"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_60"
+        android:textSize="@dimen/sp_14"
+        android:gravity="center"
+        android:text="头像设置"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/txt_border_bottom"/>
+    <TextView
+        android:id="@+id/txt_showbig"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_60"
+        android:textSize="@dimen/sp_16"
+        android:gravity="center"
+        android:text="查看大图"
+        app:layout_constraintTop_toBottomOf="@id/txt_title"
+        android:background="@drawable/txt_border_bottom"
+        android:textColor="@color/col_blue"/>
+    <TextView
+        android:id="@+id/txt_photo"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_60"
+        android:textSize="@dimen/sp_16"
+        android:gravity="center"
+        android:text="从相册中更换"
+        app:layout_constraintTop_toBottomOf="@id/txt_showbig"
+        android:background="@drawable/txt_border_bottom"
+        android:textColor="@color/col_blue"/>
+    <TextView
+        android:id="@+id/txt_camera"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_60"
+        android:textSize="@dimen/sp_16"
+        android:gravity="center"
+        android:text="拍照更换"
+        app:layout_constraintTop_toBottomOf="@id/txt_photo"
+        android:background="@drawable/txt_border_bottom"
+        android:textColor="@color/col_blue"/>
+    <TextView
+        android:id="@+id/txt_cancel"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_60"
+        android:textSize="@dimen/sp_16"
+        android:layout_marginTop="@dimen/dp_10"
+        android:gravity="center"
+        android:text="取消"
+        app:layout_constraintTop_toBottomOf="@id/txt_camera"
+        android:background="@drawable/txt_border_bottom"
+        android:textColor="@color/col_blue" />
+
+</android.support.constraint.ConstraintLayout>

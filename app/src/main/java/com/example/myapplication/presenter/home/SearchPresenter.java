@@ -20,28 +20,15 @@ public class SearchPresenter extends BasePresenter<IndexConstract.SearchView> im
     public void search(String keyword, String type, String page) {
         addSubscribe(HttpUtils.getMyServer(Constant.BaseUrl).search(Constant.token, keyword,type,page)
                 .compose(RxUtils.<SearchBean>rxScheduler())
-                .map(new Function<SearchBean, List<IndexBean.DataBean.CurriculumDataBean>>() {
+                .map(new Function<SearchBean, List<SearchBean.DataBean.CurriculumDataBean>>() {
                     @Override
-                    public List<IndexBean.DataBean.CurriculumDataBean> apply(SearchBean searchBean) throws Exception {
-                        List<IndexBean.DataBean.CurriculumDataBean> list = new ArrayList<>();
-                        for(SearchBean.DataBean.CurriculumDataBean item:searchBean.getData().getCurriculum_data()){
-                            IndexBean.DataBean.CurriculumDataBean bean = new IndexBean.DataBean.CurriculumDataBean();
-                            bean.setId(item.getId());
-                            bean.setTitle(item.getTitle());
-                            bean.setTeacher(item.getTeacher());
-                            bean.setGs(item.getGs());
-                            bean.setLog(item.getLog());
-                            bean.setUp_new(item.getUp_new());
-                            bean.setLen(item.getLen());
-                            bean.setJd(item.getJd());
-                            list.add(bean);
-                        }
-                        return list;
+                    public List<SearchBean.DataBean.CurriculumDataBean> apply(SearchBean searchBean) throws Exception {
+                        return searchBean.getData().getCurriculum_data();
                     }
                 })
-                .subscribeWith(new CommonSubscriber<List<IndexBean.DataBean.CurriculumDataBean>>(mView) {
+                .subscribeWith(new CommonSubscriber<List<SearchBean.DataBean.CurriculumDataBean>>(mView) {
                     @Override
-                    public void onNext(List<IndexBean.DataBean.CurriculumDataBean> result) {
+                    public void onNext(List<SearchBean.DataBean.CurriculumDataBean> result) {
                         mView.searchResult(result);
                     }
                 }));

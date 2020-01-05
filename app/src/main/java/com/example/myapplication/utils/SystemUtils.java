@@ -3,6 +3,8 @@ package com.example.myapplication.utils;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 
 import com.example.myapplication.app.MyApp;
 
@@ -39,6 +41,14 @@ public class SystemUtils {
         return info != null;
     }
 
-
-
+    /**
+     * 隐藏键盘
+     * @param context
+     * @param editText
+     */
+    public static void hintKeyBoard(Context context, EditText editText) {
+        //拿到InputMethodManager
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(editText.getWindowToken(),0);
+    }
 }

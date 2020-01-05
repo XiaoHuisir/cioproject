@@ -12,6 +12,7 @@ import com.example.myapplication.bean.NoticeListBean;
 import com.example.myapplication.bean.PorfolioBean;
 import com.example.myapplication.bean.SearchBean;
 import com.example.myapplication.bean.ToadayBean;
+import com.example.myapplication.bean.TokenBean;
 import com.example.myapplication.bean.TypeIndexBean;
 import com.example.myapplication.bean.UnredNoticeBean;
 import com.example.myapplication.bean.UserCenterBean;
@@ -66,6 +67,8 @@ public interface Api {
     @FormUrlEncoded
     Flowable<UserInfoUpdateBean> updateUserInfo(@Header("x-access-token") String token, @Field("nickname") String nickname, @Field("zw") String zw, @Field("avatar") String avatar);
 
+    @POST("index/user/get_token")
+    Flowable<TokenBean> getToken(@Header("x-access-token") String token);
 
     @POST("index/train/study_record")
     @FormUrlEncoded

@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.myapplication.R;
 import com.example.myapplication.base.BaseAdapter;
 import com.example.myapplication.bean.TypeIndexBean;
@@ -36,7 +37,7 @@ public class TypeAdapter extends BaseAdapter {
         TextView txt_name = (TextView) holder.getView(R.id.txt_name);
         TextView txt_work = (TextView) holder.getView(R.id.txt_work);
         TextView txt_study = (TextView) holder.getView(R.id.txt_study);
-        Glide.with(mContext).load(bean.getLog()).transform(new RoundedCorners(5))
+        Glide.with(mContext).load(bean.getLog()).apply(new RequestOptions().transform(new RoundedCorners(5)))
                 .into(img_head);
         txt_title.setText(bean.getTitle());
         txt_name.setText(bean.getTeacher());

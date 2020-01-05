@@ -1,5 +1,7 @@
 package com.example.myapplication.bean;
 
+import android.os.Parcelable;
+
 import java.util.List;
 
 public class SearchBean {

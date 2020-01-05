@@ -3,6 +3,7 @@ package com.example.myapplication.ui.acivity.setting;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -11,6 +12,7 @@ import android.widget.Toast;
 
 import com.example.myapplication.R;
 import com.example.myapplication.base.BaseActivity;
+import com.example.myapplication.bean.TokenBean;
 import com.example.myapplication.bean.UserInfoUpdateBean;
 import com.example.myapplication.interfaces.IBasePresenter;
 import com.example.myapplication.interfaces.usercenter.UsercenterConstract;
@@ -113,5 +115,22 @@ public class SetNameActivity extends BaseActivity implements UsercenterConstract
         }else{
             Toast.makeText(this,result.getMsg(),Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public void getTokenReturn(TokenBean result) {
+
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode == KeyEvent.KEYCODE_BACK){
+            Intent intent = new Intent();
+            intent.putExtra("value",returnValue);
+            setResult(type,intent);
+            finish();
+            return false;
+        }
+        return false;
     }
 }

@@ -2,6 +2,7 @@ package com.example.myapplication.presenter.usercenter;
 
 import com.example.myapplication.app.Constant;
 import com.example.myapplication.base.BasePresenter;
+import com.example.myapplication.bean.TokenBean;
 import com.example.myapplication.bean.UserCenterBean;
 import com.example.myapplication.bean.UserInfoUpdateBean;
 import com.example.myapplication.interfaces.usercenter.UsercenterConstract;
@@ -20,6 +21,22 @@ public class UpdateUserInfoPresenter extends BasePresenter<UsercenterConstract.U
                         if (result != null) {
                             if (mView != null) {
                                 mView.updateUserInfoReturn(result);
+                            }
+                        }
+                    }
+                }));
+    }
+
+    @Override
+    public void getToken() {
+        addSubscribe(HttpUtils.getMyServer(Constant.BaseUrl).getToken(Constant.token)
+                .compose(RxUtils.<TokenBean>rxScheduler())
+                .subscribeWith(new CommonSubscriber<TokenBean>(mView) {
+                    @Override
+                    public void onNext(TokenBean result) {
+                        if (result != null) {
+                            if (mView != null) {
+                                mView.getTokenReturn(result);
                             }
                         }
                     }
