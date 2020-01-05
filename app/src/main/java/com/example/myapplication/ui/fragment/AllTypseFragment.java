@@ -1,5 +1,6 @@
 package com.example.myapplication.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,6 +19,7 @@ import com.example.myapplication.bean.ToadayBean;
 import com.example.myapplication.interfaces.IBasePresenter;
 import com.example.myapplication.interfaces.contract.PorfolioConstract;
 import com.example.myapplication.presenter.mine.PorfolioPresenter;
+import com.example.myapplication.ui.acivity.video.VideoActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,7 +29,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public class AllTypseFragment extends BaseFragment implements PorfolioConstract.View {
+public class AllTypseFragment extends BaseFragment implements PorfolioConstract.View, TodayAdapter.TodayItemClick {
     @BindView(R.id.recycler_alltypes)
     RecyclerView recyclerAlltypes;
     private ArrayList<ToadayBean.DataBean.SevenDayBean> todayBeans;
@@ -49,6 +51,7 @@ public class AllTypseFragment extends BaseFragment implements PorfolioConstract.
     protected void initView() {
         todayBeans = new ArrayList<>();
         todayAdapter = new TodayAdapter(todayBeans);
+        todayAdapter.itemClick = this;
         recyclerAlltypes.setLayoutManager(new LinearLayoutManager(context));
         recyclerAlltypes.setAdapter(todayAdapter);
     }
@@ -57,17 +60,25 @@ public class AllTypseFragment extends BaseFragment implements PorfolioConstract.
     public void getPorfolioReturn(ToadayBean result) {
         if (result.getStatus() == 1) {
             List<ToadayBean.DataBean.SevenDayBean> seven_day = result.getData().getSeven_day();
-            if (seven_day!=null){
-            todayBeans.clear();
-            todayBeans.addAll(seven_day);
-            todayAdapter.notifyDataSetChanged();}
+            if (seven_day != null) {
+                todayBeans.clear();
+                todayBeans.addAll(seven_day);
+                todayAdapter.notifyDataSetChanged();
+            }
         }
     }
 
     @Override
     protected void initData() {
-        ((PorfolioPresenter) mPresenter).getPorfolio(Constant.CURTYPE ,"1");
+        ((PorfolioPresenter) mPresenter).getPorfolio(Constant.CURTYPE, "1");
     }
 
 
+    @Override
+    public void click(String id) {
+        Intent intent = new Intent();
+        intent.setClass(context, VideoActivity.class);
+        intent.putExtra("curriulum_id", id);
+        startActivity(intent);
+    }
 }

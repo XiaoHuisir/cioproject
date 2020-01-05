@@ -1,6 +1,7 @@
 package com.example.myapplication.adaper;
 
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -15,6 +16,7 @@ import com.example.myapplication.bean.ToadayBean;
 import java.util.List;
 
 public class TodayAdapter extends BaseAdapter {
+    public  TodayItemClick  itemClick;
     public TodayAdapter(List<ToadayBean.DataBean.SevenDayBean> mDatas) {
         super(mDatas);
     }
@@ -38,8 +40,20 @@ public class TodayAdapter extends BaseAdapter {
         textgs.setText(data.getGs());
         text_watchtime.setText(String.valueOf(data.getUpdate_time()));
 
-
+        ConstraintLayout layout = (ConstraintLayout) holder.getView(R.id.constraint_day);
+        layout.setTag(String.valueOf(data.getCurriculum_id()));
+        layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String id = (String) v.getTag();
+                if (itemClick != null) {
+                    itemClick.click(id);
+                }
+            }
+        });
     }
-
+    public interface TodayItemClick {
+        void click(String id);
+    }
 
 }

@@ -150,7 +150,7 @@ public class MineFragment extends BaseFragment implements UsercenterConstract.Vi
         }
     }
 
-    //TODO
+
     @Override
     public void getUnredNoticeReturn(UnredNoticeBean bean) {
         if (bean.getStatus() == 1) {
