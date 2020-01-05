@@ -1,6 +1,7 @@
 package com.example.myapplication.ui.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.ImageView;
@@ -13,6 +14,7 @@ import com.example.myapplication.bean.IndexBean;
 import com.example.myapplication.interfaces.IBasePresenter;
 import com.example.myapplication.interfaces.contract.IndexConstract;
 import com.example.myapplication.presenter.home.IndexPresenter;
+import com.example.myapplication.ui.acivity.video.VideoActivity;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
@@ -25,7 +27,7 @@ import java.util.Map;
 
 import butterknife.BindView;
 
-public class StudyFragment extends BaseFragment implements IndexConstract.View {
+public class StudyFragment extends BaseFragment implements IndexConstract.View ,IndexAdapter.IndexItemClick{
 
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
@@ -51,6 +53,7 @@ public class StudyFragment extends BaseFragment implements IndexConstract.View {
     protected void initView() {
         list = new ArrayList<>();
         indexAdapter = new IndexAdapter(list);
+        indexAdapter.itemClick = this;
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         recyclerView.setAdapter(indexAdapter);
 
@@ -104,6 +107,13 @@ public class StudyFragment extends BaseFragment implements IndexConstract.View {
             String loads = (String) path;
             Glide.with(context).load(loads).into(imageView);
         }
+    }
+    @Override
+    public void click(String id) {
+        Intent intent = new Intent();
+        intent.setClass(context, VideoActivity.class);
+        intent.putExtra("curriulum_id", id);
+        startActivity(intent);
     }
 
     /**
