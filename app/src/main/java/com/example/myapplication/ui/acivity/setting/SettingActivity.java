@@ -59,6 +59,8 @@ public class SettingActivity extends BaseActivity implements UsercenterConstract
     TextView txtZw;
     @BindView(R.id.iv_header)
     ImageView ivHeader;
+    @BindView(R.id.setting_back)
+    ImageView setting_back;
     @BindView(R.id.txt_zwName)
     TextView txtZwName;
     @BindView(R.id.txt_logout)
@@ -101,7 +103,7 @@ public class SettingActivity extends BaseActivity implements UsercenterConstract
         }
     }
 
-    @OnClick({R.id.txt_nickname,R.id.txt_zwName,R.id.iv_header,R.id.txt_logout})
+    @OnClick({R.id.setting_back,R.id.txt_nickname,R.id.txt_zwName,R.id.iv_header,R.id.txt_logout})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.txt_nickname: //设置名称
@@ -122,6 +124,9 @@ public class SettingActivity extends BaseActivity implements UsercenterConstract
                 break;
             case R.id.iv_header:
                 showPicture();
+                break;
+                case R.id.setting_back:
+               finish();
                 break;
             case R.id.txt_logout:
                 SharedPreferencesUtil.deleteToken(MyApp.mApp);
