@@ -6,7 +6,9 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -48,6 +50,8 @@ public class SearchActivity extends BaseActivity implements IndexConstract.Searc
     TabLayout tabLayout;
     @BindView(R.id.viewPager)
     ViewPager viewPager;
+    @BindView(R.id.txt_clear)
+    TextView txtClear;
 
     List<Fragment> fragments;
     String[] titles;
@@ -64,7 +68,33 @@ public class SearchActivity extends BaseActivity implements IndexConstract.Searc
         fmManager = new FmManager(getSupportFragmentManager(), fragments, titles);
         viewPager.setAdapter(fmManager);
         tabLayout.setupWithViewPager(viewPager);
+
+        //输入文本的监听
+        txtInput.addTextChangedListener(textWatcher);
     }
+
+    TextWatcher textWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            if(s.length() > 0){
+                if(txtClear.getVisibility() == View.GONE){
+                    txtClear.setVisibility(View.VISIBLE);
+                }
+            }else{
+                txtClear.setVisibility(View.GONE);
+            }
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
+        }
+    };
 
     @Override
     protected IBasePresenter getPresenter() {
@@ -76,7 +106,7 @@ public class SearchActivity extends BaseActivity implements IndexConstract.Searc
         return R.layout.activity_search;
     }
 
-    @OnClick({R.id.img_return, R.id.txt_input, R.id.txt_search})
+    @OnClick({R.id.img_return, R.id.txt_input, R.id.txt_search,R.id.txt_clear})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.img_return:
@@ -84,6 +114,9 @@ public class SearchActivity extends BaseActivity implements IndexConstract.Searc
                 finish();
                 break;
             case R.id.txt_input:
+                break;
+            case R.id.txt_clear:
+                txtInput.setText("");
                 break;
             case R.id.txt_search:
                 String str = txtInput.getText().toString();
