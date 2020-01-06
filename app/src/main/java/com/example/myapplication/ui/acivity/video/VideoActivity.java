@@ -85,6 +85,8 @@ public class VideoActivity extends BaseActivity implements CurriculumConstract.V
     TextView texTitle;
     @BindView(R.id.txt_content)
     TextView txtContent;
+    @BindView(R.id.image_back)
+    ImageView image_back;
 
     private static final int CODE_EXERCISES = 100;
 
@@ -168,11 +170,14 @@ public class VideoActivity extends BaseActivity implements CurriculumConstract.V
         txtScore.setText(str);
     }
 
-    @OnClick({R.id.txt_sound, R.id.txt_video, R.id.txt_detail, R.id.txt_evalua, R.id.layout_exercises, R.id.txt_intro})
+    @OnClick({R.id.image_back,R.id.txt_sound, R.id.txt_video, R.id.txt_detail, R.id.txt_evalua, R.id.layout_exercises, R.id.txt_intro})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.txt_sound:
                 selectSound();
+                break;case
+                    R.id.image_back:
+                finish();
                 break;
             case R.id.txt_video:
                 selectVideo();
