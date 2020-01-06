@@ -2,61 +2,140 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/dp_100">
+    android:layout_height="wrap_content">
 
-    <ImageView
-        android:id="@+id/img_head"
-        android:layout_width="@dimen/dp_64"
-        android:layout_height="@dimen/dp_80"
-        android:scaleType="centerCrop"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_96"
+        android:background="#FFFFFFFF"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/txt_title"
-        android:layout_width="@dimen/dp_176"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dp_10"
-        android:maxLines="2"
-        android:text="服务管理"
-        android:textSize="@dimen/sp_18"
-        app:layout_constraintLeft_toRightOf="@id/img_head"
-        app:layout_constraintTop_toTopOf="@id/img_head">
+        <ImageView
+            android:id="@+id/img_head"
+            android:layout_width="@dimen/dp_64"
+            android:layout_height="@dimen/dp_80"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="@dimen/dp_8"
+            android:layout_marginTop="@dimen/dp_8"
+            android:scaleType="centerCrop"
 
-    </TextView>
+            />
 
-    <TextView
-        android:id="@+id/txt_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dp_10"
-        android:text="徐斌"
-        android:textColor="#FF7A81A3"
-        android:textSize="@dimen/sp_14"
-        app:layout_constraintLeft_toRightOf="@id/img_head"
-        app:layout_constraintTop_toBottomOf="@id/txt_title"></TextView>
+        <TextView
+            android:id="@+id/txt_title"
+            android:layout_width="@dimen/dp_176"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="@dimen/dp_8"
+            android:layout_marginTop="@dimen/dp_12"
+            android:layout_toRightOf="@id/img_head"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="新一代信息技术与企业数字化的转型"
+            android:textColor="#FF333333"
+            android:textSize="@dimen/sp_16" />
 
-    <TextView
-        android:id="@+id/txt_work"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dp_10"
-        android:text="CEO"
-        android:textColor="#FF9CA0B5"
-        android:textSize="@dimen/sp_14"
-        app:layout_constraintLeft_toRightOf="@id/txt_name"
-        app:layout_constraintTop_toBottomOf="@id/txt_title"></TextView>
+        <TextView
+            android:id="@+id/txt_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txt_title"
+            android:layout_marginLeft="@dimen/dp_8"
+            android:layout_marginTop="@dimen/dp_4"
+            android:layout_toRightOf="@id/img_head"
+            android:text="徐斌"
+            android:textColor="#FF7A81A3"
+            android:textSize="@dimen/sp_12" />
 
-    <TextView
-        android:id="@+id/txt_study"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dp_10"
-        android:layout_marginBottom="@dimen/dp_5"
-        android:paddingBottom="@dimen/dp_12"
-        android:text="未学习"
-        android:textColor="#FF9CA0B5"
-        android:textSize="@dimen/sp_14"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/img_head"></TextView>
+        <TextView
+            android:id="@+id/txt_work"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txt_title"
+            android:layout_marginLeft="@dimen/dp_4"
+            android:layout_marginTop="@dimen/dp_4"
+            android:layout_toRightOf="@id/txt_name"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="雪松控股集团CIO"
+            android:textColor="#FF9CA0B5"
+            android:textSize="@dimen/sp_12" />
+
+        <TextView
+            android:id="@+id/txt_study"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txt_name"
+            android:layout_marginLeft="@dimen/dp_8"
+            android:layout_marginTop="@dimen/dp_4"
+            android:layout_toRightOf="@id/img_head"
+            android:text="已学习：96%"
+            android:textColor="#FF9CA0B5"
+            android:textSize="@dimen/sp_12" />
+
+        <!--<ImageView-->
+            <!--android:layout_width="@dimen/dp_8"-->
+            <!--android:layout_height="@dimen/dp_8"-->
+            <!--android:layout_below="@id/txt_name"-->
+            <!--android:layout_marginLeft="@dimen/dp_4"-->
+            <!--android:layout_marginTop="@dimen/dp_8"-->
+            <!--android:layout_toRightOf="@id/txt_study"-->
+            <!--android:src="@mipmap/item_arrows" />-->
+    </RelativeLayout>
+    <!--<ImageView-->
+    <!--android:id="@+id/img_head"-->
+    <!--android:layout_width="@dimen/dp_64"-->
+    <!--android:layout_height="@dimen/dp_80"-->
+    <!--android:scaleType="centerCrop"-->
+    <!--app:layout_constraintLeft_toLeftOf="parent"-->
+    <!--app:layout_constraintTop_toTopOf="parent" />-->
+
+    <!--<TextView-->
+    <!--android:id="@+id/txt_title"-->
+    <!--android:layout_width="@dimen/dp_176"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginLeft="@dimen/dp_10"-->
+    <!--android:maxLines="2"-->
+    <!--android:text="服务管理"-->
+    <!--android:textSize="@dimen/sp_18"-->
+    <!--app:layout_constraintLeft_toRightOf="@id/img_head"-->
+    <!--app:layout_constraintTop_toTopOf="@id/img_head">-->
+
+    <!--</TextView>-->
+
+    <!--<TextView-->
+    <!--android:id="@+id/txt_name"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginLeft="@dimen/dp_10"-->
+    <!--android:text="徐斌"-->
+    <!--android:textColor="#FF7A81A3"-->
+    <!--android:textSize="@dimen/sp_14"-->
+    <!--app:layout_constraintLeft_toRightOf="@id/img_head"-->
+    <!--app:layout_constraintTop_toBottomOf="@id/txt_title"></TextView>-->
+
+    <!--<TextView-->
+    <!--android:id="@+id/txt_work"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginLeft="@dimen/dp_10"-->
+    <!--android:text="CEO"-->
+    <!--android:textColor="#FF9CA0B5"-->
+    <!--android:textSize="@dimen/sp_14"-->
+    <!--app:layout_constraintLeft_toRightOf="@id/txt_name"-->
+    <!--app:layout_constraintTop_toBottomOf="@id/txt_title"></TextView>-->
+
+    <!--<TextView-->
+    <!--android:id="@+id/txt_study"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginLeft="@dimen/dp_10"-->
+    <!--android:layout_marginBottom="@dimen/dp_5"-->
+    <!--android:paddingBottom="@dimen/dp_12"-->
+    <!--android:text="未学习"-->
+    <!--android:textColor="#FF9CA0B5"-->
+    <!--android:textSize="@dimen/sp_14"-->
+    <!--app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--app:layout_constraintLeft_toRightOf="@id/img_head"></TextView>-->
 </android.support.constraint.ConstraintLayout>

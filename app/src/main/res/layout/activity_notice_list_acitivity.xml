@@ -19,6 +19,7 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/dp_16"
+            android:layout_centerHorizontal="true"
             android:src="@mipmap/back_black" />
 
         <TextView
@@ -28,6 +29,7 @@
             android:layout_marginLeft="@dimen/dp_8"
             android:layout_toRightOf="@id/image_break"
             android:text="消息"
+            android:layout_centerHorizontal="true"
             android:textColor="#FF212121"
             android:textSize="@dimen/sp_18" />
 

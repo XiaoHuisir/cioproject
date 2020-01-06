@@ -25,6 +25,7 @@ import com.example.myapplication.bean.IndexBean;
 import com.example.myapplication.interfaces.IBasePresenter;
 import com.example.myapplication.interfaces.contract.IndexConstract;
 import com.example.myapplication.presenter.home.SearchPresenter;
+import com.example.myapplication.ui.acivity.mine.NoticeListAcitivity;
 import com.example.myapplication.ui.acivity.search.SearchActivity;
 import com.example.myapplication.ui.fragment.HomeFragment;
 import com.example.myapplication.ui.fragment.MineFragment;
@@ -64,7 +65,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     private void initFragment() {
         manager = getSupportFragmentManager();
-        mTl.addTab(mTl.newTab().setText("首页").setIcon(R.drawable.home));
+        mTl.addTab(mTl.newTab().setText("课程").setIcon(R.drawable.home));
         mTl.addTab(mTl.newTab().setText("分类").setIcon(R.drawable.classify));
         mTl.addTab(mTl.newTab().setText("我的").setIcon(R.drawable.mine));
         homeFragment = new HomeFragment();
@@ -117,19 +118,19 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     }
 
 
-    private void showFragment(int type){
+    private void showFragment(int type) {
         FragmentTransaction transaction = manager.beginTransaction();
-        switch (type){
+        switch (type) {
             case 0:
-                transaction.replace(R.id.fl,homeFragment).commit();
+                transaction.replace(R.id.fl, homeFragment).commit();
                 layoutSearch.setVisibility(View.VISIBLE);
                 break;
             case 1:
-                transaction.replace(R.id.fl,classifyFragment).commit();
+                transaction.replace(R.id.fl, classifyFragment).commit();
                 layoutSearch.setVisibility(View.VISIBLE);
                 break;
             case 2:
-                transaction.replace(R.id.fl,mineFragment).commit();
+                transaction.replace(R.id.fl, mineFragment).commit();
                 layoutSearch.setVisibility(View.GONE);
                 break;
         }
@@ -137,14 +138,17 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.txt_search:
                 Intent intent = new Intent();
-                intent.setClass(context,SearchActivity.class);
+                intent.setClass(context, SearchActivity.class);
                 startActivity(intent);
                 break;
             case R.id.layout_msg:
                 //打开消息界面
+                Intent notice = new Intent();
+                notice.setClass(context, NoticeListAcitivity.class);
+                startActivity(notice);
                 break;
         }
     }

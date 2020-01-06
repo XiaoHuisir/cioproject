@@ -53,15 +53,15 @@ public class SearchActivity extends BaseActivity implements IndexConstract.Searc
     String[] titles;
     FmManager fmManager;
 
-    Map<String,List<SearchBean.DataBean.CurriculumDataBean>> map;
+    Map<String, List<SearchBean.DataBean.CurriculumDataBean>> map;
 
 
     @Override
-    public void initView(){
+    public void initView() {
         map = new HashMap<>();
         fragments = new ArrayList<>();
         titles = new String[0];
-        fmManager = new FmManager(getSupportFragmentManager(),fragments,titles);
+        fmManager = new FmManager(getSupportFragmentManager(), fragments, titles);
         viewPager.setAdapter(fmManager);
         tabLayout.setupWithViewPager(viewPager);
     }
@@ -80,48 +80,50 @@ public class SearchActivity extends BaseActivity implements IndexConstract.Searc
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.img_return:
-                SystemUtils.hintKeyBoard(context,txtInput);
+                SystemUtils.hintKeyBoard(context, txtInput);
                 finish();
                 break;
             case R.id.txt_input:
                 break;
             case R.id.txt_search:
                 String str = txtInput.getText().toString();
-                if(TextUtils.isEmpty(str)){
-                    Toast.makeText(context,"请输入搜索内容",Toast.LENGTH_SHORT).show();
+                if (TextUtils.isEmpty(str)) {
+                    Toast.makeText(context, "请输入搜索内容", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                ((SearchPresenter)mPresenter).search(str,String.valueOf(0),String.valueOf(1));
+                ((SearchPresenter) mPresenter).search(str, String.valueOf(0), String.valueOf(1));
+                txtInput.setFocusable(false);
                 break;
         }
     }
 
     /**
      * 接收搜索返回并进行分类
+     *
      * @param result
      */
     @Override
     public void searchResult(List<SearchBean.DataBean.CurriculumDataBean> result) {
         map.clear();
-        for(SearchBean.DataBean.CurriculumDataBean item:result){
+        for (SearchBean.DataBean.CurriculumDataBean item : result) {
             String key = "";
-            if(item.getType() ==  0){
+            if (item.getType() == 0) {
                 key = "全部";
-            }else if(item.getType() == 1){
+            } else if (item.getType() == 1) {
                 key = "课外学习";
-            }else if(item.getType() == 2){
+            } else if (item.getType() == 2) {
                 key = "培训课程";
             }
             List<SearchBean.DataBean.CurriculumDataBean> list = map.get(key);
-            if(list == null){
+            if (list == null) {
                 list = new ArrayList<>();
-                map.put(key,list);
+                map.put(key, list);
             }
             list.add(item);
         }
         titles = new String[map.keySet().size()];
-        int index=0;
-        for(String key : map.keySet()){
+        int index = 0;
+        for (String key : map.keySet()) {
             titles[index] = key;
             index++;
             SearchFragment fragment = SearchFragment.instance(map.get(key));
