@@ -127,9 +127,6 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
             startActivity(intent);
         }else{
             Toast.makeText(context,result.getMsg(),Toast.LENGTH_SHORT).show();
-            Toast.makeText(context, "登录成功", Toast.LENGTH_LONG).show();
-        } else {
-            Toast.makeText(context, "账号密码不正确", Toast.LENGTH_SHORT).show();
         }
     }
 }
