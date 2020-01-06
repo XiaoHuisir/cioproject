@@ -13,19 +13,19 @@
     <uses-permission android:name="android.permission.WRITE_MEDIA_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <!--    android:icon="@mipmap/ic_launcher"-->
+
     <application
         android:name=".app.MyApp"
         android:allowBackup="true"
+        android:appComponentFactory="app"
         android:icon="@mipmap/icon_logo"
         android:label="@string/app_name"
         android:networkSecurityConfig="@xml/network_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:replace="android:appComponentFactory"
-        android:appComponentFactory="app">
-        <activity android:name=".ui.acivity.search.SearchActivity"></activity>
+        tools:replace="android:appComponentFactory">
+        <activity android:name=".ui.acivity.search.SearchActivity" />
         <activity android:name=".ui.acivity.mine.NoticeListAcitivity" />
         <activity android:name=".ui.acivity.mine.NoticeDetailsActivity" />
         <activity android:name=".ui.acivity.mine.MyfilelistActivity" />
@@ -46,8 +46,9 @@
             android:name=".ui.acivity.video.VideoActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
+        <activity android:name=".ui.acivity.login.LoginActivity"/>
         <activity
-            android:name=".ui.acivity.login.LoginActivity"
+            android:name=".SplashActivity"
             android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

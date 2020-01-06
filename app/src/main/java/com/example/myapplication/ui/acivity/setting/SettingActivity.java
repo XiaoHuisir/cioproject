@@ -21,6 +21,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.myapplication.R;
 import com.example.myapplication.app.Constant;
+import com.example.myapplication.app.MyApp;
 import com.example.myapplication.base.BaseActivity;
 import com.example.myapplication.bean.TokenBean;
 import com.example.myapplication.bean.UserInfoUpdateBean;
@@ -28,6 +29,7 @@ import com.example.myapplication.interfaces.IBasePresenter;
 import com.example.myapplication.interfaces.usercenter.UsercenterConstract;
 import com.example.myapplication.presenter.usercenter.UpdateUserInfoPresenter;
 import com.example.myapplication.ui.acivity.login.LoginActivity;
+import com.example.myapplication.utils.SharedPreferencesUtil;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
@@ -122,6 +124,7 @@ public class SettingActivity extends BaseActivity implements UsercenterConstract
                 showPicture();
                 break;
             case R.id.txt_logout:
+                SharedPreferencesUtil.deleteToken(MyApp.mApp);
                 Intent intent1 = new Intent();
                 intent1.setClass(context, LoginActivity.class);
 //                intent1.addFlags(intent1.FLAG_ACTIVITY_SINGLE_TOP);

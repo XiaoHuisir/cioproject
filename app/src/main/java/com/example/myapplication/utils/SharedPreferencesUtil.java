@@ -46,4 +46,15 @@ public class SharedPreferencesUtil {
         return context.getSharedPreferences("user",Context.MODE_PRIVATE).getString("token","");
     }
 
+
+    /**
+     * 退出登录删除token
+     * @param context
+     */
+    public static void deleteToken(Context context){
+        editor = context.getSharedPreferences("user",Context.MODE_PRIVATE).edit();
+        editor.remove("token");
+        editor.commit();
+    }
+
 }
