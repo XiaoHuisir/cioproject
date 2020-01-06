@@ -38,7 +38,7 @@
         android:id="@+id/layout_sound"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_200"
-        android:background="@color/colorAccent"
+        android:background="@mipmap/coursephoto_default"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
