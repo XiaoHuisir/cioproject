@@ -38,6 +38,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
     Button btnLogin;
     private String mobile;
     private String password;
+    private int code;
 
     @Override
     protected IBasePresenter getPresenter() {
@@ -68,9 +69,18 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
                 Constant.passwords = password;
                 if (TextUtils.isEmpty(mobile) || TextUtils.isEmpty(password)) {
                     Toast.makeText(context, "请输入用户名和密码", Toast.LENGTH_SHORT).show();
+                    if (!TextUtils.isEmpty(mobile)&&TextUtils.isEmpty(password)){
+                    Toast.makeText(context, "请输入密码", Toast.LENGTH_SHORT).show();
+                    }
+                    if (TextUtils.isEmpty(mobile)&&!TextUtils.isEmpty(password)){
+                    Toast.makeText(context, "请输入用户名", Toast.LENGTH_SHORT).show();
+                    }
+
                     return;
-                }
+        }
+                if (!TextUtils.isEmpty(mobile)&&!TextUtils.isEmpty(password)){
                 ((LoginPresenter) mPresenter).login(mobile, password);
+                Toast.makeText(context, "账号密码不正确", Toast.LENGTH_SHORT).show();}
                 break;
         }
     }
@@ -78,7 +88,8 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
 
     @Override
     public void loginReturn(LoginBean result) {
-        if (result.getCode() == 10000) {
+        code = result.getCode();
+        if (code == 10000) {
             SharedPreferencesUtil.addUserToken(context, result.getData().getUserToken());
             Constant.token = result.getData().getUserToken();
             Intent intent = new Intent();
