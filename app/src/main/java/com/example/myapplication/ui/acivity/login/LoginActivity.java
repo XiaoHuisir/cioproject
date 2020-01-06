@@ -3,9 +3,11 @@ package com.example.myapplication.ui.acivity.login;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.view.TextureView;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
@@ -38,8 +40,12 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
     RelativeLayout re;
     @BindView(R.id.btn_login)
     Button btnLogin;
+    @BindView(R.id.btn_show)
+    Button btnShow;
     private String mobile;
     private String password;
+    private int code;
+
 
     @Override
     protected IBasePresenter getPresenter() {
@@ -62,30 +68,58 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
                 edPw.setText(pw);
             }
         }
+//        edPhone.setFocusable(false);
+//        edPw.setFocusable(false);
+        edPw.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD | InputType.TYPE_CLASS_TEXT);//设置密码不可见
 
     }
 
-    @OnClick({R.id.btn_login})
+    @OnClick({R.id.btn_login, R.id.btn_show})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_login:
                 mobile = edPhone.getText().toString();
                 password = edPw.getText().toString();
+                edPhone.setInputType(EditorInfo.TYPE_CLASS_PHONE);//设置数字键盘显示
+//                edPw.setInputType(EditorInfo.TYPE_CLASS_PHONE);//设置数字键盘显示
                 Constant.mobiles = mobile;
                 Constant.passwords = password;
                 if (TextUtils.isEmpty(mobile) || TextUtils.isEmpty(password)) {
                     Toast.makeText(context, "请输入用户名和密码", Toast.LENGTH_SHORT).show();
+                    if (!TextUtils.isEmpty(mobile) && TextUtils.isEmpty(password)) {
+                        Toast.makeText(context, "请输入密码", Toast.LENGTH_SHORT).show();
+                    }
+                    if (TextUtils.isEmpty(mobile) && !TextUtils.isEmpty(password)) {
+                        Toast.makeText(context, "请输入用户名", Toast.LENGTH_SHORT).show();
+                    }
+
                     return;
                 }
+//                if (!TextUtils.isEmpty(mobile) && !TextUtils.isEmpty(password)) {
                 ((LoginPresenter) mPresenter).login(mobile, password);
+//                    if (code!=10000){
+//                    Toast.makeText(context, "账号密码不正确", Toast.LENGTH_SHORT).show();}
+//                }
                 break;
+            case R.id.btn_show:
+
+                if (btnShow.isSelected()) {
+                    btnShow.setSelected(false);
+                    edPw.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD | InputType.TYPE_CLASS_TEXT);//设置密码不可见
+                } else {
+                    btnShow.setSelected(true);
+                    edPw.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);//设置密码可见                }
+
+                    break;
+                }
         }
     }
 
 
     @Override
     public void loginReturn(LoginBean result) {
-        if (result.getCode() == 10000) {
+        code = result.getCode();
+        if (code == 10000) {
             SharedPreferencesUtil.addUserToken(context, result.getData().getUserToken());
             Constant.token = result.getData().getUserToken();
             Intent intent = new Intent();
@@ -93,6 +127,9 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
             startActivity(intent);
         }else{
             Toast.makeText(context,result.getMsg(),Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "登录成功", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(context, "账号密码不正确", Toast.LENGTH_SHORT).show();
         }
     }
 }

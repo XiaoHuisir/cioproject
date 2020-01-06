@@ -15,6 +15,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -72,7 +73,7 @@ public class VideoActivity extends BaseActivity implements CurriculumConstract.V
     @BindView(R.id.txt_score)
     TextView txtScore;
     @BindView(R.id.img_material)
-    ImageView imgMaterial;
+    RelativeLayout imgMaterial;
     @BindView(R.id.linear_details)
     LinearLayout lineardetails;
     @BindView(R.id.image_log)
