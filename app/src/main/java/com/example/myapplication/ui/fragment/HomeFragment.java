@@ -93,11 +93,4 @@ public class HomeFragment extends BaseFragment {
         txt_course_2.setTextColor(getResources().getColor(R.color.black));
     }
 
-    public void searchResult(List<IndexBean.DataBean.CurriculumDataBean> result) {
-        if (Constant.CourseType == Constant.COURSE_TYPE_1) {
-            studyFragment.showSearch(result);
-        } else if (Constant.CourseType == Constant.COURSE_TYPE_2) {
-            courseFragment.showSearch(result);
-        }
-    }
 }

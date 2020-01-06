@@ -1,12 +1,13 @@
 package com.example.myapplication.base;
 
-import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +23,7 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import com.jaeger.library.*;
 
 
 public abstract class BaseActivity<V extends IBaseView, P extends IBasePresenter> extends AppCompatActivity implements IBaseView {
@@ -34,6 +36,7 @@ public abstract class BaseActivity<V extends IBaseView, P extends IBasePresenter
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         getWindow().setBackgroundDrawable(null);
         super.onCreate(savedInstanceState);
+        setStatusBar();
 
         setContentView(getLayoutId());
         unbinder = ButterKnife.bind(this);
@@ -56,6 +59,11 @@ public abstract class BaseActivity<V extends IBaseView, P extends IBasePresenter
         }
 
 
+    }
+
+    protected void setStatusBar(){
+        StatusBarUtil.setColor(this, ContextCompat.getColor(this,R.color.line_gray),50);
+        //StatusBarUtil.setDarkMode(this);
     }
 
     protected void initListener() {

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.TextureView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.app.Constant;
+import com.example.myapplication.app.MyApp;
 import com.example.myapplication.base.BaseActivity;
 import com.example.myapplication.bean.LoginBean;
 import com.example.myapplication.interfaces.IBasePresenter;
@@ -51,10 +53,15 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
 
     @Override
     protected void initView() {
-//        edPhone.setFocusable(false);
-//        edPw.setFocusable(false);
-
-
+        //判断是否有登录过
+        String username = SharedPreferencesUtil.getUserName(MyApp.mApp);
+        String pw = SharedPreferencesUtil.getPw(MyApp.mApp);
+        if(!TextUtils.isEmpty(username)){
+            edPhone.setText(username);
+            if(!TextUtils.isEmpty(pw)){
+                edPw.setText(pw);
+            }
+        }
 
     }
 
@@ -84,6 +91,8 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
             Intent intent = new Intent();
             intent.setClass(this, MainActivity.class);
             startActivity(intent);
+        }else{
+            Toast.makeText(context,result.getMsg(),Toast.LENGTH_SHORT).show();
         }
     }
 }

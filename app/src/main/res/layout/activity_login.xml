@@ -87,7 +87,7 @@
         android:hint="请输入您的手机号码"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:text=""/>
+        android:text="18610691796"/>
 
     <TextView
         android:layout_width="@dimen/dp_24"
@@ -114,8 +114,9 @@
             android:id="@+id/ed_pw"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_40"
+            android:password="true"
             android:hint="请输入密码"
-            android:text=""/>
+            android:text="123456"/>
 
         <Button
             android:layout_width="@dimen/dp_20"
