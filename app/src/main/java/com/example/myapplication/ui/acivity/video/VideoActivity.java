@@ -121,6 +121,7 @@ public class VideoActivity extends BaseActivity implements CurriculumConstract.V
         //TODO
         txtDetail.setVisibility(View.VISIBLE);
         txtIntro.setVisibility(View.INVISIBLE);
+//        txtStudyTitle.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -186,14 +187,15 @@ public class VideoActivity extends BaseActivity implements CurriculumConstract.V
             case R.id.txt_detail:
                 txtIntro.setVisibility(View.VISIBLE);
                 txtDetail.setVisibility(View.INVISIBLE);
+                txtStudyTitle.setVisibility(View.INVISIBLE);
                 pdfRecyclerview.setVisibility(View.INVISIBLE);
                 lineardetails.setVisibility(View.VISIBLE);
                 imgMaterial.setVisibility(View.INVISIBLE);
-
                 detail();
                 break;
             case R.id.txt_intro:
                 txtIntro.setVisibility(View.INVISIBLE);
+                txtStudyTitle.setVisibility(View.VISIBLE);
                 txtDetail.setVisibility(View.VISIBLE);
                 pdfRecyclerview.setVisibility(View.VISIBLE);
                 lineardetails.setVisibility(View.INVISIBLE);

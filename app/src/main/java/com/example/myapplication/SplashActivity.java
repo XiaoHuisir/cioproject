@@ -26,13 +26,13 @@ public class SplashActivity extends AppCompatActivity {
     private void initView(){
         String token = SharedPreferencesUtil.getToken(MyApp.mApp);
         Intent intent = new Intent();
-        /*if(TextUtils.isEmpty(token)){
+        if(TextUtils.isEmpty(token)){
             intent.setClass(this, LoginActivity.class);
         }else{
             Constant.token = token;
             intent.setClass(this,MainActivity.class);
-        }*/
-        intent.setClass(this, LoginActivity.class);
+        }
+//        intent.setClass(this, MainActivity.class);
         startActivity(intent);
         finish();
     }

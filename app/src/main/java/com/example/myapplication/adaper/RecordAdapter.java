@@ -1,6 +1,7 @@
 package com.example.myapplication.adaper;
 
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -16,6 +17,7 @@ import com.example.myapplication.bean.UserCenterBean;
 import java.util.List;
 
 public class RecordAdapter extends BaseAdapter {
+    public RecordItemClick  itemClick;
     public RecordAdapter(List <UserCenterBean.DataBean.HistoryBean> mDatas) {
         super(mDatas);
     }
@@ -36,7 +38,24 @@ public class RecordAdapter extends BaseAdapter {
                 .into(imgicon);
         times.setText(String.valueOf(data.getLen()));
         titles.setText(data.getTitle());
+
+
+
+        ConstraintLayout layout = (ConstraintLayout) holder.getView(R.id.record_constraint);
+        layout.setTag(String.valueOf(data.getCurriculum_id()));
+        layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String id = (String) v.getTag();
+                if (itemClick != null) {
+                    itemClick.click(id);
+                }
+            }
+        });
     }
 
+    public interface RecordItemClick {
+        void click(String id);
+    }
 
 }

@@ -9,6 +9,7 @@ import android.widget.Toast;
 import com.example.myapplication.R;
 import com.example.myapplication.base.BaseActivity;
 import com.example.myapplication.interfaces.IBasePresenter;
+import com.example.myapplication.utils.DateUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -43,6 +44,7 @@ public class NoticeDetailsActivity extends BaseActivity {
         int add_time = getIntent().getIntExtra("add_time", 0);
         txtNotName.setText("发布人：" + titles);
         txtNotData.setText(contents);
+//        String s = DateUtil.subStandardTime(String.valueOf(add_time));
         txtNotTiem.setText(String.valueOf(add_time));
     }
 

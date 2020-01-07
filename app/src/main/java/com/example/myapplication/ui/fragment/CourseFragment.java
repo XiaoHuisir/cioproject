@@ -27,6 +27,7 @@ import com.example.myapplication.widgets.DrawableCenterTextView;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
+import com.youth.banner.listener.OnBannerListener;
 import com.youth.banner.loader.ImageLoader;
 
 import java.util.ArrayList;
@@ -145,8 +146,9 @@ public class CourseFragment extends BaseFragment implements IndexConstract.View,
         startActivity(intent);
     }
 
-    private void banners(IndexBean result) {
+    private void banners(final IndexBean result) {
         List<IndexBean.DataBean.LbDataBean> lb_data = result.getData().getLb_data();
+//        result.getData().getLb_data().get(0).getId()
         if (lb_data.size() > 0) {
             ArrayList<String> strings = new ArrayList<>();
             for (int i = 0; i < lb_data.size(); i++) {
@@ -160,6 +162,16 @@ public class CourseFragment extends BaseFragment implements IndexConstract.View,
                     .setIndicatorGravity(BannerConfig.CENTER)
                     .setBannerAnimation(Transformer.Accordion).start();
         }
+        banner.setOnBannerListener(new OnBannerListener() {
+            @Override
+            public void OnBannerClick(int position) {
+                int curriculum_id = result.getData().getLb_data().get(position).getCurriculum_id();
+                Intent intent = new Intent();
+                intent.setClass(context, VideoActivity.class);
+                intent.putExtra("curriulum_id", String.valueOf(curriculum_id));
+                startActivity(intent);
+            }
+        });
 
     }
 

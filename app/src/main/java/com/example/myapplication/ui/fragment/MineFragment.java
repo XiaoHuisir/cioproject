@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.myapplication.R;
+import com.example.myapplication.adaper.IndexAdapter;
 import com.example.myapplication.adaper.RecordAdapter;
 import com.example.myapplication.app.Constant;
 import com.example.myapplication.base.BaseFragment;
@@ -28,6 +29,7 @@ import com.example.myapplication.ui.acivity.PracticeActivity;
 import com.example.myapplication.ui.acivity.mine.MyfilelistActivity;
 import com.example.myapplication.ui.acivity.mine.NoticeListAcitivity;
 import com.example.myapplication.ui.acivity.setting.SettingActivity;
+import com.example.myapplication.ui.acivity.video.VideoActivity;
 import com.example.myapplication.utils.NumView;
 
 import java.util.ArrayList;
@@ -38,7 +40,7 @@ import butterknife.OnClick;
 
 import static cn.jzvd.JZUtils.TAG;
 
-public class MineFragment extends BaseFragment implements UsercenterConstract.View {
+public class MineFragment extends BaseFragment implements UsercenterConstract.View, RecordAdapter.RecordItemClick  {
 
     @BindView(R.id.iv_setting)
     ImageView ivsetting;
@@ -129,6 +131,7 @@ public class MineFragment extends BaseFragment implements UsercenterConstract.Vi
         record.setLayoutManager(linearLayoutManager);
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         recordAdapter = new RecordAdapter(historyBeans);
+        recordAdapter.itemClick = this;
         record.setAdapter(recordAdapter);
 
     }
@@ -209,4 +212,11 @@ public class MineFragment extends BaseFragment implements UsercenterConstract.Vi
     }
 
 
+    @Override
+    public void click(String id) {
+        Intent intent = new Intent();
+        intent.setClass(context, VideoActivity.class);
+        intent.putExtra("curriulum_id", id);
+        startActivity(intent);
+    }
 }
