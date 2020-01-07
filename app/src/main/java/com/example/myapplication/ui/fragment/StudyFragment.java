@@ -18,6 +18,7 @@ import com.example.myapplication.ui.acivity.video.VideoActivity;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
+import com.youth.banner.listener.OnBannerListener;
 import com.youth.banner.loader.ImageLoader;
 
 import java.util.ArrayList;
@@ -84,7 +85,7 @@ public class StudyFragment extends BaseFragment implements IndexConstract.View ,
         indexAdapter.notifyDataSetChanged();
     }
 
-    private void setBanner(IndexBean result) {
+    private void setBanner(final IndexBean result) {
         List<IndexBean.DataBean.LbDataBean> lb_data = result.getData().getLb_data();
         if (lb_data.size() > 0) {
             ArrayList<String> strings = new ArrayList<>();
@@ -98,7 +99,19 @@ public class StudyFragment extends BaseFragment implements IndexConstract.View ,
                     .isAutoPlay(true)
                     .setIndicatorGravity(BannerConfig.CENTER)
                     .setBannerAnimation(Transformer.Accordion).start();
+
+            banners.setOnBannerListener(new OnBannerListener() {
+                @Override
+                public void OnBannerClick(int position) {
+                    int curriculum_id1 = result.getData().getLb_data().get(position).getCurriculum_id();
+                    Intent intent = new Intent();
+                    intent.setClass(context, VideoActivity.class);
+                    intent.putExtra("curriulum_id", String.valueOf(curriculum_id1));
+                    startActivity(intent);
+                }
+            });
         }
+
     }
 
     class MyLoader extends ImageLoader {

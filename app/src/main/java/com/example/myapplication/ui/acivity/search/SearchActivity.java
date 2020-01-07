@@ -9,12 +9,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.base.BaseActivity;
 import com.example.myapplication.base.FmManager;
@@ -35,6 +38,7 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.internal.Utils;
 
 public class SearchActivity extends BaseActivity {
 
@@ -55,17 +59,15 @@ public class SearchActivity extends BaseActivity {
 
     List<Fragment> fragments;
     String[] titles;
-    int[] types = new int[]{2,1};
+    int[] types = new int[]{2, 1};
     FmManager fmManager;
-
-
 
 
     @Override
     public void initView() {
         fragments = new ArrayList<>();
-        titles = new String[]{"培训课程","课外学习"};
-        for(int i=0; i<titles.length; i++){
+        titles = new String[]{"培训课程", "课外学习"};
+        for (int i = 0; i < titles.length; i++) {
             SearchFragment fragment = SearchFragment.instance(types[i]);
             fragments.add(fragment);
         }
@@ -86,11 +88,11 @@ public class SearchActivity extends BaseActivity {
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
-            if(s.length() > 0){
-                if(txtClear.getVisibility() == View.GONE){
+            if (s.length() > 0) {
+                if (txtClear.getVisibility() == View.GONE) {
                     txtClear.setVisibility(View.VISIBLE);
                 }
-            }else{
+            } else {
                 txtClear.setVisibility(View.GONE);
             }
         }
@@ -111,7 +113,7 @@ public class SearchActivity extends BaseActivity {
         return R.layout.activity_search;
     }
 
-    @OnClick({R.id.img_return, R.id.txt_input, R.id.txt_search,R.id.txt_clear})
+    @OnClick({R.id.img_return, R.id.txt_input, R.id.txt_search, R.id.txt_clear})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.img_return:
@@ -129,8 +131,8 @@ public class SearchActivity extends BaseActivity {
                     Toast.makeText(context, "请输入搜索内容", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                ((SearchFragment)fragments.get(viewPager.getCurrentItem())).doSearch(str);
-                txtInput.setFocusable(false);
+                ((SearchFragment) fragments.get(viewPager.getCurrentItem())).doSearch(str);
+//                txtInput.setFocusable(false);
                 break;
         }
     }

@@ -40,7 +40,7 @@ public class SetNameActivity extends BaseActivity implements UsercenterConstract
     String zw;
     int type;
     String curEditor;
-    String returnValue="";
+    String returnValue = "";
 
     @Override
     protected IBasePresenter getPresenter() {
@@ -59,48 +59,57 @@ public class SetNameActivity extends BaseActivity implements UsercenterConstract
 
     @Override
     protected void initData() {
-        nickname= getIntent().getStringExtra("nickname");
+        nickname = getIntent().getStringExtra("nickname");
         zw = getIntent().getStringExtra("zw");
-        type = getIntent().getIntExtra("type",0);
+        type = getIntent().getIntExtra("type", 0);
 
-        if(type == 100){
+        if (type == 100) {
             txtTitle.setText("姓名");
-            if(!TextUtils.isEmpty(nickname)){
+            if (!TextUtils.isEmpty(nickname)) {
                 edAlter.setText(nickname);
             }
-        }else if(type == 102){
+        } else if (type == 102) {
             txtTitle.setText("职务");
-            if(!TextUtils.isEmpty(zw)){
+            if (!TextUtils.isEmpty(zw)) {
                 edAlter.setText(zw);
             }
         }
     }
 
-    @OnClick({R.id.layout_save,R.id.img_return})
-    public void onClick(View view){
+    @OnClick({R.id.layout_save, R.id.img_return})
+    public void onClick(View view) {
         switch (view.getId()) {
             case R.id.layout_save:
                 saveName();
+//                Intent intent1 = new Intent();
+//                intent1.putExtra("value", returnValue);
+//                setResult(type, intent1);
+//                finish();
                 break;
             case R.id.img_return:
                 Intent intent = new Intent();
-                intent.putExtra("value",returnValue);
-                setResult(type,intent);
+                intent.putExtra("value", returnValue);
+                setResult(type, intent);
                 finish();
                 break;
         }
     }
 
-    private void saveName(){
+    private void saveName() {
         curEditor = edAlter.getText().toString();
-        if(!TextUtils.isEmpty(curEditor)){
-            if(type == 100){
-                if(!curEditor.equals(nickname)){
-                    ((UsercenterConstract.UpdatePresenter)mPresenter).updateUserInfo(curEditor,zw,"");
+        if (TextUtils.isEmpty(curEditor)){
+            Toast.makeText(context,"姓名不能为空",Toast.LENGTH_LONG).show();
+            return;
+        }
+        if (!TextUtils.isEmpty(curEditor)) {
+            if (type == 100) {
+                if (!curEditor.equals(nickname)) {
+                    ((UsercenterConstract.UpdatePresenter) mPresenter).updateUserInfo(curEditor, zw, "");
+
                 }
-            }else if(type == 102){
-                if(!curEditor.equals(zw)){
-                    ((UsercenterConstract.UpdatePresenter)mPresenter).updateUserInfo(nickname,curEditor,"");
+            } else if (type == 102) {
+                if (!curEditor.equals(zw)) {
+                    ((UsercenterConstract.UpdatePresenter) mPresenter).updateUserInfo(nickname, curEditor, "");
                 }
             }
         }
@@ -109,11 +118,11 @@ public class SetNameActivity extends BaseActivity implements UsercenterConstract
 
     @Override
     public void updateUserInfoReturn(UserInfoUpdateBean result) {
-        if(result.getCode() == 10000){
+        if (result.getCode() == 10000) {
             returnValue = edAlter.getText().toString();
-            Toast.makeText(this,"修改信息成功",Toast.LENGTH_SHORT).show();
-        }else{
-            Toast.makeText(this,result.getMsg(),Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "修改信息成功", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, result.getMsg(), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -124,10 +133,10 @@ public class SetNameActivity extends BaseActivity implements UsercenterConstract
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if(keyCode == KeyEvent.KEYCODE_BACK){
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
             Intent intent = new Intent();
-            intent.putExtra("value",returnValue);
-            setResult(type,intent);
+            intent.putExtra("value", returnValue);
+            setResult(type, intent);
             finish();
             return false;
         }

@@ -10,6 +10,7 @@
         android:layout_height="match_parent">
 
         <com.youth.banner.Banner
+            android:background="@mipmap/pic_default"
             android:id="@+id/banner_learn"
             android:layout_width="@dimen/dp_328"
             android:layout_height="@dimen/dp_136"

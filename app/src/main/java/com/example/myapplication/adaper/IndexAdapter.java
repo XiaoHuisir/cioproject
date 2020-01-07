@@ -1,5 +1,6 @@
 package com.example.myapplication.adaper;
 
+import android.graphics.Color;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.shape.RoundedCornerTreatment;
 import android.view.View;
@@ -45,8 +46,23 @@ public class IndexAdapter extends BaseAdapter {
 
         TextView txt_study_state = (TextView) holder.getView(R.id.txt_study_state);
         String progress = ((int) (Float.valueOf(bean.getJd()) * 100)) + "%";
-        txt_study_state.setText(progress);
+        String baifen = ((int) (Float.valueOf("1") * 100)) + "%";
+        String zero = ((int) (Float.valueOf("0") * 100)) + "%";
+        if (!progress.equals(baifen) && !progress.equals(zero)) {
+            txt_study_state.setText(progress);
+        }
 
+        if (progress.equals(baifen)) {
+            txt_study_state.setText("完成学时");
+
+            txt_study_state.setTextColor(Color.parseColor("#FFD7AB70"));
+
+        }
+        if (progress.equals(zero)) {
+            txt_study_state.setText("为学习");
+            txt_study_state.setTextColor(Color.parseColor("#FFE1E3ED"));
+
+        }
         ConstraintLayout layout = (ConstraintLayout) holder.getView(R.id.layout_item);
         layout.setTag(String.valueOf(bean.getId()));
         layout.setOnClickListener(new View.OnClickListener() {

@@ -70,6 +70,8 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
         }
 //        edPhone.setFocusable(false);
 //        edPw.setFocusable(false);
+
+//        edPw.setSelection(edPw.getText().length());
         edPw.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD | InputType.TYPE_CLASS_TEXT);//设置密码不可见
 
     }
@@ -92,14 +94,10 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
                     if (TextUtils.isEmpty(mobile) && !TextUtils.isEmpty(password)) {
                         Toast.makeText(context, "请输入用户名", Toast.LENGTH_SHORT).show();
                     }
-
                     return;
                 }
-//                if (!TextUtils.isEmpty(mobile) && !TextUtils.isEmpty(password)) {
+
                 ((LoginPresenter) mPresenter).login(mobile, password);
-//                    if (code!=10000){
-//                    Toast.makeText(context, "账号密码不正确", Toast.LENGTH_SHORT).show();}
-//                }
                 break;
             case R.id.btn_show:
 
