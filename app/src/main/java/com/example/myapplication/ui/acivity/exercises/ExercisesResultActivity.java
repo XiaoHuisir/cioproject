@@ -19,8 +19,10 @@ import com.example.myapplication.bean.EvaluatShowResultBean;
 import com.example.myapplication.interfaces.IBasePresenter;
 import com.example.myapplication.interfaces.contract.ExercisesConstract;
 import com.example.myapplication.presenter.exercises.EvaluatResultPresenter;
+import com.example.myapplication.utils.DateUtil;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -114,7 +116,9 @@ public class ExercisesResultActivity extends BaseActivity implements ExercisesCo
                 txtTitle.setText(result.getData().getTitle());
                 txtScore.setText(String.valueOf(result.getData().getFraction()));
                 txtExerciseNum.setText(String.valueOf(result.getData().getEvaluat_result().size()));
-                txtTime.setText(String.valueOf(result.getData().getAdd_time()));
+                long date = (long)(result.getData().getAdd_time())*1000;
+                String time = DateUtil.getStringByDate(date);
+                txtTime.setText(time);
 
                 int rightNum = getRightNum(result.getData().getEvaluat_result());
                 int failNum = result.getData().getEvaluat_result().size()-rightNum;

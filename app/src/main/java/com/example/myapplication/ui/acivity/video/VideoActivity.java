@@ -213,7 +213,7 @@ public class VideoActivity extends BaseActivity implements CurriculumConstract.V
                     //通过记录的id判断是否有测试过
                     if(curriculumBean.getData().getRecord_data().getId() > 0){
                         Intent intent = new Intent(this, ExercisesResultActivity.class);
-                        intent.putExtra("evaluat_id",curriculumBean.getData().getRecord_data().getId());
+                        intent.putExtra("evaluat_id",String.valueOf(curriculumBean.getData().getRecord_data().getId()));
                         startActivity(intent);
                     }else{
                         evaluats();

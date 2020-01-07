@@ -44,6 +44,17 @@ public class DateUtil {
     }
 
     /**
+     * 获取当前日期字符串
+     *
+     * @return
+     */
+    public static String getStringByDate(long date) {
+        /*SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        return df.format(new Date(date));*/
+        return new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date(date));
+    }
+
+    /**
      * 获取当前年
      *
      * @return
