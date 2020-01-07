@@ -94,6 +94,11 @@ public abstract class BaseActivity<V extends IBaseView, P extends IBasePresenter
     }
 
     @Override
+    public void showError() {
+
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         if (mPresenter != null) {

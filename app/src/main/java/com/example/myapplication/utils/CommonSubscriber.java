@@ -42,6 +42,8 @@ public abstract class CommonSubscriber<T> extends ResourceSubscriber<T> {
             return;
         if(errorMsg != null && TextUtils.isEmpty(errorMsg)){
             mView.showError(errorMsg);
+        }else{
+            mView.showError();
         }
 
     }

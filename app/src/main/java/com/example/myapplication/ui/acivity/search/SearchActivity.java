@@ -40,7 +40,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.internal.Utils;
 
-public class SearchActivity extends BaseActivity {
+public class SearchActivity extends BaseActivity implements SearchFragment.TabLayoutFun {
 
     @BindView(R.id.img_return)
     ImageView imgReturn;
@@ -59,16 +59,16 @@ public class SearchActivity extends BaseActivity {
 
     List<Fragment> fragments;
     String[] titles;
-    int[] types = new int[]{2, 1};
+    int[] types = new int[]{0,2, 1};
     FmManager fmManager;
 
 
     @Override
     public void initView() {
         fragments = new ArrayList<>();
-        titles = new String[]{"培训课程", "课外学习"};
+        titles = new String[]{"全部课程","培训课程", "课外学习"};
         for (int i = 0; i < titles.length; i++) {
-            SearchFragment fragment = SearchFragment.instance(types[i]);
+            SearchFragment fragment = SearchFragment.instance(types[i],this);
             fragments.add(fragment);
         }
 
@@ -132,9 +132,13 @@ public class SearchActivity extends BaseActivity {
                     return;
                 }
                 ((SearchFragment) fragments.get(viewPager.getCurrentItem())).doSearch(str);
-//                txtInput.setFocusable(false);
+                SystemUtils.hintKeyBoard(context, txtInput);
                 break;
         }
     }
 
+    @Override
+    public void setTabLayout(int visible) {
+        tabLayout.setVisibility(visible);
+    }
 }

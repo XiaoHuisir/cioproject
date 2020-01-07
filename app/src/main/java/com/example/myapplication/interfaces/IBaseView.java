@@ -7,4 +7,6 @@ package com.example.myapplication.interfaces;
 public interface IBaseView {
 
     void showError(String errorMsg);
+
+    void showError();
 }

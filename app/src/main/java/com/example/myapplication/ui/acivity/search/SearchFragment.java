@@ -37,10 +37,13 @@ public class SearchFragment extends BaseFragment implements BaseAdapter.OnItemCl
 
     int page = 1;
     int type = 0;
+    TabLayoutFun tabLayoutFun;
+    String word;
 
-    public static SearchFragment instance(int type){
+    public static SearchFragment instance(int type,TabLayoutFun tabLayoutFun){
         SearchFragment fragment = new SearchFragment();
         fragment.type = type;
+        fragment.tabLayoutFun = tabLayoutFun;
         return fragment;
     }
 
@@ -56,12 +59,27 @@ public class SearchFragment extends BaseFragment implements BaseAdapter.OnItemCl
     }
 
     @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if(isVisibleToUser){
+            page = 0;
+        }
+    }
+
+    @Override
     protected void initView() {
         list = new ArrayList<>();
         searchAdapter = new SearchAdapter(list);
         searchAdapter.setOnItemClickListener(this);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         recyclerView.setAdapter(searchAdapter);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                page++;
+                ((SearchPresenter) mPresenter).search(word, String.valueOf(type), String.valueOf(page));
+            }
+        });
     }
 
     /**
@@ -69,6 +87,8 @@ public class SearchFragment extends BaseFragment implements BaseAdapter.OnItemCl
      * @param word
      */
     public void doSearch(String word){
+        page = 1;
+        this.word = word;
         ((SearchPresenter) mPresenter).search(word, String.valueOf(type), String.valueOf(page));
     }
 
@@ -84,11 +104,46 @@ public class SearchFragment extends BaseFragment implements BaseAdapter.OnItemCl
 
     @Override
     public void searchResult(List<SearchBean.DataBean.CurriculumDataBean> result) {
-        if(result.size() == 0){
-            Toast.makeText(context, "没有所搜到相关数据", Toast.LENGTH_SHORT).show();
+        if(swipeRefreshLayout.isRefreshing()){
+            swipeRefreshLayout.setRefreshing(false);
+            if(result.size() > 0){
+                tabLayoutFun.setTabLayout(View.VISIBLE);
+                list.addAll(result);
+                searchAdapter.notifyDataSetChanged();
+            }else{
+                page--;
+                Toast.makeText(context, "没有所搜到相关数据", Toast.LENGTH_SHORT).show();
+            }
         }else{
-            list.addAll(result);
-            searchAdapter.notifyDataSetChanged();
+            list.clear();
+            if(result.size() == 0){
+                tabLayoutFun.setTabLayout(View.GONE);
+                Toast.makeText(context, "没有所搜到相关数据", Toast.LENGTH_SHORT).show();
+                searchAdapter.notifyDataSetChanged();
+            }else{
+                tabLayoutFun.setTabLayout(View.VISIBLE);
+                list.addAll(result);
+                searchAdapter.notifyDataSetChanged();
+            }
         }
+
+    }
+
+    @Override
+    public void showError(String errorMsg) {
+        if(swipeRefreshLayout.isRefreshing()){
+            swipeRefreshLayout.setRefreshing(false);
+        }
+    }
+
+    @Override
+    public void showError() {
+        if(swipeRefreshLayout.isRefreshing()){
+            swipeRefreshLayout.setRefreshing(false);
+        }
+    }
+
+    interface TabLayoutFun{
+        void setTabLayout(int visible);
     }
 }
