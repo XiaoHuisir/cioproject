@@ -44,8 +44,10 @@ public class NoticeDetailsActivity extends BaseActivity {
         int add_time = getIntent().getIntExtra("add_time", 0);
         txtNotName.setText("发布人：" + titles);
         txtNotData.setText(contents);
-//        String s = DateUtil.subStandardTime(String.valueOf(add_time));
-        txtNotTiem.setText(String.valueOf(add_time));
+        String s = DateUtil.subStandardTime(String.valueOf(add_time));
+        Long l = new Long((long)add_time);
+        String s1 = DateUtil.formatTime2String(l);
+        txtNotTiem.setText("发布时间：2019 "+s1);
     }
 
     @Override
