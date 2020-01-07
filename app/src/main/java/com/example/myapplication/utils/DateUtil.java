@@ -137,6 +137,40 @@ public class DateUtil {
         return "未知";
     }
 
+    /**
+     * 根据用户传入的时间表示格式，返回当前时间的格式 如果是yyyyMMdd，注意字母y不能大写。
+     *
+     * @param sformat
+     *            yyyyMMddhhmmss
+     * @return
+     */
+    public static String getUserDate(String sformat) {
+        Date currentTime = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat(sformat);
+        String dateString = formatter.format(currentTime);
+        return dateString;
+    }
+
+    /**
+     * 二个小时时间间的差值,必须保证二个时间都是"HH:MM"的格式，返回字符型的分钟
+     */
+    public static String getTwoHour(String st1, String st2) {
+        String[] kk = null;
+        String[] jj = null;
+        kk = st1.split(":");
+        jj = st2.split(":");
+        if (Integer.parseInt(kk[0]) < Integer.parseInt(jj[0]))
+            return "0";
+        else {
+            double y = Double.parseDouble(kk[0]) + Double.parseDouble(kk[1]) / 60;
+            double u = Double.parseDouble(jj[0]) + Double.parseDouble(jj[1]) / 60;
+            if ((y - u) > 0)
+                return y - u + "";
+            else
+                return "0";
+        }
+    }
+
     public static String formatDateTime(String time, boolean haveYear) {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         if (time == null) {
@@ -182,4 +216,6 @@ public class DateUtil {
             }
         }
     }
+
+
 }

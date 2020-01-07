@@ -30,6 +30,7 @@ import com.example.myapplication.ui.acivity.mine.MyfilelistActivity;
 import com.example.myapplication.ui.acivity.mine.NoticeListAcitivity;
 import com.example.myapplication.ui.acivity.setting.SettingActivity;
 import com.example.myapplication.ui.acivity.video.VideoActivity;
+import com.example.myapplication.utils.DateUtil;
 import com.example.myapplication.utils.NumView;
 
 import java.util.ArrayList;
