@@ -30,6 +30,7 @@ import com.example.myapplication.interfaces.IBasePresenter;
 import com.example.myapplication.interfaces.contract.CurriculumConstract;
 import com.example.myapplication.presenter.curriculum.CurriculumPresenter;
 import com.example.myapplication.ui.acivity.exercises.ExercisesActivity;
+import com.example.myapplication.ui.acivity.exercises.ExercisesResultActivity;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -205,13 +206,20 @@ public class VideoActivity extends BaseActivity implements CurriculumConstract.V
                 detail();
                 break;
             case R.id.txt_evalua:
-                evaluats();
+                //evaluats();
                 break;
             case R.id.layout_exercises:
-                if (curriculumBean.getData().getRecord_data().getIs_pass() == 0) {
-                    openExercises();
-                } else {
-                    Toast.makeText(context, "已通过测试", Toast.LENGTH_SHORT).show();
+                if(curriculumBean.getData().getHave_evaluat().equals("1")){
+                    //通过记录的id判断是否有测试过
+                    if(curriculumBean.getData().getRecord_data().getId() > 0){
+                        Intent intent = new Intent(this, ExercisesResultActivity.class);
+                        intent.putExtra("evaluat_id",curriculumBean.getData().getRecord_data().getId());
+                        startActivity(intent);
+                    }else{
+                        evaluats();
+                    }
+                }else{
+                    Toast.makeText(context, "没有考题", Toast.LENGTH_SHORT).show();
                 }
                 break;
         }

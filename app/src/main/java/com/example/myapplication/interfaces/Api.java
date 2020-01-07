@@ -3,6 +3,7 @@ package com.example.myapplication.interfaces;
 
 import com.example.myapplication.bean.CurriculumBean;
 import com.example.myapplication.bean.DownFileBean;
+import com.example.myapplication.bean.EvaluatShowResultBean;
 import com.example.myapplication.bean.EvaluationSubmitBean;
 import com.example.myapplication.bean.ExercisesBean;
 import com.example.myapplication.bean.IndexBean;
@@ -55,8 +56,14 @@ public interface Api {
     Flowable<ExercisesBean> getEvaluation(@Header("x-access-token") String token, @Field("curriculum_id") String curriculum_id);
 
     @POST("index/train/evaluation_submit")
+    @Headers({
+            "Content-type:application/json"
+    })
+    Flowable<EvaluationSubmitBean>  submitEvaluation(@Header("x-access-token") String token, @Body RequestBody body);
+
+    @POST("index/train/evaluation_result_show")
     @FormUrlEncoded
-    Flowable<EvaluationSubmitBean> submitEvaluation(@Header("x-access-token") String token, @Field("curriculum_id") String curriculum_id, @Field("answer") JSONArray answer);
+    Flowable<EvaluatShowResultBean>  showEvaluationResult(@Header("x-access-token") String token, @Field("evaluat_id") String evaluatId);
 
 
     //个人中心

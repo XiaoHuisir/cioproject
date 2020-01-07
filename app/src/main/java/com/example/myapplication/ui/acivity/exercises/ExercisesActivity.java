@@ -1,11 +1,13 @@
 package com.example.myapplication.ui.acivity.exercises;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -95,7 +97,7 @@ public class ExercisesActivity extends BaseActivity implements ExercisesConstrac
         ((ExercisesPresenter) mPresenter).getEvaluation(curriculumId);
     }
 
-    @OnClick({R.id.layout_next, R.id.txt_prev})
+    @OnClick({R.id.layout_next, R.id.txt_prev,R.id.img_close})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.layout_next:
@@ -103,7 +105,7 @@ public class ExercisesActivity extends BaseActivity implements ExercisesConstrac
                     //检查是否选择答案
                     boolean bool = checkAnswer();
                     if (!bool) {
-                        showDialog("请选择习题答案");
+                        showDialog("请选择习题答案",0);
                         return;
                     }
 
@@ -113,9 +115,11 @@ public class ExercisesActivity extends BaseActivity implements ExercisesConstrac
                         currentPos = currentExercises.getData().size();
                         try {
                             JSONArray answer = getAnswers();
-                            if (answer.length() > 0) {
-                                ((ExercisesPresenter) mPresenter).submitEvaluation(curriculumId, answer);
-                            }
+                            JSONObject data = new JSONObject();
+                            data.put("curriculum_id",curriculumId);
+                            data.put("answer",answer);
+                            ((ExercisesPresenter) mPresenter).submitEvaluation(data);
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -134,6 +138,9 @@ public class ExercisesActivity extends BaseActivity implements ExercisesConstrac
                 }
                 updateExercises(currentPos);
                 updateCurrentNum(currentPos);
+                break;
+            case R.id.img_close:
+                closeActivity();
                 break;
         }
     }
@@ -214,7 +221,11 @@ public class ExercisesActivity extends BaseActivity implements ExercisesConstrac
     @Override
     public void submitEvaluationReturn(EvaluationSubmitBean result) {
         if (result.getCode() == 10000) {
-
+            Toast.makeText(this, "提交试卷成功", Toast.LENGTH_SHORT).show();
+            int evaluat = Integer.parseInt(result.getData().getEvaluat_id());
+            //获取考试结果
+        }else{
+            Toast.makeText(this, result.getMsg(), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -225,7 +236,6 @@ public class ExercisesActivity extends BaseActivity implements ExercisesConstrac
      * @throws JSONException
      */
     private JSONArray getAnswers() throws JSONException {
-
         JSONArray jsonArray = new JSONArray();
         for (ExercisesBean.DataBean dataBean : currentExercises.getData()) {
             JSONObject item = new JSONObject();
@@ -244,13 +254,29 @@ public class ExercisesActivity extends BaseActivity implements ExercisesConstrac
 
     /**
      * 提示显示习题答案
+     * action 1只显示确定按
      */
-    private void showDialog(String string) {
-        AlertDialog alertDialog = new AlertDialog.Builder(this)
-                .setMessage(string)
-                .create();
+    private void showDialog(String string,int action) {
+        AlertDialog alertDialog;
+        if(action == 1){
+            alertDialog = new AlertDialog.Builder(this)
+                    .setPositiveButton("确定",new DialogInterface.OnClickListener(){
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            finish();
+                        }
+                    })
+                    .setNegativeButton("取消",null)
+                    .setMessage(string)
+                    .create();
+        }else{
+            alertDialog = new AlertDialog.Builder(this)
+                    .setMessage(string)
+                    .create();
+        }
         alertDialog.show();
     }
+
 
     /**
      * 检查是否选择答案
@@ -269,5 +295,19 @@ public class ExercisesActivity extends BaseActivity implements ExercisesConstrac
         return bool;
     }
 
+    /**
+     * 退出考试
+     */
+    private void closeActivity(){
+        showDialog("您还没有完成作答，确认退出习题测试吗？",1);
+    }
 
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        if(keyCode == KeyEvent.KEYCODE_BACK){
+            closeActivity();
+            return false;
+        }
+        return false;
+    }
 }

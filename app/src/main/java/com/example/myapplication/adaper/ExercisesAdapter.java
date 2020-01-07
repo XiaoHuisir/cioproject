@@ -11,7 +11,7 @@ import java.util.List;
 
 public class ExercisesAdapter extends BaseAdapter {
 
-    private String[] answers = new String[]{"A","B","C","D"};
+    private String[] answers = new String[]{"A","B","C","D","E","F","G","H","I","J","K","L","M","N"};
 
     public ExercisesAdapter(List mDatas) {
         super(mDatas);

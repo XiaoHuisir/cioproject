@@ -63,7 +63,11 @@
     <string name="enterthename">请输入姓名</string>
     <string name="mesg">接收呼播信息</string>
 
-    <string name="FAKE_STATUS_BAR_VIEW_ID">1</string>
+
+    <string name="reexercises">重新测试</string>
+
+    <string name="tips_evaluat_result">仅会保留您的最佳测试成绩</string>
+
 
 
 </resources>

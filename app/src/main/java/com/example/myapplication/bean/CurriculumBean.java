@@ -190,11 +190,19 @@ public class CurriculumBean {
         }
 
         public static class RecordDataBean {
+            public int getId() {
+                return id;
+            }
+
+            public void setId(int id) {
+                this.id = id;
+            }
+
             /**
              * fraction : 80
              * is_pass : 1
              */
-
+            private int id;
             private int fraction;
             private int is_pass;
 

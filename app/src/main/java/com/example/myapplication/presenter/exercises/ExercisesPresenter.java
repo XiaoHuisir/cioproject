@@ -11,6 +11,7 @@ import com.example.myapplication.utils.RxUtils;
 import com.google.gson.JsonArray;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -36,13 +37,11 @@ public class ExercisesPresenter extends BasePresenter<ExercisesConstract.View> i
     /**
      * 提交答题
      *
-     * @param curriculumId
-     * @param answer
      */
     @Override
-    public void submitEvaluation(String curriculumId, JSONArray answer) {
-
-        addSubscribe(HttpUtils.getMyServer(Constant.BaseUrl).submitEvaluation(Constant.token, curriculumId,answer)
+    public void submitEvaluation(JSONObject jsonObject) {
+        RequestBody body = RequestBody.create(MediaType.parse("application/json;charset=UTF-8"),jsonObject.toString());
+        addSubscribe(HttpUtils.getMyServer(Constant.BaseUrl).submitEvaluation(Constant.token,body)
                 .compose(RxUtils.<EvaluationSubmitBean>rxScheduler())
                 .subscribeWith(new CommonSubscriber<EvaluationSubmitBean>(mView) {
                     @Override
