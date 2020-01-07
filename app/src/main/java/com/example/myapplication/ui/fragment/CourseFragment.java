@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -54,10 +55,13 @@ public class CourseFragment extends BaseFragment implements IndexConstract.View,
     Banner banner;
     @BindView(R.id.swipeRefresh)
     SwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R.id.relative_ban)
+    RelativeLayout relative_ban;
 
     int page = 1;
     IndexAdapter indexAdapter;
     List<IndexBean.DataBean.CurriculumDataBean> list;
+    private String image;
 
     @Override
     protected IBasePresenter getPresenter() {
@@ -76,7 +80,7 @@ public class CourseFragment extends BaseFragment implements IndexConstract.View,
         indexAdapter.itemClick = this;
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         recyclerView.setAdapter(indexAdapter);
-
+        relative_ban.setVisibility(View.INVISIBLE);
         /*curType = Constant.STUDY_TYPE_1;
         resetTypeTxt();
         txtType1.setTextColor(getResources().getColor(R.color.red));*/
@@ -152,16 +156,18 @@ public class CourseFragment extends BaseFragment implements IndexConstract.View,
         if (lb_data.size() > 0) {
             ArrayList<String> strings = new ArrayList<>();
             for (int i = 0; i < lb_data.size(); i++) {
-                String image = lb_data.get(i).getImage();
+                image = lb_data.get(i).getImage();
                 strings.add(image);
             }
+            if (image!=null){
+            relative_ban.setVisibility(View.VISIBLE);
             banner.setImages(strings)
                     .setImageLoader(new MyLoader())
                     .setDelayTime(2000)
                     .isAutoPlay(true)
                     .setIndicatorGravity(BannerConfig.CENTER)
                     .setBannerAnimation(Transformer.Accordion).start();
-        }
+
         banner.setOnBannerListener(new OnBannerListener() {
             @Override
             public void OnBannerClick(int position) {
@@ -172,6 +178,13 @@ public class CourseFragment extends BaseFragment implements IndexConstract.View,
                 startActivity(intent);
             }
         });
+            }else {
+                relative_ban.setVisibility(View.INVISIBLE);
+            }
+
+        }else {
+            relative_ban.setVisibility(View.INVISIBLE);
+        }
 
     }
 
