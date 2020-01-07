@@ -24,12 +24,18 @@
             app:layout_constraintLeft_toLeftOf="parent"/>
         <TextView
             android:id="@+id/txt_name"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/dp_248"
             android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="2"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toRightOf="@id/img_icon"
-            android:layout_marginLeft="10dp"/>
+            android:layout_marginLeft="10dp"
+            android:text="传统行业数字化转型成难题？新能链携区块链创新破局.pdf"
+            android:textColor="#FF333333"
+            android:textSize="@dimen/sp_16"
+            />
     </android.support.constraint.ConstraintLayout>
 
 

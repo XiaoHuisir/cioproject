@@ -3,30 +3,40 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <android.support.constraint.ConstraintLayout
+    <RelativeLayout
         android:id="@+id/layout_title"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_60"
         app:layout_constraintTop_toTopOf="parent">
-        <ImageView
-            android:id="@+id/img_return"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/item_arrows"
-            android:scaleX="-1"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:layout_marginLeft="@dimen/dp_20"/>
+        <!--<ImageView-->
+            <!--android:id="@+id/img_return"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:src="@mipmap/item_arrows"-->
+            <!--android:scaleX="-1"-->
+            <!--app:layout_constraintTop_toTopOf="parent"-->
+            <!--app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--app:layout_constraintLeft_toLeftOf="parent"-->
+            <!--android:layout_marginLeft="@dimen/dp_16"/>-->
+       <ImageView
+           android:id="@+id/img_return"
+           android:src="@mipmap/back_black"
+           android:layout_centerVertical="true"
+           android:layout_alignParentLeft="true"
+           android:layout_marginLeft="@dimen/dp_16"
+           android:layout_width="@dimen/dp_24"
+           android:layout_height="@dimen/dp_24" />
         <TextView
             android:id="@+id/txt_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toRightOf="@id/img_return"
+            android:layout_marginLeft="@dimen/dp_8"
+            android:layout_centerVertical="true"
+            android:textColor="#FF212121"
+            android:layout_toRightOf="@id/img_return"
             android:textSize="@dimen/sp_18" />
-    </android.support.constraint.ConstraintLayout>
+
+    </RelativeLayout>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"

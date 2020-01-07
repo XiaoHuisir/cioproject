@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.myapplication.R;
@@ -35,7 +36,7 @@ public class CourseActivity extends BaseActivity implements IndexConstract.View,
     @BindView(R.id.txt_title)
     TextView txtTitle;
     @BindView(R.id.layout_title)
-    ConstraintLayout layoutTitle;
+    RelativeLayout layoutTitle;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
 
