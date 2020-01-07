@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.InputType;
 import android.text.TextUtils;
+import android.view.TextureView;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.app.Constant;
+import com.example.myapplication.app.MyApp;
 import com.example.myapplication.base.BaseActivity;
 import com.example.myapplication.bean.LoginBean;
 import com.example.myapplication.interfaces.IBasePresenter;
@@ -57,6 +59,15 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
 
     @Override
     protected void initView() {
+        //判断是否有登录过
+        String username = SharedPreferencesUtil.getUserName(MyApp.mApp);
+        String pw = SharedPreferencesUtil.getPw(MyApp.mApp);
+        if(!TextUtils.isEmpty(username)){
+            edPhone.setText(username);
+            if(!TextUtils.isEmpty(pw)){
+                edPw.setText(pw);
+            }
+        }
 //        edPhone.setFocusable(false);
 //        edPw.setFocusable(false);
         edPw.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD | InputType.TYPE_CLASS_TEXT);//设置密码不可见
@@ -114,9 +125,8 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
             Intent intent = new Intent();
             intent.setClass(this, MainActivity.class);
             startActivity(intent);
-            Toast.makeText(context, "登录成功", Toast.LENGTH_LONG).show();
-        } else {
-            Toast.makeText(context, "账号密码不正确", Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(context,result.getMsg(),Toast.LENGTH_SHORT).show();
         }
     }
 }

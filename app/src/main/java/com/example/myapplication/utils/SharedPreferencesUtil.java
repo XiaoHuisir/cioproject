@@ -57,4 +57,28 @@ public class SharedPreferencesUtil {
         editor.commit();
     }
 
+    /**
+     * 保存用户名和密码
+     * @param name
+     * @param pw
+     */
+    public static void saveUserAndPw(Context context,String name,String pw){
+        editor = context.getSharedPreferences("user",Context.MODE_PRIVATE).edit();
+        editor.putString("username",name);
+        editor.putString("pw",pw);
+        editor.commit();
+    }
+
+    /**
+     * 获取用户名
+     * @param context
+     * @return
+     */
+    public static String getUserName(Context context){
+        return context.getSharedPreferences("user",Context.MODE_PRIVATE).getString("username","");
+    }
+
+    public static String getPw(Context context){
+        return context.getSharedPreferences("user",Context.MODE_PRIVATE).getString("pw","");
+    }
 }

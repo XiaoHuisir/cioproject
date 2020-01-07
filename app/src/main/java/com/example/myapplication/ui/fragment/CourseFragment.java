@@ -2,12 +2,14 @@ package com.example.myapplication.ui.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.myapplication.R;
@@ -49,6 +51,10 @@ public class CourseFragment extends BaseFragment implements IndexConstract.View,
     DrawableCenterTextView txtType3;
     @BindView(R.id.banner)
     Banner banner;
+    @BindView(R.id.swipeRefresh)
+    SwipeRefreshLayout swipeRefreshLayout;
+
+    int page = 1;
     IndexAdapter indexAdapter;
     List<IndexBean.DataBean.CurriculumDataBean> list;
 
@@ -74,6 +80,13 @@ public class CourseFragment extends BaseFragment implements IndexConstract.View,
         resetTypeTxt();
         txtType1.setTextColor(getResources().getColor(R.color.red));*/
         getIndex();
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                page++;
+                getIndex();
+            }
+        });
     }
 
     @OnClick({R.id.txt_type_1, R.id.txt_type_2, R.id.txt_type_3})
@@ -105,28 +118,24 @@ public class CourseFragment extends BaseFragment implements IndexConstract.View,
         Map<String, String> map = new HashMap<String, String>();
         map.put("curriculum", String.valueOf(2));
         map.put("type", String.valueOf(curType));
-        map.put("page", "1");
+        map.put("page", String.valueOf(page));
         ((IndexPresenter) mPresenter).getIndex(map);
     }
 
     @Override
     public void getIndexReturn(IndexBean result) {
-        list.clear();
-        list.addAll(result.getData().getCurriculum_data());
-        banners(result);
-        indexAdapter.notifyDataSetChanged();
+        if(result.getData().getCurriculum_data().size() > 0){
+            list.addAll(result.getData().getCurriculum_data());
+            banners(result);
+            indexAdapter.notifyDataSetChanged();
+        }else{
+            Toast.makeText(context,"没有更多数据",Toast.LENGTH_SHORT).show();
+            page--;
+        }
+        if(swipeRefreshLayout.isRefreshing()){
+            swipeRefreshLayout.setRefreshing(false);
+        }
 
-    }
-
-    /**
-     * 显示搜索结果
-     *
-     * @param result
-     */
-    public void showSearch(List<IndexBean.DataBean.CurriculumDataBean> result) {
-        list.clear();
-        list.addAll(result);
-        indexAdapter.notifyDataSetChanged();
     }
 
     private void openCourseActivity(int type, String title) {

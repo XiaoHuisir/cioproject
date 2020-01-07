@@ -36,7 +36,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class SearchActivity extends BaseActivity implements IndexConstract.SearchView {
+public class SearchActivity extends BaseActivity {
 
     @BindView(R.id.img_return)
     ImageView imgReturn;
@@ -55,16 +55,21 @@ public class SearchActivity extends BaseActivity implements IndexConstract.Searc
 
     List<Fragment> fragments;
     String[] titles;
+    int[] types = new int[]{2,1};
     FmManager fmManager;
 
-    Map<String, List<SearchBean.DataBean.CurriculumDataBean>> map;
+
 
 
     @Override
     public void initView() {
-        map = new HashMap<>();
         fragments = new ArrayList<>();
-        titles = new String[0];
+        titles = new String[]{"培训课程","课外学习"};
+        for(int i=0; i<titles.length; i++){
+            SearchFragment fragment = SearchFragment.instance(types[i]);
+            fragments.add(fragment);
+        }
+
         fmManager = new FmManager(getSupportFragmentManager(), fragments, titles);
         viewPager.setAdapter(fmManager);
         tabLayout.setupWithViewPager(viewPager);
@@ -98,7 +103,7 @@ public class SearchActivity extends BaseActivity implements IndexConstract.Searc
 
     @Override
     protected IBasePresenter getPresenter() {
-        return new SearchPresenter();
+        return null;
     }
 
     @Override
@@ -124,45 +129,10 @@ public class SearchActivity extends BaseActivity implements IndexConstract.Searc
                     Toast.makeText(context, "请输入搜索内容", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                ((SearchPresenter) mPresenter).search(str, String.valueOf(0), String.valueOf(1));
+                ((SearchFragment)fragments.get(viewPager.getCurrentItem())).doSearch(str);
                 txtInput.setFocusable(false);
                 break;
         }
     }
 
-    /**
-     * 接收搜索返回并进行分类
-     *
-     * @param result
-     */
-    @Override
-    public void searchResult(List<SearchBean.DataBean.CurriculumDataBean> result) {
-        map.clear();
-        for (SearchBean.DataBean.CurriculumDataBean item : result) {
-            String key = "";
-            if (item.getType() == 0) {
-                key = "全部";
-            } else if (item.getType() == 1) {
-                key = "课外学习";
-            } else if (item.getType() == 2) {
-                key = "培训课程";
-            }
-            List<SearchBean.DataBean.CurriculumDataBean> list = map.get(key);
-            if (list == null) {
-                list = new ArrayList<>();
-                map.put(key, list);
-            }
-            list.add(item);
-        }
-        titles = new String[map.keySet().size()];
-        int index = 0;
-        for (String key : map.keySet()) {
-            titles[index] = key;
-            index++;
-            SearchFragment fragment = SearchFragment.instance(map.get(key));
-            fragments.add(fragment);
-        }
-        fmManager.setTitles(titles);
-        fmManager.notifyDataSetChanged();
-    }
 }
