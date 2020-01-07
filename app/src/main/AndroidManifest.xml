@@ -18,7 +18,7 @@
         android:name=".app.MyApp"
         android:allowBackup="true"
         android:appComponentFactory="app"
-        android:icon="@mipmap/icon_logo"
+        android:icon="@drawable/icon"
         android:label="@string/app_name"
         android:networkSecurityConfig="@xml/network_config"
         android:roundIcon="@mipmap/ic_launcher_round"
