@@ -3,6 +3,8 @@ package com.example.myapplication.ui.acivity.video;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.hardware.SensorManager;
 import android.media.MediaPlayer;
 import android.os.Build;
@@ -12,9 +14,15 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -25,17 +33,25 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.myapplication.R;
 import com.example.myapplication.adaper.PdfAdapter;
+import com.example.myapplication.app.Constant;
 import com.example.myapplication.base.BaseActivity;
+import com.example.myapplication.base.BaseAdapter;
 import com.example.myapplication.bean.CurriculumBean;
+import com.example.myapplication.bean.DownFileBean;
 import com.example.myapplication.interfaces.IBasePresenter;
 import com.example.myapplication.interfaces.contract.CurriculumConstract;
 import com.example.myapplication.presenter.curriculum.CurriculumPresenter;
 import com.example.myapplication.ui.acivity.exercises.ExercisesActivity;
 import com.example.myapplication.ui.acivity.exercises.ExercisesResultActivity;
+import com.example.myapplication.ui.acivity.pdf.PdfActivity;
+import com.example.myapplication.utils.DownLoadUtils;
+import com.example.myapplication.utils.FileUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -43,7 +59,10 @@ import cn.jzvd.JZMediaManager;
 import cn.jzvd.JZVideoPlayer;
 import cn.jzvd.JZVideoPlayerStandard;
 
-public class VideoActivity extends BaseActivity implements CurriculumConstract.View {
+public class VideoActivity extends BaseActivity implements CurriculumConstract.View, BaseAdapter.OnItemClickListener {
+
+    @BindView(R.id.layout_bg)
+    ConstraintLayout layoutBg;
     @BindView(R.id.videoplayer)
     JZVideoPlayerStandard videoplayer;
     @BindView(R.id.txt_title)
@@ -107,6 +126,14 @@ public class VideoActivity extends BaseActivity implements CurriculumConstract.V
     private boolean inxdler = true;
     long curPos;
 
+    //下载
+    PopupWindow popupWindow;
+    ProgressBar progressBar;
+
+    int fileSize;
+    String fileName;
+    String filePath;
+
     @Override
     protected IBasePresenter getPresenter() {
         return new CurriculumPresenter();
@@ -123,6 +150,7 @@ public class VideoActivity extends BaseActivity implements CurriculumConstract.V
         pdfAdapter = new PdfAdapter(pdfList);
         pdfRecyclerview.setLayoutManager(new LinearLayoutManager(this));
         pdfRecyclerview.setAdapter(pdfAdapter);
+        pdfAdapter.setOnItemClickListener(this);
         layoutSound.setVisibility(View.GONE);
         //TODO
         txtDetail.setVisibility(View.VISIBLE);
@@ -178,6 +206,16 @@ public class VideoActivity extends BaseActivity implements CurriculumConstract.V
             txtScore.setTextColor(Color.parseColor("#FF0000"));
         }
         txtScore.setText(str);
+    }
+
+    /**
+     * 调用下载文件返回
+     * @param result
+     */
+    @Override
+    public void downFileReturn(DownFileBean result) {
+        //打开显示页面
+        openPdfRead(fileName,filePath);
     }
 
     @OnClick({R.id.image_back,R.id.txt_sound, R.id.txt_video, R.id.txt_detail, R.id.txt_evalua, R.id.layout_exercises, R.id.txt_intro})
@@ -358,5 +396,94 @@ public class VideoActivity extends BaseActivity implements CurriculumConstract.V
                 mediaPlayer.stop();
             }
         }
+    }
+
+    /**
+     * pdf条目点击
+     * @param v
+     * @param position
+     */
+    @Override
+    public void onItemClick(View v, int position) {
+        String pdfname = curriculumBean.getData().getFile_data().get(position).getName();
+        String url = curriculumBean.getData().getFile_data().get(position).getUrl();
+        String path = Constant.PATH_PDF+pdfname;
+        boolean isDir = FileUtils.checkDir(Constant.PATH_PDF);
+        int size = FileUtils.checkFile(Constant.PATH_PDF+pdfname);
+        //如果存在直接打开
+        if(size > 0){
+            fileName = pdfname;
+            fileSize = size;
+            filePath = path;
+            sendDownFile(fileName,url,size);
+        }else{
+            showDown(url,pdfname,path);
+        }
+        //showDown(url,pdfname,path);
+    }
+
+    private void showDown(final String url, final String name, final String path){
+        if(popupWindow == null){
+            View view = LayoutInflater.from(this).inflate(R.layout.layout_down_loading,null);
+            popupWindow = new PopupWindow();
+            popupWindow.setContentView(view);
+            popupWindow.setWidth(500);
+            popupWindow.setHeight(180);
+            progressBar = view.findViewById(R.id.loadingBar);
+            progressBar.setProgress(0);
+            popupWindow.setFocusable(true);
+            layoutBg.setVisibility(View.VISIBLE);
+            popupWindow.showAtLocation(layoutBg, Gravity.CENTER,0,0);
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    DownLoadUtils downLoadUtils = new DownLoadUtils();
+                    downLoadUtils.downFile(url, path, new DownLoadUtils.DownLoadListener() {
+                        @Override
+                        public void loading(final int loaded, final int total) {
+                            final int pre = (int) (((float)loaded)/((float)total)*100);
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    progressBar.setProgress(pre);
+                                    //下载完成
+                                    if(loaded == total){
+                                        fileSize = total;
+                                        fileName = name;
+                                        filePath = path;
+                                        popupWindow.dismiss();
+                                        popupWindow = null;
+                                        sendDownFile(fileName,url,fileSize);
+                                        layoutBg.setVisibility(View.GONE);
+                                    }
+                                }
+                            });
+
+                        }
+                    });
+                }
+            }).start();
+        }
+    }
+
+    private void sendDownFile(String fileName,String fileUrl,int size){
+        Map<String,String> map = new HashMap<>();
+        map.put("curriculum_id", String.valueOf(curriculumBean.getData().getCurriculum_data().getId()));
+        map.put("file_name",fileName);
+        map.put("file_url",fileUrl);
+        map.put("file_size", String.valueOf(size));
+        ((CurriculumPresenter)mPresenter).downFile(map);
+    }
+
+    /**
+     * 打开pdf的详情页
+     * @param path
+     */
+    private void openPdfRead(String name,String path){
+        Intent intent = new Intent();
+        intent.setClass(this, PdfActivity.class);
+        intent.putExtra("name",name);
+        intent.putExtra("pdf_path",path);
+        startActivity(intent);
     }
 }
