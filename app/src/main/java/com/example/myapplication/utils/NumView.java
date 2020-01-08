@@ -55,7 +55,7 @@ public class NumView extends AppCompatImageView {
             //设置抗锯齿
             paint.setAntiAlias(true);
             //设置颜色为红色0xffff4444
-            paint.setColor(getResources().getColor(R.color.beige));
+            paint.setColor(getResources().getColor(R.color.red));
             //设置填充样式为充满
             paint.setStyle(Paint.Style.FILL);
             //画圆

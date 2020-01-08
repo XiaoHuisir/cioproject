@@ -41,7 +41,7 @@ import butterknife.OnClick;
 
 import static cn.jzvd.JZUtils.TAG;
 
-public class MineFragment extends BaseFragment implements UsercenterConstract.View, RecordAdapter.RecordItemClick  {
+public class MineFragment extends BaseFragment implements UsercenterConstract.View, RecordAdapter.RecordItemClick {
 
     @BindView(R.id.iv_setting)
     ImageView ivsetting;
@@ -77,8 +77,9 @@ public class MineFragment extends BaseFragment implements UsercenterConstract.Vi
     RelativeLayout relativesoos;
     private ArrayList<UserCenterBean.DataBean.HistoryBean> historyBeans;
     private RecordAdapter recordAdapter;
-
     UserCenterBean userCenterBean;
+//    public boolean inxdler = false;
+    private int noticenum;
 
     @Override
     protected IBasePresenter getPresenter() {
@@ -159,11 +160,20 @@ public class MineFragment extends BaseFragment implements UsercenterConstract.Vi
     public void getUnredNoticeReturn(UnredNoticeBean bean) {
         if (bean.getStatus() == 1) {
 
+
             String notice_num = bean.getData().getNotice_num();
-//          int noticenum = Integer.valueOf(notice_num).intValue();
-            int notice_nums = Integer.parseInt(notice_num);
-            Constant.NUM_VIEW = String.valueOf(notice_nums);
-            numView.setNum(notice_nums);
+            noticenum = Integer.valueOf(notice_num).intValue();
+//            int notice_nums = Integer.parseInt(notice_num);
+            Constant.NUM_VIEW = noticenum;
+                if (noticenum == 0) {
+                    numView.setNum(0);
+                } else {
+                    numView.setNum(noticenum);
+                }
+
+
+
+
         }
 
     }
@@ -193,13 +203,13 @@ public class MineFragment extends BaseFragment implements UsercenterConstract.Vi
             txtreferral.setText(result.getData().getMechanism());
         }
         if (result.getData().getKcpx_time() >= Constant.ZERO) {
-            kcpxtime.setText(String.valueOf(result.getData().getKcpx_time()));
+            kcpxtime.setText(String.valueOf(result.getData().getKcpx_time()/60));
         }
         if (result.getData().getKcpx_num() >= Constant.ZERO) {
             kcpxnum.setText(String.valueOf(result.getData().getKcpx_num()));
         }
         if (result.getData().getKwxx_time() >= Constant.ZERO) {
-            kwxxtime.setText(String.valueOf(result.getData().getKwxx_time()) + " 分钟");
+            kwxxtime.setText(String.valueOf(result.getData().getKwxx_time()/60) + " 分钟");
         }
         if (result.getData().getKwxx_num() >= Constant.ZERO) {
             kwxxnum.setText(result.getData().getKwxx_num() + "门");

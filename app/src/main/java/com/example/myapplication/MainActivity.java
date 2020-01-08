@@ -19,11 +19,15 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.myapplication.adaper.RecordAdapter;
 import com.example.myapplication.app.Constant;
 import com.example.myapplication.base.BaseActivity;
 import com.example.myapplication.bean.IndexBean;
+import com.example.myapplication.bean.UnredNoticeBean;
+import com.example.myapplication.bean.UserCenterBean;
 import com.example.myapplication.interfaces.IBasePresenter;
 import com.example.myapplication.interfaces.contract.IndexConstract;
+import com.example.myapplication.interfaces.usercenter.UsercenterConstract;
 import com.example.myapplication.presenter.home.SearchPresenter;
 import com.example.myapplication.ui.acivity.mine.NoticeListAcitivity;
 import com.example.myapplication.ui.acivity.search.SearchActivity;
@@ -31,6 +35,7 @@ import com.example.myapplication.ui.fragment.HomeFragment;
 import com.example.myapplication.ui.fragment.MineFragment;
 import com.example.myapplication.ui.fragment.ClassifyFragment;
 import com.example.myapplication.ui.fragment.StudyFragment;
+import com.example.myapplication.utils.NumView;
 
 import org.greenrobot.greendao.annotation.JoinEntity;
 
@@ -40,7 +45,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class MainActivity extends BaseActivity implements View.OnClickListener {
+public class MainActivity extends BaseActivity implements View.OnClickListener, UsercenterConstract.View, RecordAdapter.RecordItemClick {
 
 
     @BindView(R.id.tl)
@@ -53,13 +58,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     RelativeLayout layoutSearch;
     @BindView(R.id.layout_msg)
     ConstraintLayout layoutMsg;
-
-
+    @BindView(R.id.num_wx)
+    NumView numWx;
     private FragmentManager manager;
     Fragment homeFragment;
     Fragment classifyFragment;
     Fragment mineFragment;
-
     int curType;
 
 
@@ -110,6 +114,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             }
         });
         showFragment(0);
+
     }
 
     @Override
@@ -150,6 +155,28 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 notice.setClass(context, NoticeListAcitivity.class);
                 startActivity(notice);
                 break;
+        }
+    }
+
+    @Override
+    public void click(String id) {
+
+    }
+
+    @Override
+    public void UserCenterReturn(UserCenterBean result) {
+
+    }
+
+    @Override
+    public void getUnredNoticeReturn(UnredNoticeBean bean) {
+        String notice_num = bean.getData().getNotice_num();
+        int numNot = Integer.valueOf(notice_num).intValue();
+
+        if (numNot == 0) {
+            numWx.setNum(0);
+        } else {
+            numWx.setNum(numNot);
         }
     }
 }

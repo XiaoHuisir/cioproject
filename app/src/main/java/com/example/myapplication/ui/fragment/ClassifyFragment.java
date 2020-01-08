@@ -123,7 +123,7 @@ public class ClassifyFragment extends BaseFragment implements TypeIndexConstact.
      */
     @Override
     public void courseClick(int id) {
-        type = 1;
+        type = id;
         for (TypeIndexBean.DataBean.CurriculumKwBean item : studyList) {
             item.select = false;
         }
@@ -149,7 +149,8 @@ public class ClassifyFragment extends BaseFragment implements TypeIndexConstact.
      */
     @Override
     public void studyClick(int id) {
-        type = 2;
+//        type = 2;
+        type = id;
         for (TypeIndexBean.DataBean.CurriculumPxBean item : courseList) {
             item.select = false;
         }
