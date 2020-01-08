@@ -1,5 +1,6 @@
 package com.example.myapplication.ui.acivity.login;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.text.TextUtils;
 import android.view.TextureView;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
@@ -62,9 +64,9 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
         //判断是否有登录过
         String username = SharedPreferencesUtil.getUserName(MyApp.mApp);
         String pw = SharedPreferencesUtil.getPw(MyApp.mApp);
-        if(!TextUtils.isEmpty(username)){
+        if (!TextUtils.isEmpty(username)) {
             edPhone.setText(username);
-            if(!TextUtils.isEmpty(pw)){
+            if (!TextUtils.isEmpty(pw)) {
                 edPw.setText(pw);
             }
         }
@@ -78,13 +80,20 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
 
     }
 
-    @OnClick({R.id.btn_login, R.id.btn_show})
+    @OnClick({R.id.btn_login, R.id.btn_show, R.id.ed_pw, R.id.ed_phone})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+            case R.id.ed_pw:
+
+//                edPhone.setInputType(InputType.TYPE_CLASS_NUMBER);
+//                edPhone.setInputType(EditorInfo.TYPE_CLASS_PHONE);//设置数字键盘显示
+                break;
             case R.id.btn_login:
                 mobile = edPhone.getText().toString();
                 password = edPw.getText().toString();
-                edPhone.setInputType(EditorInfo.TYPE_CLASS_PHONE);//设置数字键盘显示
+                closeKeyboard();
+                closeKeyboardedPhone();
+
 //                edPw.setInputType(EditorInfo.TYPE_CLASS_PHONE);//设置数字键盘显示
                 Constant.mobiles = mobile;
                 Constant.passwords = password;
@@ -98,7 +107,6 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
                     }
                     return;
                 }
-
                 ((LoginPresenter) mPresenter).login(mobile, password);
                 break;
             case R.id.btn_show:
@@ -106,12 +114,17 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
                 if (btnShow.isSelected()) {
                     btnShow.setSelected(false);
                     edPw.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD | InputType.TYPE_CLASS_TEXT);//设置密码不可见
+                    edPw.setSelection(edPw.getText().length());//设置光标的位置到末尾
                 } else {
                     btnShow.setSelected(true);
                     edPw.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);//设置密码可见                }
-
+                    edPw.setSelection(edPw.getText().length());//设置光标的位置到末尾
                     break;
                 }
+
+
+                edPw.setSelection(edPw.getText().length());//设置光标的位置到末尾
+
         }
     }
 
@@ -125,8 +138,22 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
             Intent intent = new Intent();
             intent.setClass(this, MainActivity.class);
             startActivity(intent);
-        }else{
-            Toast.makeText(context,result.getMsg(),Toast.LENGTH_SHORT).show();
+            finish();
+        } else {
+            Toast.makeText(context, result.getMsg(), Toast.LENGTH_SHORT).show();
         }
     }
+
+    //关闭指定文本输入框的软键盘
+    private void closeKeyboard() {
+
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(edPw.getWindowToken(), 0);
+    }
+
+    private void closeKeyboardedPhone() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(edPhone.getWindowToken(), 0);
+    }
+
 }

@@ -31,9 +31,12 @@ public class SplashActivity extends AppCompatActivity {
         }else{
             Constant.token = token;
             intent.setClass(this,MainActivity.class);
+
         }
 //        intent.setClass(this, MainActivity.class);
+//        intent.addFlags(intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
+
         finish();
     }
 }
