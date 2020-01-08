@@ -13,11 +13,13 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.myapplication.R;
@@ -65,7 +67,7 @@ public class SettingActivity extends BaseActivity implements UsercenterConstract
     @BindView(R.id.txt_zwName)
     TextView txtZwName;
     @BindView(R.id.txt_logout)
-    TextView txtlogout;
+    LinearLayout txtlogout;
     @BindView(R.id.progress)
     ProgressBar progressBar;
 
@@ -93,14 +95,16 @@ public class SettingActivity extends BaseActivity implements UsercenterConstract
         zw = getIntent().getStringExtra("zw");
 
         if(!TextUtils.isEmpty(avatar)){
-            Glide.with(this).load(avatar).apply(new RequestOptions().transform(new RoundedCorners(20)))
-                    .into(ivHeader);
+//            Glide.with(this).load(avatar).apply(new RequestOptions().transform(new RoundedCorners(20)))
+//                    .into(ivHeader);
+            Glide.with(this).load(avatar).apply(RequestOptions.bitmapTransform(new CircleCrop())).into(ivHeader);
         }
         if(!TextUtils.isEmpty(nickname)){
             txtNickname.setText(nickname);
         }
         if(!TextUtils.isEmpty(zw)){
-            txtZw.setText(zw);
+//            txtZw.setText(zw);
+            txtZwName.setText(zw);
         }
     }
 
@@ -253,8 +257,10 @@ public class SettingActivity extends BaseActivity implements UsercenterConstract
     public void updateUserInfoReturn(UserInfoUpdateBean result) {
         progressBar.setVisibility(View.GONE);
         if(result.getCode() == 10000){
-            Glide.with(this).load(avatar).apply(new RequestOptions().transform(new RoundedCorners(20)))
-                    .into(ivHeader);
+//            Glide.with(this).load(avatar).apply(new RequestOptions().transform(new RoundedCorners(20)))
+//                    .into(ivHeader);
+            Glide.with(this).load(avatar).apply(RequestOptions.bitmapTransform(new CircleCrop())).into(ivHeader);
+
         }
     }
 
