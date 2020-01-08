@@ -31,6 +31,7 @@ import com.example.myapplication.ui.fragment.HomeFragment;
 import com.example.myapplication.ui.fragment.MineFragment;
 import com.example.myapplication.ui.fragment.ClassifyFragment;
 import com.example.myapplication.ui.fragment.StudyFragment;
+import com.example.myapplication.utils.NumView;
 
 import org.greenrobot.greendao.annotation.JoinEntity;
 
@@ -53,13 +54,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     RelativeLayout layoutSearch;
     @BindView(R.id.layout_msg)
     ConstraintLayout layoutMsg;
-
-
+    @BindView(R.id.num_wx)
+    NumView numWx;
     private FragmentManager manager;
     Fragment homeFragment;
     Fragment classifyFragment;
     Fragment mineFragment;
-
     int curType;
 
 
@@ -110,6 +110,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             }
         });
         showFragment(0);
+//        int numwx = Integer.valueOf(Constant.NUM_VIEW).intValue();
+            numWx.setNum(Constant.NUM_VIEW);
     }
 
     @Override

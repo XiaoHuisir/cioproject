@@ -18,7 +18,7 @@ public class Constant {
 
     public static String token = "";
 
-    public static String NUM_VIEW = "";
+    public static int NUM_VIEW = 0;
 
     public static int CourseType = 2;
 
