@@ -68,6 +68,8 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
                 edPw.setText(pw);
             }
         }
+        edPhone.setText("18701420943");
+        edPw.setText("18701420943");
 //        edPhone.setFocusable(false);
 //        edPw.setFocusable(false);
 

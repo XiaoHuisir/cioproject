@@ -92,6 +92,15 @@ public class SearchFragment extends BaseFragment implements BaseAdapter.OnItemCl
         ((SearchPresenter) mPresenter).search(word, String.valueOf(type), String.valueOf(page));
     }
 
+    /**
+     * 清理搜索
+     */
+    public void clearSearch(){
+        page = 1;
+        this.word = "";
+        list.clear();
+        searchAdapter.notifyDataSetChanged();
+    }
 
     @Override
     public void onItemClick(View v, int position) {
@@ -117,7 +126,7 @@ public class SearchFragment extends BaseFragment implements BaseAdapter.OnItemCl
         }else{
             list.clear();
             if(result.size() == 0){
-                tabLayoutFun.setTabLayout(View.GONE);
+                //tabLayoutFun.setTabLayout(View.GONE);
                 Toast.makeText(context, "没有所搜到相关数据", Toast.LENGTH_SHORT).show();
                 searchAdapter.notifyDataSetChanged();
             }else{

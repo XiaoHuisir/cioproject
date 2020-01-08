@@ -61,7 +61,7 @@ public class SearchActivity extends BaseActivity implements SearchFragment.TabLa
     String[] titles;
     int[] types = new int[]{0,2, 1};
     FmManager fmManager;
-
+    int curPageNo=0;
 
     @Override
     public void initView() {
@@ -78,6 +78,29 @@ public class SearchActivity extends BaseActivity implements SearchFragment.TabLa
 
         //输入文本的监听
         txtInput.addTextChangedListener(textWatcher);
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int i, float v, int i1) {
+
+            }
+
+            @Override
+            public void onPageSelected(int i) {
+                curPageNo = i;
+                //切换分类以后在这里搜索数据 不知道需求是否如此
+                String str = txtInput.getText().toString();
+                if (TextUtils.isEmpty(str)) {
+                    Toast.makeText(context, "请输入搜索内容", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                ((SearchFragment) fragments.get(viewPager.getCurrentItem())).doSearch(str);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int i) {
+
+            }
+        });
     }
 
     TextWatcher textWatcher = new TextWatcher() {
@@ -124,6 +147,8 @@ public class SearchActivity extends BaseActivity implements SearchFragment.TabLa
                 break;
             case R.id.txt_clear:
                 txtInput.setText("");
+                setTabLayout(View.GONE);
+                ((SearchFragment) fragments.get(viewPager.getCurrentItem())).clearSearch();
                 break;
             case R.id.txt_search:
                 String str = txtInput.getText().toString();
