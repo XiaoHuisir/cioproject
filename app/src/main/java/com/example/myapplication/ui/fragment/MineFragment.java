@@ -73,6 +73,12 @@ public class MineFragment extends BaseFragment implements UsercenterConstract.Vi
     TextView txtMyfilelist;
     @BindView(R.id.num_view)
     NumView numView;
+    @BindView(R.id.txt_sixteen)
+    TextView txtSixteen;
+    @BindView(R.id.txt_fifteen)
+    TextView txtFifteen;
+    @BindView(R.id.txt_one)
+    TextView txtOne;
     @BindView(R.id.relative_soos)
     RelativeLayout relativesoos;
     private ArrayList<UserCenterBean.DataBean.HistoryBean> historyBeans;
@@ -181,6 +187,11 @@ public class MineFragment extends BaseFragment implements UsercenterConstract.Vi
 
     private void mydata(UserCenterBean result) {
         String nickname = result.getData().getNickname();
+
+        txtSixteen.setText(String.valueOf(result.getData().getEnd_num()));
+        txtFifteen.setText(String.valueOf(result.getData().getPass_num()));
+        txtOne.setText(String.valueOf(result.getData().getNopass_num()));
+
         if (!TextUtils.isEmpty(nickname)) {
             txtdutyname.setText(nickname);
         } else {
