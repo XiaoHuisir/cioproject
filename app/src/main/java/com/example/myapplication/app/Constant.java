@@ -30,9 +30,9 @@ public class Constant {
     public static final int COURSE_TYPE_1 = 1; //课外学习
     public static final int COURSE_TYPE_2 = 2; //培训
 
-    public static final int STUDY_TYPE_1 = 0; //智慧课堂
-    public static final int STUDY_TYPE_2 = 1; //内部培训
-    public static final int STUDY_TYPE_3 = 2; //其他培训
+    public static final int STUDY_TYPE_1 = 1; //智慧课堂
+    public static final int STUDY_TYPE_2 = 2; //内部培训
+    public static final int STUDY_TYPE_3 = 3; //其他培训
 
 
     public static String CURTYPE = "";

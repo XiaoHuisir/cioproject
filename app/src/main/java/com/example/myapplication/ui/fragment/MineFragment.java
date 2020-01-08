@@ -78,7 +78,7 @@ public class MineFragment extends BaseFragment implements UsercenterConstract.Vi
     private ArrayList<UserCenterBean.DataBean.HistoryBean> historyBeans;
     private RecordAdapter recordAdapter;
     UserCenterBean userCenterBean;
-    public boolean inxdler = false;
+//    public boolean inxdler = false;
     private int noticenum;
 
     @Override
@@ -107,10 +107,6 @@ public class MineFragment extends BaseFragment implements UsercenterConstract.Vi
                 Intent intent1 = new Intent();
                 intent1.setClass(context, NoticeListAcitivity.class);
                 startActivity(intent1);
-                if (inxdler == true) {
-                    numView.setNum(0);
-                    inxdler=true;
-                }
                 break;
             case R.id.txt_study_all:
                 Intent intentall = new Intent();
@@ -169,14 +165,13 @@ public class MineFragment extends BaseFragment implements UsercenterConstract.Vi
             noticenum = Integer.valueOf(notice_num).intValue();
 //            int notice_nums = Integer.parseInt(notice_num);
             Constant.NUM_VIEW = noticenum;
-            if (inxdler == false) {
                 if (noticenum == 0) {
                     numView.setNum(0);
                 } else {
                     numView.setNum(noticenum);
                 }
-                inxdler = true;
-            }
+
+
 
 
         }
@@ -214,7 +209,7 @@ public class MineFragment extends BaseFragment implements UsercenterConstract.Vi
             kcpxnum.setText(String.valueOf(result.getData().getKcpx_num()));
         }
         if (result.getData().getKwxx_time() >= Constant.ZERO) {
-            kwxxtime.setText(String.valueOf(result.getData().getKwxx_time()) + " 分钟");
+            kwxxtime.setText(String.valueOf(result.getData().getKwxx_time()/60) + " 分钟");
         }
         if (result.getData().getKwxx_num() >= Constant.ZERO) {
             kwxxnum.setText(result.getData().getKwxx_num() + "门");
