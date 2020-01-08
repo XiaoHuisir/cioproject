@@ -318,8 +318,9 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/re_record"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/dp_60"
             android:layout_marginTop="@dimen/dp_8"
+            android:layout_marginBottom="@dimen/dp_16"
             android:background="@color/whites" />
     </LinearLayout>
 
