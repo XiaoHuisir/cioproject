@@ -3,6 +3,7 @@ package com.example.myapplication.ui.acivity.search;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,6 +19,9 @@ import com.example.myapplication.interfaces.IBasePresenter;
 import com.example.myapplication.interfaces.contract.IndexConstract;
 import com.example.myapplication.presenter.home.SearchPresenter;
 import com.example.myapplication.ui.acivity.video.VideoActivity;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -29,8 +33,8 @@ public class SearchFragment extends BaseFragment implements BaseAdapter.OnItemCl
 
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
-    @BindView(R.id.swipeRefresh)
-    SwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R.id.smartRefresh)
+    SmartRefreshLayout smartRefresh;
 
     SearchAdapter searchAdapter;
     List<SearchBean.DataBean.CurriculumDataBean> list;
@@ -39,6 +43,7 @@ public class SearchFragment extends BaseFragment implements BaseAdapter.OnItemCl
     int type = 0;
     TabLayoutFun tabLayoutFun;
     String word;
+    boolean isRefreshing;
 
     public static SearchFragment instance(int type,TabLayoutFun tabLayoutFun){
         SearchFragment fragment = new SearchFragment();
@@ -58,13 +63,6 @@ public class SearchFragment extends BaseFragment implements BaseAdapter.OnItemCl
         return R.layout.fragment_search;
     }
 
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if(isVisibleToUser){
-            page = 0;
-        }
-    }
 
     @Override
     protected void initView() {
@@ -73,11 +71,18 @@ public class SearchFragment extends BaseFragment implements BaseAdapter.OnItemCl
         searchAdapter.setOnItemClickListener(this);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         recyclerView.setAdapter(searchAdapter);
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+
+        smartRefresh.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
-            public void onRefresh() {
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
                 page++;
+                isRefreshing = true;
                 ((SearchPresenter) mPresenter).search(word, String.valueOf(type), String.valueOf(page));
+            }
+
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                smartRefresh.finishRefresh(500);
             }
         });
     }
@@ -89,6 +94,7 @@ public class SearchFragment extends BaseFragment implements BaseAdapter.OnItemCl
     public void doSearch(String word){
         page = 1;
         this.word = word;
+        isRefreshing = false;
         ((SearchPresenter) mPresenter).search(word, String.valueOf(type), String.valueOf(page));
     }
 
@@ -113,8 +119,8 @@ public class SearchFragment extends BaseFragment implements BaseAdapter.OnItemCl
 
     @Override
     public void searchResult(List<SearchBean.DataBean.CurriculumDataBean> result) {
-        if(swipeRefreshLayout.isRefreshing()){
-            swipeRefreshLayout.setRefreshing(false);
+        if(isRefreshing){
+            smartRefresh.finishLoadMore(300);
             if(result.size() > 0){
                 tabLayoutFun.setTabLayout(View.VISIBLE);
                 list.addAll(result);
@@ -140,15 +146,15 @@ public class SearchFragment extends BaseFragment implements BaseAdapter.OnItemCl
 
     @Override
     public void showError(String errorMsg) {
-        if(swipeRefreshLayout.isRefreshing()){
-            swipeRefreshLayout.setRefreshing(false);
+        if(isRefreshing){
+            smartRefresh.finishLoadMore();
         }
     }
 
     @Override
     public void showError() {
-        if(swipeRefreshLayout.isRefreshing()){
-            swipeRefreshLayout.setRefreshing(false);
+        if(isRefreshing){
+            smartRefresh.finishLoadMore();
         }
     }
 
