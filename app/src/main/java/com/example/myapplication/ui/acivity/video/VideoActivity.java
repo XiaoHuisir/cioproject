@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -76,9 +77,11 @@ public class VideoActivity extends BaseActivity implements CurriculumConstract.V
     @BindView(R.id.img_material)
     RelativeLayout imgMaterial;
     @BindView(R.id.linear_details)
-    LinearLayout lineardetails;
+    ScrollView lineardetails;
     @BindView(R.id.image_log)
     ImageView imageLog;
+    @BindView(R.id.layout_bottoms)
+    RelativeLayout layoutbottoms;
     @BindView(R.id.txt_teacher)
     TextView txTeacher;
     @BindView(R.id.txt_gs)
@@ -89,6 +92,8 @@ public class VideoActivity extends BaseActivity implements CurriculumConstract.V
     TextView txtContent;
     @BindView(R.id.image_back)
     ImageView image_back;
+    @BindView(R.id.relative_xq)
+    RelativeLayout relative_xq;
 
     private static final int CODE_EXERCISES = 100;
 
@@ -122,6 +127,8 @@ public class VideoActivity extends BaseActivity implements CurriculumConstract.V
         //TODO
         txtDetail.setVisibility(View.VISIBLE);
         txtIntro.setVisibility(View.INVISIBLE);
+        relative_xq.setVisibility(View.VISIBLE);
+        layoutbottoms.setVisibility(View.VISIBLE);
 //        txtStudyTitle.setVisibility(View.VISIBLE);
     }
 
@@ -186,19 +193,23 @@ public class VideoActivity extends BaseActivity implements CurriculumConstract.V
                 selectVideo();
                 break;
             case R.id.txt_detail:
+                relative_xq.setVisibility(View.INVISIBLE);
+                layoutbottoms.setVisibility(View.INVISIBLE);
                 txtIntro.setVisibility(View.VISIBLE);
                 txtDetail.setVisibility(View.INVISIBLE);
-                txtStudyTitle.setVisibility(View.INVISIBLE);
-                pdfRecyclerview.setVisibility(View.INVISIBLE);
+//                txtStudyTitle.setVisibility(View.INVISIBLE);
+//                pdfRecyclerview.setVisibility(View.INVISIBLE);
                 lineardetails.setVisibility(View.VISIBLE);
                 imgMaterial.setVisibility(View.INVISIBLE);
                 detail();
                 break;
             case R.id.txt_intro:
+                relative_xq.setVisibility(View.VISIBLE);
+                layoutbottoms.setVisibility(View.VISIBLE);
                 txtIntro.setVisibility(View.INVISIBLE);
-                txtStudyTitle.setVisibility(View.VISIBLE);
+//                txtStudyTitle.setVisibility(View.VISIBLE);
                 txtDetail.setVisibility(View.VISIBLE);
-                pdfRecyclerview.setVisibility(View.VISIBLE);
+//                pdfRecyclerview.setVisibility(View.VISIBLE);
                 lineardetails.setVisibility(View.INVISIBLE);
                 if (curriculumBean.getData().getFile_data().size() == 0) {
                 imgMaterial.setVisibility(View.VISIBLE);
