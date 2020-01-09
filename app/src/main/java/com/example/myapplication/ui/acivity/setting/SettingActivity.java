@@ -45,7 +45,9 @@ import com.qiniu.android.storage.UploadOptions;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -288,7 +290,7 @@ public class SettingActivity extends BaseActivity implements UsercenterConstract
      */
     private void updateUserInfo(String header){
         avatar = header;
-        ((UpdateUserInfoPresenter)mPresenter).updateUserInfo(nickname,zw,header);
+        ((UpdateUserInfoPresenter)mPresenter).updateUserInfo("","",avatar);
     }
 
 }

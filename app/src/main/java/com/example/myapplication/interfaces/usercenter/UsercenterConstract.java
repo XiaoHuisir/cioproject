@@ -11,6 +11,8 @@ import com.example.myapplication.interfaces.contract.LoginContract;
 import com.example.myapplication.interfaces.contract.UnredNoticeConstract;
 import com.example.myapplication.presenter.usercenter.UserCenterPresenter;
 
+import java.util.Map;
+
 public interface UsercenterConstract {
 
     interface View extends IBaseView {
@@ -32,6 +34,7 @@ public interface UsercenterConstract {
     }
 
     interface UpdatePresenter extends IBasePresenter<UpdateView>{
+
         void updateUserInfo(String nickname,String zw,String avatar);
 
         void getToken();

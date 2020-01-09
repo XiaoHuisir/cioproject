@@ -10,10 +10,13 @@ import com.example.myapplication.utils.CommonSubscriber;
 import com.example.myapplication.utils.HttpUtils;
 import com.example.myapplication.utils.RxUtils;
 
+import java.util.Map;
+
 public class UpdateUserInfoPresenter extends BasePresenter<UsercenterConstract.UpdateView> implements UsercenterConstract.UpdatePresenter {
+
     @Override
-    public void updateUserInfo(String nickname, String zw, String avatar) {
-        addSubscribe(HttpUtils.getMyServer(Constant.BaseUrl).updateUserInfo(Constant.token, nickname, zw,avatar)
+    public void updateUserInfo(String nickname,String zw,String avatar) {
+        addSubscribe(HttpUtils.getMyServer(Constant.BaseUrl).updateUserInfo(Constant.token, nickname,zw,avatar)
                 .compose(RxUtils.<UserInfoUpdateBean>rxScheduler())
                 .subscribeWith(new CommonSubscriber<UserInfoUpdateBean>(mView) {
                     @Override

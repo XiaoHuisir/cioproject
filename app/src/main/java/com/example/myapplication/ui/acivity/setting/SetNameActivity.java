@@ -19,6 +19,8 @@ import com.example.myapplication.interfaces.usercenter.UsercenterConstract;
 import com.example.myapplication.presenter.usercenter.UpdateUserInfoPresenter;
 
 import java.nio.file.SecureDirectoryStream;
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -101,12 +103,13 @@ public class SetNameActivity extends BaseActivity implements UsercenterConstract
         if (!TextUtils.isEmpty(curEditor)) {
             if (type == 100) {
                 if (!curEditor.equals(nickname)) {
-                    ((UsercenterConstract.UpdatePresenter) mPresenter).updateUserInfo(curEditor, zw, "");
+                    ((UsercenterConstract.UpdatePresenter) mPresenter).updateUserInfo(curEditor,"","");
 
                 }
             } else if (type == 102) {
                 if (!curEditor.equals(zw)) {
-                    ((UsercenterConstract.UpdatePresenter) mPresenter).updateUserInfo(nickname, curEditor, "");
+                    Map<String,String> map = new HashMap<String, String>();
+                    ((UsercenterConstract.UpdatePresenter) mPresenter).updateUserInfo("",curEditor,"");
                 }
             }
         }

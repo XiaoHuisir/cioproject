@@ -21,6 +21,7 @@ import com.example.myapplication.bean.UserInfoUpdateBean;
 
 import org.json.JSONArray;
 
+import java.io.File;
 import java.util.Map;
 
 import io.reactivex.Flowable;
@@ -72,7 +73,8 @@ public interface Api {
 
     @POST("index/train/userinfo_update")
     @FormUrlEncoded
-    Flowable<UserInfoUpdateBean> updateUserInfo(@Header("x-access-token") String token, @Field("nickname") String nickname, @Field("zw") String zw, @Field("avatar") String avatar);
+    Flowable<UserInfoUpdateBean> updateUserInfo(@Header("x-access-token") String token, @Field("nickname") String nickname,
+                                                @Field("zw") String zw,@Field("avatar") String avatar);
 
     @POST("index/user/get_token")
     Flowable<TokenBean> getToken(@Header("x-access-token") String token);
