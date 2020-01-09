@@ -144,14 +144,23 @@
                 android:background="@color/white"/>
 
         </android.support.constraint.ConstraintLayout>
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerView"
+        <!--SmartRefreshLayout-->
+        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+            android:id="@+id/smartrefresh_classfy"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginLeft="@dimen/dp_10"
             android:layout_marginRight="@dimen/dp_10"
             app:layout_constraintTop_toBottomOf="@id/layout_title"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            >
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                />
+        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
 
     </android.support.constraint.ConstraintLayout>
 

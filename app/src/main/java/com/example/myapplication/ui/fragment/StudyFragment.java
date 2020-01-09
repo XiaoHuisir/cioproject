@@ -2,9 +2,11 @@ package com.example.myapplication.ui.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.myapplication.R;
@@ -34,8 +36,10 @@ public class StudyFragment extends BaseFragment implements IndexConstract.View ,
     RecyclerView recyclerView;
     @BindView(R.id.banner_learn)
     Banner banners;
+    @BindView(R.id.swipeRefresh_study)
+    SwipeRefreshLayout swipeRefreshStudy;
 
-    private int courseType = 1;
+     int page = 1;
 
     IndexAdapter indexAdapter;
     List<IndexBean.DataBean.CurriculumDataBean> list;
@@ -57,15 +61,22 @@ public class StudyFragment extends BaseFragment implements IndexConstract.View ,
         indexAdapter.itemClick = this;
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         recyclerView.setAdapter(indexAdapter);
-
         getIndex();
+        swipeRefreshStudy.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                page++;
+                getIndex();
+            }
+        });
+
     }
 
     private void getIndex() {
         Map<String, String> map = new HashMap<String, String>();
         map.put("curriculum", String.valueOf(1));
         map.put("type", "");
-        map.put("page", "1");
+        map.put("page", String.valueOf(page));
         ((IndexPresenter) mPresenter).getIndex(map);
 
 
@@ -79,10 +90,19 @@ public class StudyFragment extends BaseFragment implements IndexConstract.View ,
 
     @Override
     public void getIndexReturn(IndexBean result) {
-        list.clear();
-        list.addAll(result.getData().getCurriculum_data());
-        setBanner(result);
-        indexAdapter.notifyDataSetChanged();
+        if (result.getData().getCurriculum_data().size()>0){
+//            list.clear();
+            list.addAll(result.getData().getCurriculum_data());
+            setBanner(result);
+            indexAdapter.notifyDataSetChanged();
+        }else {
+            Toast.makeText(context,"没有更多数据",Toast.LENGTH_LONG).show();
+                page--;
+        }
+        if (swipeRefreshStudy.isRefreshing()){
+            swipeRefreshStudy.setRefreshing(false);
+        }
+
     }
 
     private void setBanner(final IndexBean result) {

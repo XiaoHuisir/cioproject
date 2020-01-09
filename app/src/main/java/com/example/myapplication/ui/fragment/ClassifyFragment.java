@@ -3,7 +3,9 @@ package com.example.myapplication.ui.fragment;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.myapplication.R;
 import com.example.myapplication.adaper.CourseAdapter;
@@ -25,6 +28,11 @@ import com.example.myapplication.interfaces.contract.IndexConstract;
 import com.example.myapplication.interfaces.contract.TypeIndexConstact;
 import com.example.myapplication.presenter.classify.ClassifyPresenter;
 import com.example.myapplication.ui.acivity.video.VideoActivity;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -58,6 +66,8 @@ public class ClassifyFragment extends BaseFragment implements TypeIndexConstact.
     RecyclerView recyclerView;
     @BindView(R.id.null_courses)
     RelativeLayout nullCourses;
+    @BindView(R.id.smartrefresh_classfy)
+    SmartRefreshLayout smartrefreshClassfy;
 
     int type = 1;
     int page = 1;
@@ -95,6 +105,15 @@ public class ClassifyFragment extends BaseFragment implements TypeIndexConstact.
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         recyclerView.setAdapter(typeAdapter);
 
+//        smartrefreshClassfy.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+//            @Override
+//            public void onRefresh() {
+//                page++;
+//                getIndex();
+//            }
+//        });
+
+
     }
 
 
@@ -113,12 +132,10 @@ public class ClassifyFragment extends BaseFragment implements TypeIndexConstact.
                 courseAdapter.notifyDataSetChanged();
                 studyAdapter.notifyDataSetChanged();
             }
-
         }
-        curriculumList.clear();
-        curriculumList.addAll(bean.getData().getCurriculum_data());
-        typeAdapter.notifyDataSetChanged();
-
+            curriculumList.clear();
+            curriculumList.addAll(bean.getData().getCurriculum_data());
+            typeAdapter.notifyDataSetChanged();
 
 
     }
