@@ -52,6 +52,7 @@ public abstract class BaseActivity<V extends IBaseView, P extends IBasePresenter
             ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
             addContentView(inflate, params);
         } else {
+
             initFragments();
             initView();
             initData();

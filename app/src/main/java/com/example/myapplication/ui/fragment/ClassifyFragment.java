@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -30,8 +29,6 @@ import com.example.myapplication.presenter.classify.ClassifyPresenter;
 import com.example.myapplication.ui.acivity.video.VideoActivity;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
-import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
 import java.lang.reflect.Array;
@@ -50,6 +47,8 @@ import q.rorbin.verticaltablayout.widget.TabView;
 public class ClassifyFragment extends BaseFragment implements TypeIndexConstact.View, CourseAdapter.CourseItemClick,
         StudyAdapter.StudyItemClick, TypeAdapter.TypeItemClick {
 
+    @BindView(R.id.txt_title)
+    TextView txtTitle;
     @BindView(R.id.txt_course_title)
     TextView txtCourseTitle;
     @BindView(R.id.tab_course)
@@ -66,8 +65,20 @@ public class ClassifyFragment extends BaseFragment implements TypeIndexConstact.
     RecyclerView recyclerView;
     @BindView(R.id.null_courses)
     RelativeLayout nullCourses;
-    @BindView(R.id.smartrefresh_classfy)
-    SmartRefreshLayout smartrefreshClassfy;
+
+    @BindView(R.id.smartRefresh)
+    SmartRefreshLayout smartRefresh;
+
+    @BindView(R.id.line1_normal)
+    View line1_normal;
+    @BindView(R.id.line1_select)
+    View line1_select;
+    @BindView(R.id.line2_normal)
+    View line2_normal;
+    @BindView(R.id.line2_select)
+    View line2_select;
+
+
 
     int type = 1;
     int page = 1;
@@ -79,6 +90,7 @@ public class ClassifyFragment extends BaseFragment implements TypeIndexConstact.
 
     List<TypeIndexBean.DataBean.CurriculumDataBean> curriculumList;
     TypeAdapter typeAdapter;
+    boolean isRefresh;
 
     @Override
     protected IBasePresenter getPresenter() {
@@ -100,30 +112,38 @@ public class ClassifyFragment extends BaseFragment implements TypeIndexConstact.
         tabCourse.setAdapter(courseAdapter);
         tabStudy.setLayoutManager(new LinearLayoutManager(context));
         tabStudy.setAdapter(studyAdapter);
+
         curriculumList = new ArrayList<>();
         typeAdapter = new TypeAdapter(curriculumList, this);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         recyclerView.setAdapter(typeAdapter);
 
-//        smartrefreshClassfy.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-//            @Override
-//            public void onRefresh() {
-//                page++;
-//                getIndex();
-//            }
-//        });
+        smartRefresh.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                isRefresh = true;
+                page++;
+                ((ClassifyPresenter) mPresenter).getTypeIndex(String.valueOf(type), String.valueOf(page));
+            }
 
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                smartRefresh.finishRefresh(300);
+            }
+        });
 
     }
 
 
     @Override
     protected void initData() {
+        isRefresh = false;
         ((ClassifyPresenter) mPresenter).getTypeIndex(String.valueOf(type), String.valueOf(page));
     }
 
     @Override
     public void getTypeIndexReturn(TypeIndexBean bean) {
+        smartRefresh.finishLoadMore(500);
         if (courseList.size() == 0) {
             courseList.addAll(bean.getData().getCurriculum_px());
             if (courseList.size() > 0) {
@@ -132,12 +152,21 @@ public class ClassifyFragment extends BaseFragment implements TypeIndexConstact.
                 courseAdapter.notifyDataSetChanged();
                 studyAdapter.notifyDataSetChanged();
             }
+            txtCourseTitle.setText("培训课程");
+            txtStudyTitle.setText("课外学习");
+
+            selectCourse();
         }
-            curriculumList.clear();
+
+        if(bean.getData().getCurriculum_data().size() > 0){
             curriculumList.addAll(bean.getData().getCurriculum_data());
             typeAdapter.notifyDataSetChanged();
-
-
+        }else{
+            if(isRefresh){
+                page--;
+            }
+            Toast.makeText(context,"无课程数据",Toast.LENGTH_SHORT).show();
+        }
     }
 
     /**
@@ -150,19 +179,21 @@ public class ClassifyFragment extends BaseFragment implements TypeIndexConstact.
         type = id;
         for (TypeIndexBean.DataBean.CurriculumKwBean item : studyList) {
             item.select = false;
-
         }
+
         for (TypeIndexBean.DataBean.CurriculumPxBean item : courseList) {
             if (item.getId() == id) {
                 item.select = true;
-
+                txtTitle.setText(item.getTitle());
             } else {
                 item.select = false;
-
             }
         }
-        layoutStudy.setBackground(null);
-        layoutCourse.setBackgroundResource(R.drawable.tab_bg);
+        selectCourse();
+
+        curriculumList.clear();
+        typeAdapter.notifyDataSetChanged();
+
         courseAdapter.notifyDataSetChanged();
         studyAdapter.notifyDataSetChanged();
         //刷新分类数据
@@ -188,13 +219,38 @@ public class ClassifyFragment extends BaseFragment implements TypeIndexConstact.
                 item.select = false;
             }
         }
-        layoutCourse.setBackground(null);
-        layoutStudy.setBackgroundResource(R.drawable.tab_bg);
+        selectStudy();
+
+        curriculumList.clear();
+        typeAdapter.notifyDataSetChanged();
+
         courseAdapter.notifyDataSetChanged();
         studyAdapter.notifyDataSetChanged();
         //刷新分类数据
         initData();
     }
+
+    //选择培训课程的分类
+    private void selectCourse(){
+        line1_normal.setVisibility(View.GONE);
+        line1_select.setVisibility(View.VISIBLE);
+        layoutCourse.setBackgroundResource(R.drawable.tab_bg_select);
+        line2_normal.setVisibility(View.VISIBLE);
+        line2_select.setVisibility(View.GONE);
+        layoutStudy.setBackgroundResource(0);
+    }
+
+    //选择课外学习的分类
+    private void selectStudy(){
+        line1_normal.setVisibility(View.VISIBLE);
+        line1_select.setVisibility(View.GONE);
+        layoutCourse.setBackgroundResource(0);
+        line2_normal.setVisibility(View.GONE);
+        line2_select.setVisibility(View.VISIBLE);
+        layoutStudy.setBackgroundResource(R.drawable.tab_bg_select);
+    }
+
+
 
     @Override
     public void typeClick(int id) {
@@ -220,5 +276,12 @@ public class ClassifyFragment extends BaseFragment implements TypeIndexConstact.
             curriculumList.add(bean);
         }
         typeAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        page = 1;
+        type = 1;
     }
 }
