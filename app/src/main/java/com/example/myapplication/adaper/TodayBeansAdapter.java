@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide;
 import com.example.myapplication.R;
 import com.example.myapplication.base.BaseAdapter;
 import com.example.myapplication.bean.ToadayBean;
+import com.example.myapplication.utils.DateUtil;
 
 import java.util.List;
 
@@ -27,18 +28,26 @@ public class TodayBeansAdapter extends BaseAdapter {
 
     @Override
     protected void bindData(BaseViewHolder holder, int positon, Object o) {
+        ToadayBean.DataBean.TodayBean data = (ToadayBean.DataBean.TodayBean) mDatas.get(positon);
         ImageView ivtoday = (ImageView) holder.getView(R.id.iv_todaybean);
         TextView textdata = (TextView) holder.getView(R.id.text_databeans);
         TextView textname = (TextView) holder.getView(R.id.text_namebeans);
         TextView textgs = (TextView) holder.getView(R.id.text_gsbeans);
         TextView text_watchtime = (TextView) holder.getView(R.id.text_watchtimebeans);
-        ToadayBean.DataBean.TodayBean data = (ToadayBean.DataBean.TodayBean) mDatas.get(positon);
+        String userDate = DateUtil.getUserDate(String.valueOf(data.getLen()/60));
+
+        long len = (long)data.getLen();
+        String lens = DateUtil.formatTimeS(len);
+
+        text_watchtime.setText("观看至"+lens);
 
 
         Glide.with(mContext).load(data.getLog()).into(ivtoday);
         textdata.setText(data.getTitle());
         textname.setText(data.getTeacher());
         textgs.setText(data.getGs());
+
+
         text_watchtime.setText(String.valueOf(data.getUpdate_time()));
         ConstraintLayout layout = (ConstraintLayout) holder.getView(R.id.constraint_todaybeans);
         layout.setTag(String.valueOf(data.getCurriculum_id()));

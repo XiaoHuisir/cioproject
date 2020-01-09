@@ -12,6 +12,7 @@ import com.example.myapplication.R;
 import com.example.myapplication.base.BaseAdapter;
 import com.example.myapplication.bean.PorfolioBean;
 import com.example.myapplication.bean.ToadayBean;
+import com.example.myapplication.utils.DateUtil;
 
 import java.util.List;
 
@@ -39,7 +40,10 @@ public class TodayAdapter extends BaseAdapter {
         textname.setText(data.getTeacher());
         textgs.setText(data.getGs());
         text_watchtime.setText(String.valueOf(data.getUpdate_time()));
+        long len = (long)data.getLen();
+        String lens = DateUtil.formatTimeS(len);
 
+        text_watchtime.setText("观看至"+lens);
         ConstraintLayout layout = (ConstraintLayout) holder.getView(R.id.constraint_day);
         layout.setTag(String.valueOf(data.getCurriculum_id()));
         layout.setOnClickListener(new View.OnClickListener() {
