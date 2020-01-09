@@ -203,9 +203,9 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
+                        android:layout_toRightOf="@+id/kcpx_time"
                         android:layout_centerVertical="true"
-                        android:layout_marginLeft="@dimen/dp_272"
+                        android:layout_marginLeft="@dimen/dp_4"
                         android:text="分钟"
                         android:textColor="@color/grays"
                         android:textSize="@dimen/sp_14" />

@@ -151,8 +151,7 @@ public class DateUtil {
     /**
      * 根据用户传入的时间表示格式，返回当前时间的格式 如果是yyyyMMdd，注意字母y不能大写。
      *
-     * @param sformat
-     *            yyyyMMddhhmmss
+     * @param sformat yyyyMMddhhmmss
      * @return
      */
     public static String getUserDate(String sformat) {
@@ -227,6 +226,35 @@ public class DateUtil {
             }
         }
     }
+
+/**将秒转换成观看至 04分25秒*/
+    public static String formatTimeS(long seconds) {
+        int temp = 0;
+        StringBuffer sb = new StringBuffer();
+        if (seconds > 3600) {
+            temp = (int) (seconds / 3600);
+            sb.append((seconds / 3600) < 10 ? "0" + temp + ":" : temp + ":");
+            temp = (int) (seconds % 3600 / 60);
+            changeSeconds(seconds, temp, sb);
+        } else {
+            temp = (int) (seconds % 3600 / 60);
+            changeSeconds(seconds, temp, sb);
+
+        }
+        return sb.toString();
+    }
+
+    private static void changeSeconds(long seconds, int temp, StringBuffer sb) {
+        sb.append((temp < 10) ? "0" + temp + "" : "" + temp + "");
+        temp = (int) (seconds % 3600 % 60);
+        sb.append((temp < 10) ? "0" + temp : "分" + temp+"秒");
+    }
+
+
+
+
+
+
 
 
 }

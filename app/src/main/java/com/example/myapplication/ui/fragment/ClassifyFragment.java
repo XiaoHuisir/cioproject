@@ -90,7 +90,6 @@ public class ClassifyFragment extends BaseFragment implements TypeIndexConstact.
         tabCourse.setAdapter(courseAdapter);
         tabStudy.setLayoutManager(new LinearLayoutManager(context));
         tabStudy.setAdapter(studyAdapter);
-
         curriculumList = new ArrayList<>();
         typeAdapter = new TypeAdapter(curriculumList, this);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
@@ -121,6 +120,7 @@ public class ClassifyFragment extends BaseFragment implements TypeIndexConstact.
         typeAdapter.notifyDataSetChanged();
 
 
+
     }
 
     /**
@@ -133,12 +133,15 @@ public class ClassifyFragment extends BaseFragment implements TypeIndexConstact.
         type = id;
         for (TypeIndexBean.DataBean.CurriculumKwBean item : studyList) {
             item.select = false;
+
         }
         for (TypeIndexBean.DataBean.CurriculumPxBean item : courseList) {
             if (item.getId() == id) {
                 item.select = true;
+
             } else {
                 item.select = false;
+
             }
         }
         layoutStudy.setBackground(null);

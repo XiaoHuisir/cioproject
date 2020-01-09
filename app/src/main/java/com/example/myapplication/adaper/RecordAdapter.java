@@ -13,6 +13,8 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.myapplication.R;
 import com.example.myapplication.base.BaseAdapter;
 import com.example.myapplication.bean.UserCenterBean;
+import com.example.myapplication.utils.DateUtil;
+import com.example.myapplication.utils.SharedPreferencesUtil;
 
 import java.util.List;
 
@@ -36,7 +38,12 @@ public class RecordAdapter extends BaseAdapter {
         Glide.with(mContext).load(data.getLog())
                 .apply(new RequestOptions().transform(new RoundedCorners(5)))
                 .into(imgicon);
-        times.setText(String.valueOf(data.getLen()));
+        String userDate = DateUtil.getUserDate(String.valueOf(data.getLen()/60));
+
+        long len = (long)data.getLen();
+        String lens = DateUtil.formatTimeS(len);
+
+        times.setText("观看至"+lens);
         titles.setText(data.getTitle());
 
 
