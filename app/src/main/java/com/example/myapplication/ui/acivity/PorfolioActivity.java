@@ -26,9 +26,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 public class PorfolioActivity extends BaseActivity {
-  public  boolean  inxdler=false;
-  public  boolean  inxdler1=false;
-  public  boolean  inxdler2=false;
+
     @BindView(R.id.image_return)
     ImageView imageReturn;
     @BindView(R.id.btn_types_all)
@@ -87,13 +85,11 @@ public class PorfolioActivity extends BaseActivity {
     }
 
     private void allTypes() {
-        if (inxdler==false) {
-            btnAlltypes.setBackgroundResource(R.drawable.bg_red_button);
-            inxdler=true;
-        } else {
-            btnAlltypes.setBackgroundResource(R.drawable.bg_red_buttons);
-            inxdler=false;
-        }
+        btnAlltypes.setBackgroundResource(R.drawable.text_bg_true);
+        btnTrc.setBackgroundResource(R.drawable.text_bg_false);
+        btnBeyond.setBackgroundResource(R.drawable.text_bg_false);
+
+        btnAlltypes.setBackgroundResource(R.drawable.text_bg_true);
         android.support.v4.app.FragmentTransaction transaction1 = getSupportFragmentManager().beginTransaction();
         transaction1.show(allTypseFragment)
                 .hide(trainTypesFragment)
@@ -102,13 +98,10 @@ public class PorfolioActivity extends BaseActivity {
     }
 
     private void trainTypes() {
-        if (inxdler1==false) {
-            btnTrc.setBackgroundResource(R.drawable.bg_red_button);
-            inxdler1=true;
-        } else {
-            btnTrc.setBackgroundResource(R.drawable.bg_red_buttons);
-            inxdler1=false;
-        }
+        btnAlltypes.setBackgroundResource(R.drawable.text_bg_false);
+        btnTrc.setBackgroundResource(R.drawable.text_bg_true);
+        btnBeyond.setBackgroundResource(R.drawable.text_bg_false);
+
         android.support.v4.app.FragmentTransaction transaction1 = getSupportFragmentManager().beginTransaction();
         transaction1.show(trainTypesFragment)
                 .hide(allTypseFragment)
@@ -117,13 +110,10 @@ public class PorfolioActivity extends BaseActivity {
     }
 
     private void lessonTypes() {
-        if (inxdler2==false) {
-            btnBeyond.setBackgroundResource(R.drawable.bg_red_button);
-            inxdler2=true;
-        } else {
-            btnBeyond.setBackgroundResource(R.drawable.bg_red_buttons);
-            inxdler2=false;
-        }
+        btnAlltypes.setBackgroundResource(R.drawable.text_bg_false);
+        btnTrc.setBackgroundResource(R.drawable.text_bg_false);
+        btnBeyond.setBackgroundResource(R.drawable.text_bg_true);
+
         android.support.v4.app.FragmentTransaction transaction1 = getSupportFragmentManager().beginTransaction();
         transaction1.show(lessonTypesFragment)
                 .hide(allTypseFragment)
