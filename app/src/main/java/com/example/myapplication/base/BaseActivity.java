@@ -42,16 +42,16 @@ public abstract class BaseActivity<V extends IBaseView, P extends IBasePresenter
         unbinder = ButterKnife.bind(this);
         activity = this;
         context = this;
+
+        mPresenter = getPresenter();
+        if (mPresenter != null) {
+            mPresenter.attchView(this);
+        }
         if (!SystemUtils.checkNetWork()) {
             View inflate = LayoutInflater.from(this).inflate(R.layout.not_net, null);
             ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
             addContentView(inflate, params);
         } else {
-            mPresenter = getPresenter();
-            if (mPresenter != null) {
-                mPresenter.attchView(this);
-            }
-
             initFragments();
             initView();
             initData();
