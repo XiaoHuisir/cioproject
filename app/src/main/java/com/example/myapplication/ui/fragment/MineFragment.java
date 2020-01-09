@@ -1,6 +1,7 @@
 package com.example.myapplication.ui.fragment;
 
 import android.content.Intent;
+import android.service.dreams.DreamService;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -106,6 +107,7 @@ public class MineFragment extends BaseFragment implements UsercenterConstract.Vi
                 intent.putExtra("nickname", userCenterBean.getData().getNickname());
                 intent.putExtra("avatar", userCenterBean.getData().getAvatar());
                 intent.putExtra("zw", userCenterBean.getData().getZw());
+                intent.putExtra("mechanism_file", userCenterBean.getData().getMechanism());
                 intent.setClass(getActivity(), SettingActivity.class);
                 startActivityForResult(intent,200);
                 break;
@@ -194,9 +196,10 @@ public class MineFragment extends BaseFragment implements UsercenterConstract.Vi
         txtOne.setText(String.valueOf(result.getData().getNopass_num()));
 
         if (!TextUtils.isEmpty(nickname)) {
-            txttitlename.setText(nickname);
+//            txttitlename.setText(nickname);
+            txtdutyname.setText(nickname);
         } else {
-            txttitlename.setText("***");
+            txtdutyname.setText("***");
         }
         String avatar = result.getData().getAvatar();
         if (!TextUtils.isEmpty(avatar)) {
@@ -206,7 +209,7 @@ public class MineFragment extends BaseFragment implements UsercenterConstract.Vi
         }
         String zw = result.getData().getZw();
         if (!TextUtils.isEmpty(zw)) {
-            txtdutyname.setText(zw);
+            txttitlename.setText(zw);
         } else {
             Toast.makeText(getActivity(), "空", Toast.LENGTH_LONG).show();
         }

@@ -66,6 +66,8 @@ public class SettingActivity extends BaseActivity implements UsercenterConstract
     ImageView setting_back;
     @BindView(R.id.txt_zwName)
     TextView txtZwName;
+    @BindView(R.id.txt_data)
+    TextView txtData;
     @BindView(R.id.txt_logout)
     LinearLayout txtlogout;
     @BindView(R.id.progress)
@@ -74,6 +76,7 @@ public class SettingActivity extends BaseActivity implements UsercenterConstract
     String avatar;
     String nickname;
     String zw;
+    String mechanismFile;
     AlertDialog.Builder builder;
     AlertDialog dialog;
     String imgPath;
@@ -93,6 +96,7 @@ public class SettingActivity extends BaseActivity implements UsercenterConstract
         avatar = getIntent().getStringExtra("avatar");
         nickname = getIntent().getStringExtra("nickname");
         zw = getIntent().getStringExtra("zw");
+        mechanismFile = getIntent().getStringExtra("mechanism_file");
 
         if(!TextUtils.isEmpty(avatar)){
 //            Glide.with(this).load(avatar).apply(new RequestOptions().transform(new RoundedCorners(20)))
@@ -105,6 +109,9 @@ public class SettingActivity extends BaseActivity implements UsercenterConstract
         if(!TextUtils.isEmpty(zw)){
             txtZwName.setText(zw);
 //            txtZw.setText(zw);
+        }
+        if (!TextUtils.isEmpty(mechanismFile)){
+            txtData.setText(mechanismFile);
         }
     }
 

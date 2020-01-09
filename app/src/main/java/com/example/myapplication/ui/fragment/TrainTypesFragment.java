@@ -27,11 +27,16 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public class TrainTypesFragment extends BaseFragment implements PorfolioConstract.View,TodayAdapter.TodayItemClick {
+public class TrainTypesFragment extends BaseFragment implements PorfolioConstract.View, TodayAdapter.TodayItemClick {
     @BindView(R.id.txt_train)
     TextView txtTrain;
-    @BindView(R.id.recycler_traintypes)
-    RecyclerView recyclerTraintypes;
+    @BindView(R.id.recycler_traintypes) //今天
+            RecyclerView recyclerTraintypes;
+    @BindView(R.id.recyc_seven_day)     //七天前
+            RecyclerView recycSevenDay;
+    @BindView(R.id.recyc_day_ago)      //更早
+            RecyclerView recycDayAgo;
+
     private ArrayList<ToadayBean.DataBean.SevenDayBean> trainList;
     private TodayAdapter trainAdapter;
 
@@ -50,13 +55,14 @@ public class TrainTypesFragment extends BaseFragment implements PorfolioConstrac
     protected void initView() {
         trainList = new ArrayList<>();
         trainAdapter = new TodayAdapter(trainList);
-        trainAdapter.itemClick=this;
+        trainAdapter.itemClick = this;
         recyclerTraintypes.setLayoutManager(new LinearLayoutManager(context));
         recyclerTraintypes.setAdapter(trainAdapter);
     }
 
     @Override
     public void getPorfolioReturn(ToadayBean result) {
+
         if (result.getStatus() == 1) {
             List<ToadayBean.DataBean.SevenDayBean> seven_day = result.getData().getSeven_day();
             if (seven_day != null) {
@@ -64,6 +70,7 @@ public class TrainTypesFragment extends BaseFragment implements PorfolioConstrac
                 trainList.addAll(seven_day);
                 trainAdapter.notifyDataSetChanged();
             }
+
         }
     }
 
