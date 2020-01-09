@@ -45,7 +45,9 @@ import com.qiniu.android.storage.UploadOptions;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -58,8 +60,6 @@ public class SettingActivity extends BaseActivity implements UsercenterConstract
 
     @BindView(R.id.txt_nickname)
     TextView txtNickname;
-    @BindView(R.id.txt_zw)
-    TextView txtZw;
     @BindView(R.id.iv_header)
     ImageView ivHeader;
     @BindView(R.id.setting_back)
@@ -103,8 +103,8 @@ public class SettingActivity extends BaseActivity implements UsercenterConstract
             txtNickname.setText(nickname);
         }
         if(!TextUtils.isEmpty(zw)){
-//            txtZw.setText(zw);
             txtZwName.setText(zw);
+//            txtZw.setText(zw);
         }
     }
 
@@ -290,7 +290,7 @@ public class SettingActivity extends BaseActivity implements UsercenterConstract
      */
     private void updateUserInfo(String header){
         avatar = header;
-        ((UpdateUserInfoPresenter)mPresenter).updateUserInfo(nickname,zw,header);
+        ((UpdateUserInfoPresenter)mPresenter).updateUserInfo("","",avatar);
     }
 
 }
