@@ -107,7 +107,7 @@ public class MineFragment extends BaseFragment implements UsercenterConstract.Vi
                 intent.putExtra("avatar", userCenterBean.getData().getAvatar());
                 intent.putExtra("zw", userCenterBean.getData().getZw());
                 intent.setClass(getActivity(), SettingActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent,200);
                 break;
             case R.id.iv_word:  //消息
                 Intent intent1 = new Intent();
@@ -184,6 +184,13 @@ public class MineFragment extends BaseFragment implements UsercenterConstract.Vi
 
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 200){
+            ((UserCenterPresenter) mPresenter).usercenter();
+        }
+    }
 
     private void mydata(UserCenterBean result) {
         String nickname = result.getData().getNickname();
@@ -193,9 +200,9 @@ public class MineFragment extends BaseFragment implements UsercenterConstract.Vi
         txtOne.setText(String.valueOf(result.getData().getNopass_num()));
 
         if (!TextUtils.isEmpty(nickname)) {
-            txtdutyname.setText(nickname);
+            txttitlename.setText(nickname);
         } else {
-            txtdutyname.setText("***");
+            txttitlename.setText("***");
         }
         String avatar = result.getData().getAvatar();
         if (!TextUtils.isEmpty(avatar)) {
@@ -205,7 +212,7 @@ public class MineFragment extends BaseFragment implements UsercenterConstract.Vi
         }
         String zw = result.getData().getZw();
         if (!TextUtils.isEmpty(zw)) {
-            txttitlename.setText(zw);
+            txtdutyname.setText(zw);
         } else {
             Toast.makeText(getActivity(), "空", Toast.LENGTH_LONG).show();
         }

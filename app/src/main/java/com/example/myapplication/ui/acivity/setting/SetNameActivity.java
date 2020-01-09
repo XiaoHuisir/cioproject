@@ -87,10 +87,7 @@ public class SetNameActivity extends BaseActivity implements UsercenterConstract
 //                finish();
                 break;
             case R.id.img_return:
-                Intent intent = new Intent();
-                intent.putExtra("value", returnValue);
-                setResult(type, intent);
-                finish();
+                returnPage();
                 break;
         }
     }
@@ -121,6 +118,7 @@ public class SetNameActivity extends BaseActivity implements UsercenterConstract
         if (result.getCode() == 10000) {
             returnValue = edAlter.getText().toString();
             Toast.makeText(this, "修改信息成功", Toast.LENGTH_SHORT).show();
+            returnPage();
         } else {
             Toast.makeText(this, result.getMsg(), Toast.LENGTH_SHORT).show();
         }
@@ -134,12 +132,17 @@ public class SetNameActivity extends BaseActivity implements UsercenterConstract
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            Intent intent = new Intent();
-            intent.putExtra("value", returnValue);
-            setResult(type, intent);
-            finish();
+            returnPage();
             return false;
         }
         return false;
+    }
+
+
+    private void returnPage(){
+        Intent intent = new Intent();
+        intent.putExtra("value", returnValue);
+        setResult(type, intent);
+        finish();
     }
 }

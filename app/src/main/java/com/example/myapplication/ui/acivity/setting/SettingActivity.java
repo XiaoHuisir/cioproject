@@ -56,8 +56,6 @@ public class SettingActivity extends BaseActivity implements UsercenterConstract
 
     @BindView(R.id.txt_nickname)
     TextView txtNickname;
-    @BindView(R.id.txt_zw)
-    TextView txtZw;
     @BindView(R.id.iv_header)
     ImageView ivHeader;
     @BindView(R.id.setting_back)
@@ -100,7 +98,7 @@ public class SettingActivity extends BaseActivity implements UsercenterConstract
             txtNickname.setText(nickname);
         }
         if(!TextUtils.isEmpty(zw)){
-            txtZw.setText(zw);
+            txtZwName.setText(zw);
         }
     }
 
