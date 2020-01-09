@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.myapplication.R;
@@ -55,6 +56,8 @@ public class ClassifyFragment extends BaseFragment implements TypeIndexConstact.
     ConstraintLayout layoutStudy;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
+    @BindView(R.id.null_courses)
+    RelativeLayout nullCourses;
 
     int type = 1;
     int page = 1;
@@ -105,14 +108,18 @@ public class ClassifyFragment extends BaseFragment implements TypeIndexConstact.
     public void getTypeIndexReturn(TypeIndexBean bean) {
         if (courseList.size() == 0) {
             courseList.addAll(bean.getData().getCurriculum_px());
-            if (courseList.size() > 0) courseList.get(0).select = true;
-            studyList.addAll(bean.getData().getCurriculum_kw());
-            courseAdapter.notifyDataSetChanged();
-            studyAdapter.notifyDataSetChanged();
+            if (courseList.size() > 0) {
+                courseList.get(0).select = true;
+                studyList.addAll(bean.getData().getCurriculum_kw());
+                courseAdapter.notifyDataSetChanged();
+                studyAdapter.notifyDataSetChanged();
+            }
+
         }
         curriculumList.clear();
         curriculumList.addAll(bean.getData().getCurriculum_data());
         typeAdapter.notifyDataSetChanged();
+
 
     }
 
@@ -180,7 +187,7 @@ public class ClassifyFragment extends BaseFragment implements TypeIndexConstact.
     public void searchResult(List<IndexBean.DataBean.CurriculumDataBean> result) {
         curriculumList.clear();
 
-        for(IndexBean.DataBean.CurriculumDataBean item:result){
+        for (IndexBean.DataBean.CurriculumDataBean item : result) {
             TypeIndexBean.DataBean.CurriculumDataBean bean = new TypeIndexBean.DataBean.CurriculumDataBean();
             bean.setId(item.getId());
             bean.setTitle(item.getTitle());
