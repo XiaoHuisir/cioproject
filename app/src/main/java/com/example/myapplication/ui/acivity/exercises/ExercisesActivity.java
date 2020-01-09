@@ -2,6 +2,7 @@ package com.example.myapplication.ui.acivity.exercises;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -163,7 +164,7 @@ public class ExercisesActivity extends BaseActivity implements ExercisesConstrac
         ExercisesBean.DataBean dataBean = currentExercises.getData().get(pos - 1);
         txtTitle.setText(dataBean.getTitle());
         txtScore.setText(String.valueOf(dataBean.getFraction()) + "分");
-        if (dataBean.getType() == 1) {
+        if (dataBean.getType() == 0) {
             txtAnswerType.setText("多选题");
             txtAnswerType.setBackgroundResource(R.drawable.txt_roundborder_org);
         } else {
@@ -199,7 +200,7 @@ public class ExercisesActivity extends BaseActivity implements ExercisesConstrac
                 exercisesAdapter.notifyDataSetChanged();
             } else {
                 //如果当前没有选中，需要判断是单选还是多选
-                if (dataBean.getType() == 1) {
+                if (dataBean.getType() == 0) {
                     dataBean.getOption().get(position).select = true;
                     exercisesAdapter.notifyDataSetChanged();
                 } else {
@@ -222,8 +223,10 @@ public class ExercisesActivity extends BaseActivity implements ExercisesConstrac
     public void submitEvaluationReturn(EvaluationSubmitBean result) {
         if (result.getCode() == 10000) {
             Toast.makeText(this, "提交试卷成功", Toast.LENGTH_SHORT).show();
-            int evaluat = Integer.parseInt(result.getData().getEvaluat_id());
             //获取考试结果
+            Intent intent = new Intent(this, ExercisesResultActivity.class);
+            intent.putExtra("evaluat_id",result.getData().getEvaluat_id());
+            startActivity(intent);
         }else{
             Toast.makeText(this, result.getMsg(), Toast.LENGTH_SHORT).show();
         }

@@ -202,7 +202,7 @@ public class VideoActivity extends BaseActivity implements CurriculumConstract.V
             str = fraction + "分 已通过";
             txtScore.setTextColor(Color.parseColor("#C7C7C7"));
         } else {
-            str = "未通过";
+            str = fraction + "分 未通过";
             txtScore.setTextColor(Color.parseColor("#FF0000"));
         }
         txtScore.setText(str);

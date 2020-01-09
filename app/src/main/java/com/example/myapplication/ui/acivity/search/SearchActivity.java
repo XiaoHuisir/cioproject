@@ -149,6 +149,7 @@ public class SearchActivity extends BaseActivity implements SearchFragment.TabLa
                 txtInput.setText("");
                 setTabLayout(View.GONE);
                 ((SearchFragment) fragments.get(viewPager.getCurrentItem())).clearSearch();
+                tabLayout.getTabAt(0).select();
                 break;
             case R.id.txt_search:
                 String str = txtInput.getText().toString();
