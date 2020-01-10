@@ -144,7 +144,7 @@ public class SettingActivity extends BaseActivity implements UsercenterConstract
                 SharedPreferencesUtil.deleteToken(MyApp.mApp);
                 Intent intent1 = new Intent();
                 intent1.setClass(context, LoginActivity.class);
-//                intent1.addFlags(intent1.FLAG_ACTIVITY_SINGLE_TOP);
+                intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent1);
                 finish();
                 break;
