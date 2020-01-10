@@ -251,6 +251,29 @@ public class DateUtil {
     }
 
 
+    /**
+     * 将时间戳转换为时间
+     *
+     * s就是时间戳
+     */
+
+    public static String stampToDate(String s) {
+
+        if(s.length()==10){
+            s=s+"000";
+        }
+        String res;
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        //如果它本来就是long类型的,则不用写这一步
+        long lt = new Long(s);
+//        Date date = new Date(lt * 1000);
+        Date date = new Date(lt );
+        res = simpleDateFormat.format(date);
+        return res;
+    }
+
+
+
 
 
 

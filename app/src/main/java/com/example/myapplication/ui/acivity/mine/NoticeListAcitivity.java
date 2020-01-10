@@ -65,6 +65,18 @@ public class NoticeListAcitivity extends BaseActivity implements NoticeListConst
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 smarNot.finishRefresh(300);
+                noticelist.clear();
+                data.clear();
+//                ((NoticeListPresenter) mPresenter).getNoticeList(String.valueOf(page));
+//                noticelist.addAll(data);
+                noticeListAdaper.notifyDataSetChanged();
+
+                if (noticelist.size()<=0){
+                    page=1;
+                    ((NoticeListPresenter) mPresenter).getNoticeList(String.valueOf(page));
+                    noticelist.addAll(data);
+                    noticeListAdaper.notifyDataSetChanged();
+                }
             }
         });
     }
@@ -103,6 +115,7 @@ public class NoticeListAcitivity extends BaseActivity implements NoticeListConst
         }else {if (isRefresh) {
             page--;
             Toast.makeText(context,"没有更多数据",Toast.LENGTH_LONG).show();
+            noticeListAdaper.notifyDataSetChanged();
         }}
     }
 

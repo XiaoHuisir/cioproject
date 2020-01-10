@@ -32,14 +32,14 @@ public class NoticeListAdaper extends BaseAdapter {
         TextView terrace = (TextView) holder.getView(R.id.txt_terrace);
         TextView txtmatter = (TextView) holder.getView(R.id.txt_matter);
         TextView txtnotice = (TextView) holder.getView(R.id.txt_notice);
-        TextView txt_times = (TextView) holder.getView(R.id.txt_time);
+        TextView txtTime = (TextView) holder.getView(R.id.txt_time);
         NoticeListBean.DataBean data = (NoticeListBean.DataBean) mDatas.get(positon);
         txtmatter.setText(data.getContent());
         terrace.setText(data.getTitle());
-//        formatTime2String
-        long  tiem =(long)data.getAdd_time();
-        String ago = DateUtil.formatTime2String(tiem);
-        txt_times.setText(ago);
+        long  ago =(long)data.getAdd_time();
+        String agotime = DateUtil.formatTime2String(ago);
+        String s = DateUtil.stampToDate(String.valueOf(data.getAdd_time()));
+                txtTime.setText(s);
         holder.itemView.setTag(data);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
