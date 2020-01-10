@@ -4,6 +4,7 @@ import com.example.myapplication.app.Constant;
 import com.example.myapplication.base.BasePresenter;
 import com.example.myapplication.bean.IndexBean;
 import com.example.myapplication.bean.SearchBean;
+import com.example.myapplication.bean.UnredNoticeBean;
 import com.example.myapplication.interfaces.contract.IndexConstract;
 import com.example.myapplication.utils.CommonSubscriber;
 import com.example.myapplication.utils.HttpUtils;
@@ -33,4 +34,6 @@ public class SearchPresenter extends BasePresenter<IndexConstract.SearchView> im
                     }
                 }));
     }
+
+
 }

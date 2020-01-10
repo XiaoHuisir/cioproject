@@ -2,6 +2,7 @@ package com.example.myapplication.interfaces.contract;
 
 import com.example.myapplication.bean.IndexBean;
 import com.example.myapplication.bean.SearchBean;
+import com.example.myapplication.bean.UnredNoticeBean;
 import com.example.myapplication.interfaces.IBasePresenter;
 import com.example.myapplication.interfaces.IBaseView;
 
@@ -21,9 +22,11 @@ public interface IndexConstract {
 
     interface SearchView extends IBaseView{
         void searchResult(List<SearchBean.DataBean.CurriculumDataBean> result);
+
     }
 
     interface SearchPresenter extends IBasePresenter<SearchView>{
         void search(String keyword,String type,String page);
+
     }
 }
