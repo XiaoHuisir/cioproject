@@ -85,8 +85,9 @@ public class MineFragment extends BaseFragment implements UsercenterConstract.Vi
     private ArrayList<UserCenterBean.DataBean.HistoryBean> historyBeans;
     private RecordAdapter recordAdapter;
     UserCenterBean userCenterBean;
-//    public boolean inxdler = false;
+    //    public boolean inxdler = false;
     private int noticenum;
+    boolean indxler = false;
 
     @Override
     protected IBasePresenter getPresenter() {
@@ -109,12 +110,15 @@ public class MineFragment extends BaseFragment implements UsercenterConstract.Vi
                 intent.putExtra("zw", userCenterBean.getData().getZw());
                 intent.putExtra("mechanism_file", userCenterBean.getData().getMechanism());
                 intent.setClass(getActivity(), SettingActivity.class);
-                startActivityForResult(intent,200);
+                startActivityForResult(intent, 200);
                 break;
             case R.id.iv_word:  //消息
+                numView.setNum(0);
+                indxler = true;
                 Intent intent1 = new Intent();
                 intent1.setClass(context, NoticeListAcitivity.class);
                 startActivity(intent1);
+
                 break;
             case R.id.txt_study_all:
                 Intent intentall = new Intent();
@@ -166,16 +170,18 @@ public class MineFragment extends BaseFragment implements UsercenterConstract.Vi
 
     @Override
     public void getUnredNoticeReturn(UnredNoticeBean bean) {
-        if (bean.getStatus() == 1) {
-            String notice_num = bean.getData().getNotice_num();
-            noticenum = Integer.valueOf(notice_num).intValue();
+        if (indxler == false) {
+            if (bean.getStatus() == 1) {
+                String notice_num = bean.getData().getNotice_num();
+                noticenum = Integer.valueOf(notice_num).intValue();
 //            int notice_nums = Integer.parseInt(notice_num);
-            Constant.NUM_VIEW = noticenum;
+                Constant.NUM_VIEW = noticenum;
                 if (noticenum == 0) {
                     numView.setNum(0);
                 } else {
                     numView.setNum(noticenum);
                 }
+            }
         }
 
     }
@@ -183,7 +189,7 @@ public class MineFragment extends BaseFragment implements UsercenterConstract.Vi
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == 200){
+        if (requestCode == 200) {
             ((UserCenterPresenter) mPresenter).usercenter();
         }
     }
@@ -218,13 +224,13 @@ public class MineFragment extends BaseFragment implements UsercenterConstract.Vi
             txtreferral.setText(result.getData().getMechanism());
         }
         if (result.getData().getKcpx_time() >= Constant.ZERO) {
-            kcpxtime.setText(String.valueOf(result.getData().getKcpx_time()/60));
+            kcpxtime.setText(String.valueOf(result.getData().getKcpx_time() / 60));
         }
         if (result.getData().getKcpx_num() >= Constant.ZERO) {
             kcpxnum.setText(String.valueOf(result.getData().getKcpx_num()));
         }
         if (result.getData().getKwxx_time() >= Constant.ZERO) {
-            kwxxtime.setText(String.valueOf(result.getData().getKwxx_time()/60) + " 分钟");
+            kwxxtime.setText(String.valueOf(result.getData().getKwxx_time() / 60) + " 分钟");
         }
         if (result.getData().getKwxx_num() >= Constant.ZERO) {
             kwxxnum.setText(result.getData().getKwxx_num() + "门");

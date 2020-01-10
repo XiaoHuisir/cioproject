@@ -79,7 +79,6 @@ public class ClassifyFragment extends BaseFragment implements TypeIndexConstact.
     View line2_select;
 
 
-
     int type = 1;
     int page = 1;
 
@@ -158,14 +157,16 @@ public class ClassifyFragment extends BaseFragment implements TypeIndexConstact.
             selectCourse();
         }
 
-        if(bean.getData().getCurriculum_data().size() > 0){
+        if (bean.getData().getCurriculum_data().size() > 0) {
             curriculumList.addAll(bean.getData().getCurriculum_data());
             typeAdapter.notifyDataSetChanged();
-        }else{
-            if(isRefresh){
+            nullCourses.setVisibility(View.INVISIBLE);
+        } else {
+            if (isRefresh) {
                 page--;
             }
-            Toast.makeText(context,"无课程数据",Toast.LENGTH_SHORT).show();
+            nullCourses.setVisibility(View.VISIBLE);
+//            Toast.makeText(context,"无课程数据",Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -215,6 +216,7 @@ public class ClassifyFragment extends BaseFragment implements TypeIndexConstact.
         for (TypeIndexBean.DataBean.CurriculumKwBean item : studyList) {
             if (item.getId() == id) {
                 item.select = true;
+                txtTitle.setText(item.getTitle());
             } else {
                 item.select = false;
             }
@@ -231,7 +233,7 @@ public class ClassifyFragment extends BaseFragment implements TypeIndexConstact.
     }
 
     //选择培训课程的分类
-    private void selectCourse(){
+    private void selectCourse() {
         line1_normal.setVisibility(View.GONE);
         line1_select.setVisibility(View.VISIBLE);
         layoutCourse.setBackgroundResource(R.drawable.tab_bg_select);
@@ -241,7 +243,7 @@ public class ClassifyFragment extends BaseFragment implements TypeIndexConstact.
     }
 
     //选择课外学习的分类
-    private void selectStudy(){
+    private void selectStudy() {
         line1_normal.setVisibility(View.VISIBLE);
         line1_select.setVisibility(View.GONE);
         layoutCourse.setBackgroundResource(0);
@@ -249,7 +251,6 @@ public class ClassifyFragment extends BaseFragment implements TypeIndexConstact.
         line2_select.setVisibility(View.VISIBLE);
         layoutStudy.setBackgroundResource(R.drawable.tab_bg_select);
     }
-
 
 
     @Override

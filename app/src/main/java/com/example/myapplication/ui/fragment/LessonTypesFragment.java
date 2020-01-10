@@ -57,8 +57,11 @@ public class LessonTypesFragment extends BaseFragment implements PorfolioConstra
 
     @Override
     public void getPorfolioReturn(ToadayBean result) {
+        ToadayBean.DataBean data = result.getData();
+
         if (result.getStatus() == 1) {
             List<ToadayBean.DataBean.SevenDayBean> seven_day = result.getData().getSeven_day();
+
             if (seven_day != null) {
                 sevenDayBeans.clear();
                 sevenDayBeans.addAll(seven_day);

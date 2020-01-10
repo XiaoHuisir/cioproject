@@ -9,6 +9,7 @@ import com.example.myapplication.R;
 import com.example.myapplication.base.BaseAdapter;
 import com.example.myapplication.bean.NoticeListBean;
 import com.example.myapplication.bean.TypeIndexBean;
+import com.example.myapplication.utils.DateUtil;
 
 import java.util.List;
 
@@ -31,9 +32,14 @@ public class NoticeListAdaper extends BaseAdapter {
         TextView terrace = (TextView) holder.getView(R.id.txt_terrace);
         TextView txtmatter = (TextView) holder.getView(R.id.txt_matter);
         TextView txtnotice = (TextView) holder.getView(R.id.txt_notice);
+        TextView txt_times = (TextView) holder.getView(R.id.txt_time);
         NoticeListBean.DataBean data = (NoticeListBean.DataBean) mDatas.get(positon);
         txtmatter.setText(data.getContent());
         terrace.setText(data.getTitle());
+//        formatTime2String
+        long  tiem =(long)data.getAdd_time();
+        String ago = DateUtil.formatTime2String(tiem);
+        txt_times.setText(ago);
         holder.itemView.setTag(data);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -12,7 +12,6 @@
             android:layout_alignParentTop="true"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_24"
-            android:visibility="gone"
             android:background="#FFFFFFFF"
             >
 

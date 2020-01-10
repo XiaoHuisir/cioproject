@@ -101,6 +101,7 @@ public class TrainTypesFragment extends BaseFragment implements PorfolioConstrac
         if (result.getStatus() == 1) {
             if (result.getData() != null) {
                 List<ToadayBean.DataBean.SevenDayBean> seven_day = result.getData().getSeven_day();
+
                 if (seven_day.size() > 0) {
                     trainList.clear();
                     trainList.addAll(seven_day);
