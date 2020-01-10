@@ -145,7 +145,8 @@ public class ClassifyFragment extends BaseFragment implements TypeIndexConstact.
 
     @Override
     public void getTypeIndexReturn(TypeIndexBean bean) {
-        smartRefresh.finishLoadMore(500);
+        smartRefresh.finishLoadMore(300);
+        smartRefresh.finishRefresh(300);
         if (courseList.size() == 0) {
             courseList.addAll(bean.getData().getCurriculum_px());
             if (courseList.size() > 0) {
