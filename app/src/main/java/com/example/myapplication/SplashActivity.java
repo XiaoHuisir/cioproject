@@ -1,9 +1,12 @@
 package com.example.myapplication;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.widget.VideoView;
 
 import com.example.myapplication.app.Constant;
 import com.example.myapplication.app.MyApp;
@@ -12,11 +15,12 @@ import com.example.myapplication.utils.SharedPreferencesUtil;
 
 public class SplashActivity extends AppCompatActivity {
 
+    VideoView videoView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-
         initView();
     }
 
