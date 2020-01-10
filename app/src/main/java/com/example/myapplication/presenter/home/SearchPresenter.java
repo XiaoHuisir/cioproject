@@ -35,5 +35,21 @@ public class SearchPresenter extends BasePresenter<IndexConstract.SearchView> im
                 }));
     }
 
+    @Override
+    public void getUnredNotice() {
+        addSubscribe(HttpUtils.getMyServer(Constant.BaseUrl).unreadNotice(Constant.token)
+                .compose(RxUtils.<UnredNoticeBean>rxScheduler())
+                .subscribeWith(new CommonSubscriber<UnredNoticeBean>(mView) {
+                    @Override
+                    public void onNext(UnredNoticeBean result) {
+                        if (result != null) {
+                            if (mView != null) {
+                                mView.getUnredNoticeReturn(result);
+                            }
+                        }
+                    }
+                }));
+    }
+
 
 }

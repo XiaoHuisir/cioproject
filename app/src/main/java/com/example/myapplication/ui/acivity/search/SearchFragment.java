@@ -15,6 +15,7 @@ import com.example.myapplication.adaper.SearchAdapter;
 import com.example.myapplication.base.BaseAdapter;
 import com.example.myapplication.base.BaseFragment;
 import com.example.myapplication.bean.SearchBean;
+import com.example.myapplication.bean.UnredNoticeBean;
 import com.example.myapplication.interfaces.IBasePresenter;
 import com.example.myapplication.interfaces.contract.IndexConstract;
 import com.example.myapplication.presenter.home.SearchPresenter;
@@ -141,6 +142,11 @@ public class SearchFragment extends BaseFragment implements BaseAdapter.OnItemCl
                 searchAdapter.notifyDataSetChanged();
             }
         }
+
+    }
+
+    @Override
+    public void getUnredNoticeReturn(UnredNoticeBean bean) {
 
     }
 

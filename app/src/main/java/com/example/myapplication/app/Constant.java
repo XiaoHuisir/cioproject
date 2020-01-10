@@ -23,7 +23,7 @@ public class Constant {
 
     public static String token = "";
 
-    public static int NUM_VIEW = 0;
+    public static String NUM_VIEW = "";
 
     public static int CourseType = 2;
 
