@@ -82,7 +82,10 @@ public class SearchFragment extends BaseFragment implements BaseAdapter.OnItemCl
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                smartRefresh.finishRefresh(500);
+                //smartRefresh.finishRefresh(500);
+                page = 1;
+                isRefreshing = false;
+                ((SearchPresenter) mPresenter).search(word, String.valueOf(type), String.valueOf(page));
             }
         });
     }
@@ -130,6 +133,7 @@ public class SearchFragment extends BaseFragment implements BaseAdapter.OnItemCl
                 Toast.makeText(context, "没有所搜到相关数据", Toast.LENGTH_SHORT).show();
             }
         }else{
+            smartRefresh.finishRefresh(300);
             list.clear();
             if(result.size() == 0){
                 //tabLayoutFun.setTabLayout(View.GONE);
