@@ -57,7 +57,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     @BindView(R.id.layout_search)
     RelativeLayout layoutSearch;
     @BindView(R.id.layout_msg)
-    ConstraintLayout layoutMsg;
+    RelativeLayout layoutMsg;
     @BindView(R.id.num_wx)
     NumView numWx;
     private FragmentManager manager;
@@ -65,7 +65,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     Fragment classifyFragment;
     Fragment mineFragment;
     int curType;
-
+    private int numNot;
+    boolean indxler = false;
 
     private void initFragment() {
         manager = getSupportFragmentManager();
@@ -151,9 +152,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 break;
             case R.id.layout_msg:
                 //打开消息界面
+                numWx.setNum(0);
+                indxler=true;
                 Intent notice = new Intent();
                 notice.setClass(context, NoticeListAcitivity.class);
                 startActivity(notice);
+
                 break;
         }
     }
@@ -170,13 +174,26 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
     @Override
     public void getUnredNoticeReturn(UnredNoticeBean bean) {
-        String notice_num = bean.getData().getNotice_num();
-        int numNot = Integer.valueOf(notice_num).intValue();
-
-        if (numNot == 0) {
-            numWx.setNum(0);
-        } else {
-            numWx.setNum(numNot);
+        if (indxler = false) {
+            String notice_num = bean.getData().getNotice_num();
+            numNot = Integer.valueOf(notice_num).intValue();
+//
+//        if (!TextUtils.isEmpty(notice_num)){
+//
+//                numWx.setNum(numNot);
+//
+//        }else {
+//            numWx.setNum(numNot);
+//            numNot =0;
+//           return;
+//
+//        }
+            if (numNot == 0) {
+                numWx.setNum(0);
+            } else {
+                numWx.setNum(12);
+            }
         }
+
     }
 }

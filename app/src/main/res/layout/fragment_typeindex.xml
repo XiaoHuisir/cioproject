@@ -25,6 +25,7 @@
             android:id="@+id/layout_course"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/whites"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -181,8 +182,12 @@
             android:layout_marginRight="@dimen/dp_10"
             app:layout_constraintTop_toBottomOf="@id/layout_title"
             app:layout_constraintBottom_toBottomOf="parent">
+          <com.scwang.smartrefresh.layout.header.TwoLevelHeader
+              android:layout_width="match_parent"
+              android:layout_height="@dimen/dp_60"/>
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recyclerView"
+
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
         </com.scwang.smartrefresh.layout.SmartRefreshLayout>

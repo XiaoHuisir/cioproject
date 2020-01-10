@@ -1,6 +1,7 @@
 package com.example.myapplication.ui.acivity.mine;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -14,6 +15,9 @@ import com.example.myapplication.interfaces.IBasePresenter;
 import com.example.myapplication.adaper.NoticeListAdaper;
 import com.example.myapplication.interfaces.contract.NoticeListConstract;
 import com.example.myapplication.presenter.noticelist.NoticeListPresenter;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
 
 import java.util.ArrayList;
@@ -28,10 +32,15 @@ public class NoticeListAcitivity extends BaseActivity implements NoticeListConst
 
     @BindView(R.id.image_break)
     ImageView imageBreak;
+    @BindView(R.id.smar_not)
+    SmartRefreshLayout smarNot;
     @BindView(R.id.rv_noticelist)
     RecyclerView rvNoticelist;
     private ArrayList<NoticeListBean.DataBean> noticelist;
     private NoticeListAdaper noticeListAdaper;
+    boolean isRefresh;
+    int page = 1;
+    private List<NoticeListBean.DataBean> data;
 
     @Override
     protected IBasePresenter getPresenter() {
@@ -44,11 +53,38 @@ public class NoticeListAcitivity extends BaseActivity implements NoticeListConst
         rvNoticelist.setLayoutManager(new LinearLayoutManager(context));
         noticeListAdaper = new NoticeListAdaper(noticelist, this);
         rvNoticelist.setAdapter(noticeListAdaper);
+        smarNot.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                isRefresh = true;
+                page++;
+                ((NoticeListPresenter) mPresenter).getNoticeList(String.valueOf(page));
+
+            }
+
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                smarNot.finishRefresh(300);
+                noticelist.clear();
+                data.clear();
+//                ((NoticeListPresenter) mPresenter).getNoticeList(String.valueOf(page));
+//                noticelist.addAll(data);
+                noticeListAdaper.notifyDataSetChanged();
+
+                if (noticelist.size()<=0){
+                    page=1;
+                    ((NoticeListPresenter) mPresenter).getNoticeList(String.valueOf(page));
+                    noticelist.addAll(data);
+                    noticeListAdaper.notifyDataSetChanged();
+                }
+            }
+        });
     }
 
     @Override
     protected void initData() {
-        ((NoticeListPresenter) mPresenter).getNoticeList("1");
+        isRefresh = false;
+        ((NoticeListPresenter) mPresenter).getNoticeList(String.valueOf(page));
     }
 
     @Override
@@ -68,12 +104,19 @@ public class NoticeListAcitivity extends BaseActivity implements NoticeListConst
 
     @Override
     public void getNoticeListReturn(NoticeListBean bean) {
+        smarNot.finishLoadMore(500);
         if (bean.getStatus() == 1) {
-            List<NoticeListBean.DataBean> data = bean.getData();
-            noticelist.clear();
-            noticelist.addAll(data);
+            data = bean.getData();
+            if (data.size() > 0) {
+//                noticelist.clear();
+                noticelist.addAll(data);
+                noticeListAdaper.notifyDataSetChanged();
+            }
+        }else {if (isRefresh) {
+            page--;
+            Toast.makeText(context,"没有更多数据",Toast.LENGTH_LONG).show();
             noticeListAdaper.notifyDataSetChanged();
-        }
+        }}
     }
 
 
@@ -90,5 +133,10 @@ public class NoticeListAcitivity extends BaseActivity implements NoticeListConst
             intent.putExtra("add_time", add_time);
             startActivity(intent);
         }
+    }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        page = 1;
     }
 }
