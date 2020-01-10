@@ -170,12 +170,14 @@ public class MineFragment extends BaseFragment implements UsercenterConstract.Vi
 
     @Override
     public void getUnredNoticeReturn(UnredNoticeBean bean) {
+
         if (indxler == false) {
             if (bean.getStatus() == 1) {
                 String notice_num = bean.getData().getNotice_num();
+                Constant.NUM_VIEW="111";
                 noticenum = Integer.valueOf(notice_num).intValue();
 //            int notice_nums = Integer.parseInt(notice_num);
-                Constant.NUM_VIEW = noticenum;
+
                 if (noticenum == 0) {
                     numView.setNum(0);
                 } else {

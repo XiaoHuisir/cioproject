@@ -23,6 +23,7 @@ import com.example.myapplication.adaper.RecordAdapter;
 import com.example.myapplication.app.Constant;
 import com.example.myapplication.base.BaseActivity;
 import com.example.myapplication.bean.IndexBean;
+import com.example.myapplication.bean.SearchBean;
 import com.example.myapplication.bean.UnredNoticeBean;
 import com.example.myapplication.bean.UserCenterBean;
 import com.example.myapplication.interfaces.IBasePresenter;
@@ -45,7 +46,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class MainActivity extends BaseActivity implements View.OnClickListener, UsercenterConstract.View, RecordAdapter.RecordItemClick {
+public class MainActivity extends BaseActivity implements View.OnClickListener,
+        IndexConstract.SearchView , RecordAdapter.RecordItemClick {
 
 
     @BindView(R.id.tl)
@@ -93,6 +95,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
     @Override
     protected void initView() {
+
+
         initFragment();
         txtSearch.setOnClickListener(this);
         layoutMsg.setOnClickListener(this);
@@ -120,7 +124,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
     @Override
     protected void initData() {
-
+        ((SearchPresenter)mPresenter).getUnredNotice();
     }
 
 
@@ -152,6 +156,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 break;
             case R.id.layout_msg:
                 //打开消息界面
+//                numWx.setNum(0);
                 numWx.setNum(0);
                 indxler=true;
                 Intent notice = new Intent();
@@ -167,33 +172,26 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
     }
 
+
     @Override
-    public void UserCenterReturn(UserCenterBean result) {
+    public void searchResult(List<SearchBean.DataBean.CurriculumDataBean> result) {
 
     }
 
     @Override
     public void getUnredNoticeReturn(UnredNoticeBean bean) {
-        if (indxler = false) {
+        if (bean.getStatus() == 1) {
+
             String notice_num = bean.getData().getNotice_num();
-            numNot = Integer.valueOf(notice_num).intValue();
-//
-//        if (!TextUtils.isEmpty(notice_num)){
-//
-//                numWx.setNum(numNot);
-//
-//        }else {
-//            numWx.setNum(numNot);
-//            numNot =0;
-//           return;
-//
-//        }
-            if (numNot == 0) {
+            Constant.NUM_VIEW="111";
+           int noticenum = Integer.valueOf(notice_num).intValue();
+//            int notice_nums = Integer.parseInt(notice_num);
+
+            if (noticenum == 0) {
                 numWx.setNum(0);
             } else {
-                numWx.setNum(12);
+                numWx.setNum(noticenum);
             }
         }
-
     }
 }

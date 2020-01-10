@@ -22,11 +22,11 @@ public interface IndexConstract {
 
     interface SearchView extends IBaseView{
         void searchResult(List<SearchBean.DataBean.CurriculumDataBean> result);
-
+        void getUnredNoticeReturn(UnredNoticeBean bean);
     }
 
     interface SearchPresenter extends IBasePresenter<SearchView>{
         void search(String keyword,String type,String page);
-
+        void getUnredNotice();
     }
 }
