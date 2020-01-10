@@ -57,7 +57,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     @BindView(R.id.layout_search)
     RelativeLayout layoutSearch;
     @BindView(R.id.layout_msg)
-    ConstraintLayout layoutMsg;
+    RelativeLayout layoutMsg;
     @BindView(R.id.num_wx)
     NumView numWx;
     private FragmentManager manager;
@@ -191,7 +191,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             if (numNot == 0) {
                 numWx.setNum(0);
             } else {
-                numWx.setNum(numNot);
+                numWx.setNum(12);
             }
         }
 

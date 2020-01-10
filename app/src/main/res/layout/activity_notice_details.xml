@@ -36,6 +36,15 @@
             android:textSize="@dimen/sp_18" />
     </LinearLayout>
 
+    <ScrollView
+        android:layout_width="match_parent"
+
+        android:layout_height="wrap_content">
+<LinearLayout
+    android:scrollbars="vertical"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
     <TextView
         android:id="@+id/txt_not_name"
         android:layout_width="wrap_content"
@@ -66,12 +75,14 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/txt_not_tiem"
         android:layout_alignParentLeft="true"
-        android:layout_marginLeft="@dimen/dp_16"
         android:layout_marginTop="@dimen/dp_16"
+        android:layout_gravity="center"
         android:ellipsize="end"
         android:text="培训课程上线：《互联网趋势下CIO应成为企业转型升级的赋能者》
         在完成学时的基础上还需通过习题测评，得分80分以上方可通过，希望大家在学习视频之余结合实际作答。
         课程培训累计学习时长以及习题完成度将纳入年终考核，希望大家严肃对待！"
         android:textColor="#FF333333"
         android:textSize="@dimen/sp_16" />
+</LinearLayout>
+    </ScrollView>
 </LinearLayout>

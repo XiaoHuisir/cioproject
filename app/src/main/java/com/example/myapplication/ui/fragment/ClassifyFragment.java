@@ -123,11 +123,13 @@ public class ClassifyFragment extends BaseFragment implements TypeIndexConstact.
                 isRefresh = true;
                 page++;
                 ((ClassifyPresenter) mPresenter).getTypeIndex(String.valueOf(type), String.valueOf(page));
+                nullCourses.setVisibility(View.INVISIBLE);
             }
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 smartRefresh.finishRefresh(300);
+                nullCourses.setVisibility(View.INVISIBLE);
             }
         });
 
@@ -164,9 +166,12 @@ public class ClassifyFragment extends BaseFragment implements TypeIndexConstact.
         } else {
             if (isRefresh) {
                 page--;
+
+            } else {
+                nullCourses.setVisibility(View.VISIBLE);
             }
             nullCourses.setVisibility(View.VISIBLE);
-//            Toast.makeText(context,"无课程数据",Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "无课程数据", Toast.LENGTH_SHORT).show();
         }
     }
 
