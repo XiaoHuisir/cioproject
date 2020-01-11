@@ -2,12 +2,16 @@ package com.example.myapplication.ui.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.bumptech.glide.Glide;
 import com.example.myapplication.R;
 import com.example.myapplication.adaper.IndexAdapter;
@@ -17,6 +21,8 @@ import com.example.myapplication.interfaces.IBasePresenter;
 import com.example.myapplication.interfaces.contract.IndexConstract;
 import com.example.myapplication.presenter.home.IndexPresenter;
 import com.example.myapplication.ui.acivity.video.VideoActivity;
+import com.example.myapplication.utils.NetDownResponse;
+import com.example.myapplication.utils.NetRequsetUtil;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
@@ -30,7 +36,7 @@ import java.util.Map;
 
 import butterknife.BindView;
 
-public class StudyFragment extends BaseFragment implements IndexConstract.View ,IndexAdapter.IndexItemClick{
+public class StudyFragment extends BaseFragment implements IndexConstract.View, IndexAdapter.IndexItemClick {
 
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
@@ -38,8 +44,10 @@ public class StudyFragment extends BaseFragment implements IndexConstract.View ,
     Banner banners;
     @BindView(R.id.swipeRefresh_study)
     SwipeRefreshLayout swipeRefreshStudy;
+    @BindView(R.id.nv)
+    NestedScrollView sv;
 
-     int page = 1;
+    int page = 1;
 
     IndexAdapter indexAdapter;
     List<IndexBean.DataBean.CurriculumDataBean> list;
@@ -65,9 +73,67 @@ public class StudyFragment extends BaseFragment implements IndexConstract.View ,
         swipeRefreshStudy.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                page++;
+                page = 1;
                 getIndex();
             }
+        });
+
+        sv.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+
+                if (scrollY > oldScrollY) {
+
+                }
+                if (scrollY < oldScrollY) {
+
+                }
+
+                if (scrollY == 0) {
+
+                }
+
+                if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
+                    page = page + 1;
+
+
+                    JSONObject jsonObject = new JSONObject();
+                    jsonObject.put("curriculum", String.valueOf(1));
+                    jsonObject.put("type", "");
+                    jsonObject.put("page", page + "");
+
+                    NetRequsetUtil.getInstance().netRequestPostJson("index/train/index",
+                            jsonObject.toString(), new NetDownResponse() {
+                                @Override
+                                public void success(String str) {
+                                    IndexBean indexBean = JSON.parseObject(str, IndexBean.class);
+                                    List<IndexBean.DataBean.CurriculumDataBean> curriculum_data = indexBean.getData().getCurriculum_data();
+                                    if (curriculum_data.size() > 0) {
+                                        for (IndexBean.DataBean.CurriculumDataBean curriculum_datum : curriculum_data) {
+                                            list.add(curriculum_datum);
+                                            indexAdapter.notifyDataSetChanged();
+                                        }
+                                    } else {
+                                        Toast.makeText(StudyFragment.this.getActivity(), "没有更多了", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+
+                                @Override
+                                public void errowithresponse(String str) {
+                                }
+
+                                @Override
+                                public void erro() {
+                                }
+
+                                @Override
+                                public void finish() {
+
+                                }
+                            });
+                }
+            }
+
         });
 
     }
@@ -80,27 +146,21 @@ public class StudyFragment extends BaseFragment implements IndexConstract.View ,
         ((IndexPresenter) mPresenter).getIndex(map);
 
 
-
-
-
     }
-
-
 
 
     @Override
     public void getIndexReturn(IndexBean result) {
-        if (result.getData().getCurriculum_data().size()>0){
-//            list.clear();
-            list.addAll(result.getData().getCurriculum_data());
-            setBanner(result);
-            indexAdapter.notifyDataSetChanged();
-        }else {
-            Toast.makeText(context,"没有更多数据",Toast.LENGTH_LONG).show();
-                page--;
-        }
-        if (swipeRefreshStudy.isRefreshing()){
-            swipeRefreshStudy.setRefreshing(false);
+        setBanner(result);
+        list.clear();
+        list.addAll(result.getData().getCurriculum_data());
+        indexAdapter.notifyDataSetChanged();
+        swipeRefreshStudy.setRefreshing(false);
+
+        if (result.getData().getLb_data() == null || result.getData().getLb_data().size() == 0) {
+            banners.setVisibility(View.GONE);
+        } else {
+            banners.setVisibility(View.VISIBLE);
         }
 
     }
@@ -141,6 +201,7 @@ public class StudyFragment extends BaseFragment implements IndexConstract.View ,
             Glide.with(context).load(loads).into(imageView);
         }
     }
+
     @Override
     public void click(String id) {
         Intent intent = new Intent();
@@ -151,9 +212,10 @@ public class StudyFragment extends BaseFragment implements IndexConstract.View ,
 
     /**
      * 显示搜索结果
+     *
      * @param result
      */
-    public void showSearch(List<IndexBean.DataBean.CurriculumDataBean> result){
+    public void showSearch(List<IndexBean.DataBean.CurriculumDataBean> result) {
         list.clear();
         list.addAll(result);
         indexAdapter.notifyDataSetChanged();

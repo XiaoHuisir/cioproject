@@ -96,10 +96,6 @@ public class CourseActivity extends BaseActivity implements IndexConstract.View,
             public void onLoadMore() {
                 page = page + 1;
 
-                Map<String, String> map = new HashMap<String, String>();
-                map.put("curriculum", String.valueOf(2));
-                map.put("type", String.valueOf(curType));
-                map.put("page", page + "");
 
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.put("curriculum", String.valueOf(2));
