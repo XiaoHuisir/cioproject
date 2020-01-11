@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.example.myapplication.app.Constant;
@@ -34,6 +35,7 @@ public class SplashActivity extends AppCompatActivity {
             intent.setClass(this, LoginActivity.class);
         }else{
             Constant.token = token;
+            Toast.makeText(this, "123", Toast.LENGTH_SHORT).show();
             intent.setClass(this,MainActivity.class);
 
         }
