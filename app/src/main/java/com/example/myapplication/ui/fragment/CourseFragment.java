@@ -2,6 +2,7 @@ package com.example.myapplication.ui.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,6 +13,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.bumptech.glide.Glide;
 import com.example.myapplication.R;
 import com.example.myapplication.adaper.IndexAdapter;
@@ -24,7 +27,10 @@ import com.example.myapplication.interfaces.contract.IndexConstract;
 import com.example.myapplication.presenter.home.IndexPresenter;
 import com.example.myapplication.ui.acivity.course.CourseActivity;
 import com.example.myapplication.ui.acivity.video.VideoActivity;
+import com.example.myapplication.utils.NetDownResponse;
+import com.example.myapplication.utils.NetRequsetUtil;
 import com.example.myapplication.widgets.DrawableCenterTextView;
+import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
@@ -57,6 +63,8 @@ public class CourseFragment extends BaseFragment implements IndexConstract.View,
     SwipeRefreshLayout swipeRefreshLayout;
     @BindView(R.id.relative_ban)
     RelativeLayout relative_ban;
+    @BindView(R.id.sv)
+    NestedScrollView sv;
 
     int page = 1;
     IndexAdapter indexAdapter;
@@ -88,10 +96,70 @@ public class CourseFragment extends BaseFragment implements IndexConstract.View,
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                page++;
+                page = 1;
                 getIndex();
             }
         });
+
+
+        sv.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+
+                if (scrollY > oldScrollY) {
+
+                }
+                if (scrollY < oldScrollY) {
+
+                }
+
+                if (scrollY == 0) {
+
+                }
+
+                if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
+                    page = page + 1;
+
+
+                    JSONObject jsonObject = new JSONObject();
+                    jsonObject.put("curriculum", String.valueOf(2));
+                    jsonObject.put("type", String.valueOf(curType));
+                    jsonObject.put("page",  page + "");
+
+                    NetRequsetUtil.getInstance().netRequestPostJson("index/train/index",
+                            jsonObject.toString(), new NetDownResponse() {
+                                @Override
+                                public void success(String str) {
+                                    IndexBean indexBean = JSON.parseObject(str, IndexBean.class);
+                                    List<IndexBean.DataBean.CurriculumDataBean> curriculum_data = indexBean.getData().getCurriculum_data();
+                                    if ( curriculum_data.size()> 0 ){
+                                        for (IndexBean.DataBean.CurriculumDataBean curriculum_datum : curriculum_data) {
+                                            list.add(curriculum_datum);
+                                            indexAdapter.notifyDataSetChanged();
+                                        }
+                                    }else {
+                                        Toast.makeText(CourseFragment.this.getActivity(), "没有更多了", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+
+                                @Override
+                                public void errowithresponse(String str) {
+                                }
+
+                                @Override
+                                public void erro() {
+                                }
+
+                                @Override
+                                public void finish() {
+
+                                }
+                            });
+                }
+                }
+
+        });
+
     }
 
     @OnClick({R.id.txt_type_1, R.id.txt_type_2, R.id.txt_type_3})
@@ -129,16 +197,16 @@ public class CourseFragment extends BaseFragment implements IndexConstract.View,
 
     @Override
     public void getIndexReturn(IndexBean result) {
-        if(result.getData().getCurriculum_data().size() > 0){
-            list.addAll(result.getData().getCurriculum_data());
-            banners(result);
-            indexAdapter.notifyDataSetChanged();
-        }else{
-            Toast.makeText(context,"没有更多数据",Toast.LENGTH_SHORT).show();
-            page--;
-        }
-        if(swipeRefreshLayout.isRefreshing()){
-            swipeRefreshLayout.setRefreshing(false);
+        banners(result);
+        list.clear();
+        list.addAll(result.getData().getCurriculum_data());
+        indexAdapter.notifyDataSetChanged();
+        swipeRefreshLayout.setRefreshing(false);
+
+        if (result.getData().getLb_data() == null || result.getData().getLb_data() .size() == 0){
+            relative_ban.setVisibility(View.GONE);
+        }else {
+            relative_ban.setVisibility(View.VISIBLE);
         }
 
     }
