@@ -25,6 +25,7 @@ import com.example.myapplication.bean.IndexBean;
 import com.example.myapplication.interfaces.IBasePresenter;
 import com.example.myapplication.interfaces.contract.IndexConstract;
 import com.example.myapplication.presenter.home.IndexPresenter;
+import com.example.myapplication.ui.acivity.NewVideoActivity;
 import com.example.myapplication.ui.acivity.course.CourseActivity;
 import com.example.myapplication.ui.acivity.video.VideoActivity;
 import com.example.myapplication.utils.NetDownResponse;
@@ -123,7 +124,7 @@ public class CourseFragment extends BaseFragment implements IndexConstract.View,
 
                     JSONObject jsonObject = new JSONObject();
                     jsonObject.put("curriculum", String.valueOf(2));
-                    jsonObject.put("type", String.valueOf(curType));
+                    jsonObject.put("type", "");
                     jsonObject.put("page",  page + "");
 
                     NetRequsetUtil.getInstance().netRequestPostJson("index/train/index",
@@ -190,7 +191,7 @@ public class CourseFragment extends BaseFragment implements IndexConstract.View,
     private void getIndex() {
         Map<String, String> map = new HashMap<String, String>();
         map.put("curriculum", String.valueOf(2));
-        map.put("type", String.valueOf(curType));
+        map.put("type", "");
         map.put("page", String.valueOf(page));
         ((IndexPresenter) mPresenter).getIndex(map);
     }
@@ -219,6 +220,9 @@ public class CourseFragment extends BaseFragment implements IndexConstract.View,
     }
 
     private void banners(final IndexBean result) {
+        if (result == null){
+            return;
+        }
         List<IndexBean.DataBean.LbDataBean> lb_data = result.getData().getLb_data();
 //        result.getData().getLb_data().get(0).getId()
         if (lb_data.size() > 0) {

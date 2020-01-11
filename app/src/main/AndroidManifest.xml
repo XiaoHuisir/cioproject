@@ -25,6 +25,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:appComponentFactory">
+        <activity android:name=".ui.acivity.NewVideoActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" ></activity>
         <activity android:name=".ui.acivity.search.SearchActivity" />
         <activity android:name=".ui.acivity.mine.NoticeListAcitivity" />
         <activity android:name=".ui.acivity.mine.NoticeDetailsActivity" />
@@ -34,8 +37,8 @@
         <activity android:name=".ui.acivity.setting.SetNameActivity" />
         <activity android:name=".ui.acivity.setting.SettingActivity" />
         <activity android:name=".ui.acivity.exercises.ExercisesActivity" />
-        <activity android:name=".ui.acivity.exercises.ExercisesResultActivity"/>
-        <activity android:name=".ui.acivity.pdf.PdfActivity"/>
+        <activity android:name=".ui.acivity.exercises.ExercisesResultActivity" />
+        <activity android:name=".ui.acivity.pdf.PdfActivity" />
         <activity
             android:name=".MainActivity"
             android:windowSoftInputMode="adjustPan|stateHidden" />
@@ -48,9 +51,8 @@
             android:name=".ui.acivity.video.VideoActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.acivity.login.LoginActivity"/>
-        <activity
-            android:name=".SplashActivity">
+        <activity android:name=".ui.acivity.login.LoginActivity" />
+        <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
