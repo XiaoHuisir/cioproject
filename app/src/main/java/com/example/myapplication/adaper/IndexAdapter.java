@@ -13,6 +13,8 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.myapplication.R;
 import com.example.myapplication.base.BaseAdapter;
 import com.example.myapplication.bean.IndexBean;
+import com.example.myapplication.utils.CircleBarView;
+import com.scwang.smartrefresh.header.material.CircleImageView;
 
 import java.util.List;
 
@@ -52,6 +54,7 @@ public class IndexAdapter extends BaseAdapter {
             txt_study_state.setText(progress);
         }
 
+
         if (progress.equals(baifen)) {
             txt_study_state.setText("完成学时");
 
@@ -63,6 +66,14 @@ public class IndexAdapter extends BaseAdapter {
             txt_study_state.setTextColor(Color.parseColor("#FFE1E3ED"));
 
         }
+
+
+        CircleBarView circleImageView = (CircleBarView) holder.getView(R.id.img_persent);
+
+        circleImageView.setMaxNum(100f);
+        circleImageView.setProgressNum(Float.valueOf(bean.getJd()) * 100, 0);
+
+
         ConstraintLayout layout = (ConstraintLayout) holder.getView(R.id.layout_item);
         layout.setTag(String.valueOf(bean.getId()));
         layout.setOnClickListener(new View.OnClickListener() {
