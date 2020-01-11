@@ -59,7 +59,7 @@ public class IndexAdapter extends BaseAdapter {
 
         }
         if (progress.equals(zero)) {
-            txt_study_state.setText("为学习");
+            txt_study_state.setText("未学习");
             txt_study_state.setTextColor(Color.parseColor("#FFE1E3ED"));
 
         }

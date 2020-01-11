@@ -35,7 +35,6 @@ public class SplashActivity extends AppCompatActivity {
             intent.setClass(this, LoginActivity.class);
         }else{
             Constant.token = token;
-            Toast.makeText(this, "123", Toast.LENGTH_SHORT).show();
             intent.setClass(this,MainActivity.class);
 
         }
