@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide;
 import com.example.myapplication.R;
 import com.example.myapplication.base.BaseAdapter;
 import com.example.myapplication.bean.ToadayBean;
+import com.example.myapplication.utils.DateUtil;
 
 import java.util.List;
 
@@ -37,7 +38,11 @@ public class DaAgoAdapter extends BaseAdapter {
         textdata.setText(data.getTitle());
         textname.setText(data.getTeacher());
         textgs.setText(data.getGs());
-        text_watchtime.setText(String.valueOf(data.getUpdate_time()));
+
+        long len = (long)data.getLen();
+        String lens = DateUtil.formatTimeS(len);
+        text_watchtime.setText("观看至"+lens);
+
 
         ConstraintLayout layout = (ConstraintLayout) holder.getView(R.id.constraint_daytrain);
         layout.setTag(String.valueOf(data.getCurriculum_id()));

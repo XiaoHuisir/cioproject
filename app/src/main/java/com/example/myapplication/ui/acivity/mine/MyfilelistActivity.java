@@ -80,7 +80,9 @@ public class MyfilelistActivity extends BaseActivity implements MyfilelistConstr
     //下载文件 TODO
     @Override
     public void getdownfileReturn(DownFileBean result) {
+        String insert_id = result.getData().getInsert_id();
         Toast.makeText(context, "" + result.getStatus(), Toast.LENGTH_LONG).show();
+
     }
 
     @OnClick({R.id.iv_myreturn})
@@ -100,7 +102,6 @@ public class MyfilelistActivity extends BaseActivity implements MyfilelistConstr
             file_name = datas.getFile_name();
             file_size = datas.getFile_size();
             file_url = datas.getFile_url();
-
             HashMap<String, String> map = new HashMap<>();
             map.put("curriculum_id", String.valueOf(curriculum_id));
             map.put("file_name", file_name);

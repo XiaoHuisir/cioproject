@@ -34,12 +34,15 @@ public class TodayBeansAdapter extends BaseAdapter {
         TextView textname = (TextView) holder.getView(R.id.text_namebeans);
         TextView textgs = (TextView) holder.getView(R.id.text_gsbeans);
         TextView text_watchtime = (TextView) holder.getView(R.id.text_watchtimebeans);
-        String userDate = DateUtil.getUserDate(String.valueOf(data.getLen()/60));
+//        String userDate = DateUtil.getUserDate(String.valueOf(data.getLen()/60));
 
         long len = (long)data.getLen();
-        String lens = DateUtil.formatTimeS(len);
-
-        text_watchtime.setText("观看至"+lens);
+//        String lens = DateUtil.formatTimeS(len);
+//        formatTimeS
+        String lens = DateUtil.stampToDate(String.valueOf(data.getLen()));
+//        String s1 = DateUtil.stampToDate(String.valueOf(data.getLen()));
+        String s = DateUtil.formatTimeS(len);
+        text_watchtime.setText("观看至"+s);
 
 
         Glide.with(mContext).load(data.getLog()).into(ivtoday);
@@ -48,7 +51,7 @@ public class TodayBeansAdapter extends BaseAdapter {
         textgs.setText(data.getGs());
 
 
-        text_watchtime.setText(String.valueOf(data.getUpdate_time()));
+//        text_watchtime.setText(String.valueOf(data.getUpdate_time()));
         ConstraintLayout layout = (ConstraintLayout) holder.getView(R.id.constraint_todaybeans);
         layout.setTag(String.valueOf(data.getCurriculum_id()));
         layout.setOnClickListener(new View.OnClickListener() {

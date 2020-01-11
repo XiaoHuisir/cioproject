@@ -58,6 +58,8 @@
             android:layout_below="@id/text_databeans"
             android:layout_marginLeft="@dimen/dp_4"
             android:layout_marginTop="@dimen/dp_8"
+            android:maxLines="1"
+            android:ellipsize="end"
             android:layout_toRightOf="@id/text_namebeans"
             android:text="CIO时代学院院长"
             android:textColor="#FF9CA0B5"

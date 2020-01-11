@@ -121,17 +121,19 @@ public class SettingActivity extends BaseActivity implements UsercenterConstract
             case R.id.txt_nickname: //设置名称
                 Intent intent = new Intent();
                 intent.setClass(context, SetNameActivity.class);
+                intent.setClass(context, SetNameActivity.class);
                 intent.putExtra("type",EDIT_NAME);
-                intent.putExtra("nickname",nickname);
+                intent.putExtra("nickname",txtNickname.getText().toString());
                 intent.putExtra("zw",zw);
                 startActivityForResult(intent,EDIT_NAME);
                 break;
             case R.id.txt_zwName:
                 Intent intentZw = new Intent();
                 intentZw.setClass(context, SetNameActivity.class);
+                intentZw.setClass(context, SetNameActivity.class);
                 intentZw.putExtra("type",EDIT_ZW);
                 intentZw.putExtra("nickname",nickname);
-                intentZw.putExtra("zw",zw);
+                intentZw.putExtra("zw",txtZwName.getText().toString());
                 startActivityForResult(intentZw,EDIT_ZW);
                 break;
             case R.id.iv_header:

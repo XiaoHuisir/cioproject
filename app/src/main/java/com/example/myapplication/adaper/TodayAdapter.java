@@ -39,7 +39,7 @@ public class TodayAdapter extends BaseAdapter {
         textdata.setText(data.getTitle());
         textname.setText(data.getTeacher());
         textgs.setText(data.getGs());
-        text_watchtime.setText(String.valueOf(data.getUpdate_time()));
+//        text_watchtime.setText(String.valueOf(data.getUpdate_time()));
         long len = (long)data.getLen();
         String lens = DateUtil.formatTimeS(len);
 

@@ -82,7 +82,6 @@ public class AllTypseFragment extends BaseFragment implements PorfolioConstract.
         todayBeansAdapter.itemClick = this;
         recyclerTraintypes.setLayoutManager(new LinearLayoutManager(context));
         recyclerTraintypes.setAdapter(todayBeansAdapter);
-
         //七天
         trainList = new ArrayList<>();
         trainAdapter = new TodayAdapter(trainList);
