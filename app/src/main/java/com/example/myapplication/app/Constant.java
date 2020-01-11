@@ -19,7 +19,7 @@ public class Constant {
 
     public static final String PATH_CACHE = PATH_DATA + "/cilo";
 
-    public static final String PATH_PDF = MyApp.mApp.getFilesDir().getAbsolutePath()+"/pdfs/";
+    public static final String PATH_PDF = MyApp.mApp.getFilesDir().getAbsolutePath() + "/pdfs/";
 
     public static String token = "";
 
@@ -39,10 +39,12 @@ public class Constant {
     public static final int STUDY_TYPE_2 = 2; //内部培训
     public static final int STUDY_TYPE_3 = 3; //其他培训
 
+    public static final int ONE_CODE = 10000;
 
     public static String CURTYPE = "";
     public static final String STUD_TYPE_0 = "0";
     public static final String STUD_TYPE_1 = "1";
     public static final String STUD_TYPE_2 = "2";
+
 
 }
