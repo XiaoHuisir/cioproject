@@ -6,6 +6,7 @@ import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -72,6 +73,7 @@ public class AllTypseFragment extends BaseFragment implements PorfolioConstract.
     @BindView(R.id.swipeRefresh)
     SwipeRefreshLayout swipeRefreshLayout;
     int page = 1;
+    private String TAG = getClass().getSimpleName();
 
 
     @Override
@@ -159,7 +161,7 @@ public class AllTypseFragment extends BaseFragment implements PorfolioConstract.
                                         lin2.setVisibility(View.VISIBLE);
                                     } else {
                                         Toast.makeText(context, "没有更多了", Toast.LENGTH_SHORT).show();
-                                        lin2.setVisibility(View.INVISIBLE);
+//                                        lin2.setVisibility(View.INVISIBLE);
                                     }
                                 }
 
@@ -220,6 +222,7 @@ public class AllTypseFragment extends BaseFragment implements PorfolioConstract.
 
     @Override
     protected void initData() {
+        Log.e(TAG, "initData: " + Constant.CURTYPE );
         ((PorfolioPresenter) mPresenter).getPorfolio(Constant.CURTYPE, "1");
     }
 
@@ -259,4 +262,9 @@ public class AllTypseFragment extends BaseFragment implements PorfolioConstract.
             return;
         }
     }
+
+    public void onRefresh() {
+        initData();
+    }
+
 }

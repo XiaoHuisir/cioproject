@@ -23,8 +23,9 @@
         android:layout_marginLeft="@dimen/dp_10"
         android:gravity="left"
         android:maxLines="2"
+        android:textColor="#333"
         android:text="1.构建"
-        android:textSize="@dimen/sp_18"
+        android:textSize="@dimen/sp_14"
         />
 
     <android.support.v7.widget.RecyclerView

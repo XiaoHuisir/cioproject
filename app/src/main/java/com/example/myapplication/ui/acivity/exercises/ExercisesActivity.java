@@ -180,8 +180,11 @@ public class ExercisesActivity extends BaseActivity implements ExercisesConstrac
         } else if (pos == 1) {
             txtPrev.setVisibility(View.GONE);
             txtNext.setText("下一题");
-        } else if (pos == currentExercises.getData().size()) {
+        } else if (pos == currentExercises.getData().size() ) {
             txtNext.setText("交卷");
+        } else if(pos == currentExercises.getData().size() - 1) {
+            txtPrev.setVisibility(View.VISIBLE);
+            txtNext.setText("下一题");
         }
     }
 
@@ -224,9 +227,10 @@ public class ExercisesActivity extends BaseActivity implements ExercisesConstrac
         if (result.getCode() == 10000) {
             Toast.makeText(this, "提交试卷成功", Toast.LENGTH_SHORT).show();
             //获取考试结果
-            Intent intent = new Intent(this, ExercisesResultActivity.class);
+            Intent intent = new Intent(this, EexerciseDetailAcivity.class);
             intent.putExtra("evaluat_id",result.getData().getEvaluat_id());
             startActivity(intent);
+            finish();
         }else{
             Toast.makeText(this, result.getMsg(), Toast.LENGTH_SHORT).show();
         }

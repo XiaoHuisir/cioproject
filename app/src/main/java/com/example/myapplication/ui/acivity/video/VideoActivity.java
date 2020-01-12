@@ -50,6 +50,7 @@ import com.example.myapplication.bean.DownFileBean;
 import com.example.myapplication.interfaces.IBasePresenter;
 import com.example.myapplication.interfaces.contract.CurriculumConstract;
 import com.example.myapplication.presenter.curriculum.CurriculumPresenter;
+import com.example.myapplication.ui.acivity.exercises.EexerciseDetailAcivity;
 import com.example.myapplication.ui.acivity.exercises.ExercisesActivity;
 import com.example.myapplication.ui.acivity.exercises.ExercisesResultActivity;
 import com.example.myapplication.ui.acivity.pdf.PdfActivity;
@@ -332,8 +333,8 @@ public class VideoActivity extends BaseActivity implements CurriculumConstract.V
                     intent.setClass(VideoActivity.this,ExercisesActivity.class);
                     startActivity(intent);
                 } else {
-                    intent.putExtra("evaluat_id" , curriculumBean.getData().getRecord_data().getId());
-                    intent.setClass(VideoActivity.this,ExercisesResultActivity.class);
+                    intent.putExtra("evaluat_id" , curriculumBean.getData().getRecord_data().getId() +"");
+                    intent.setClass(VideoActivity.this,EexerciseDetailAcivity.class);
                     startActivity(intent);
                 }
                 break;

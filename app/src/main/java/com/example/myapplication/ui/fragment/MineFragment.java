@@ -21,10 +21,14 @@ import com.example.myapplication.adaper.IndexAdapter;
 import com.example.myapplication.adaper.RecordAdapter;
 import com.example.myapplication.app.Constant;
 import com.example.myapplication.base.BaseFragment;
+import com.example.myapplication.bean.DownFileBean;
+import com.example.myapplication.bean.MyfilelistBean;
 import com.example.myapplication.bean.UnredNoticeBean;
 import com.example.myapplication.bean.UserCenterBean;
 import com.example.myapplication.interfaces.IBasePresenter;
+import com.example.myapplication.interfaces.contract.MyfilelistConstract;
 import com.example.myapplication.interfaces.usercenter.UsercenterConstract;
+import com.example.myapplication.presenter.mine.MyfilelistPresenter;
 import com.example.myapplication.presenter.usercenter.UserCenterPresenter;
 import com.example.myapplication.ui.acivity.PorfolioActivity;
 import com.example.myapplication.ui.acivity.PracticeActivity;
@@ -32,18 +36,23 @@ import com.example.myapplication.ui.acivity.mine.MyfilelistActivity;
 import com.example.myapplication.ui.acivity.mine.NoticeListAcitivity;
 import com.example.myapplication.ui.acivity.setting.SettingActivity;
 import com.example.myapplication.ui.acivity.video.VideoActivity;
+import com.example.myapplication.utils.CommonSubscriber;
 import com.example.myapplication.utils.DateUtil;
+import com.example.myapplication.utils.HttpUtils;
 import com.example.myapplication.utils.NumView;
+import com.example.myapplication.utils.RxUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.disposables.CompositeDisposable;
 
 import static cn.jzvd.JZUtils.TAG;
 
-public class MineFragment extends BaseFragment implements UsercenterConstract.View, RecordAdapter.RecordItemClick {
+public class MineFragment extends BaseFragment implements
+        UsercenterConstract.View, RecordAdapter.RecordItemClick {
 
     @BindView(R.id.iv_setting)
     ImageView ivsetting;
@@ -222,6 +231,7 @@ public class MineFragment extends BaseFragment implements UsercenterConstract.Vi
         txtSixteen.setText(String.valueOf(result.getData().getEnd_num()));
         txtFifteen.setText(String.valueOf(result.getData().getPass_num()));
         txtOne.setText(String.valueOf(result.getData().getNopass_num()));
+        txtMyfilelist.setText(result.getData().getFile_num()+ "个材料文件");
 
         if (!TextUtils.isEmpty(nickname)) {
 //            txttitlename.setText(nickname);
@@ -273,4 +283,6 @@ public class MineFragment extends BaseFragment implements UsercenterConstract.Vi
         intent.putExtra("curriulum_id", id);
         startActivity(intent);
     }
+
+
 }

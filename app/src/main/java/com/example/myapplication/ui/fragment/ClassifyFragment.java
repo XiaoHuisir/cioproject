@@ -191,6 +191,7 @@ public class ClassifyFragment extends BaseFragment implements TypeIndexConstact.
      */
     @Override
     public void courseClick(int id) {
+        page = 1;
         type = id;
         for (TypeIndexBean.DataBean.CurriculumKwBean item : studyList) {
             item.select = false;

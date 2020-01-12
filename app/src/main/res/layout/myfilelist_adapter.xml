@@ -47,6 +47,8 @@
             android:layout_alignParentTop="true"
             android:layout_marginLeft="@dimen/dp_16"
             android:layout_marginTop="@dimen/dp_65"
+            android:maxLines="1"
+            android:ellipsize="end"
             android:text="来自课程：新一代信息技术与企业数字化的转型"
             android:textColor="#FF75788C"
             android:textSize="@dimen/sp_12" />

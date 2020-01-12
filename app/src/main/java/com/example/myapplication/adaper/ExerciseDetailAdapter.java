@@ -167,7 +167,6 @@ public class ExerciseDetailAdapter extends RecyclerView.Adapter {
             if(data.getIs_pass() == 1){
                 txtResult.setText("通过");
                 txtResult.setTextColor(Color.parseColor("#2196F3"));
-                layoutInfo.setVisibility(View.VISIBLE);
                 layoutLose.setVisibility(View.GONE);
                 txtTitle.setText(data.getTitle());
                 txtScore.setText(String.valueOf(data.getFraction()));
@@ -186,7 +185,6 @@ public class ExerciseDetailAdapter extends RecyclerView.Adapter {
             }else{
                 txtTitle.setText(data.getTitle());
                 txtScore.setText(String.valueOf(data.getFraction()));
-                layoutInfo.setVisibility(View.GONE);
                 layoutLose.setVisibility(View.VISIBLE);
                 txtResult.setText("未通过");
                 txtResult.setTextColor(Color.parseColor("#ff0000"));

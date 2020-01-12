@@ -80,6 +80,7 @@ public class EexerciseDetailAcivity extends BaseActivity implements ExercisesCon
                     intent.setClass(context, ExercisesActivity.class);
                     intent.putExtra("evaluat_curriulum_id", data.getCurriculum_id());
                     startActivity(intent);
+                    finish();
                 }
                 break;
         }

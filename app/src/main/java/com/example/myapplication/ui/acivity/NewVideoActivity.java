@@ -38,6 +38,7 @@ import com.example.myapplication.bean.DownFileBean;
 import com.example.myapplication.interfaces.IBasePresenter;
 import com.example.myapplication.interfaces.contract.CurriculumConstract;
 import com.example.myapplication.presenter.curriculum.CurriculumPresenter;
+import com.example.myapplication.ui.acivity.exercises.EexerciseDetailAcivity;
 import com.example.myapplication.ui.acivity.exercises.ExercisesActivity;
 import com.example.myapplication.ui.acivity.exercises.ExercisesResultActivity;
 import com.example.myapplication.ui.acivity.pdf.PdfActivity;
@@ -251,7 +252,7 @@ public class NewVideoActivity extends BaseActivity implements CurriculumConstrac
                 if (curriculumBean.getData().getHave_evaluat().equals("1")) {
                     //通过记录的id判断是否有测试过
                     if (curriculumBean.getData().getRecord_data().getId() > 0) {
-                        Intent intent = new Intent(this, ExercisesResultActivity.class);
+                        Intent intent = new Intent(this, EexerciseDetailAcivity.class);
                         intent.putExtra("evaluat_id", String.valueOf(curriculumBean.getData().getRecord_data().getId()));
                         startActivity(intent);
                     } else {

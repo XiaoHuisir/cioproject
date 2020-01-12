@@ -1,8 +1,5 @@
 package com.example.myapplication.adaper;
 
-import android.support.annotation.NonNull;
-import android.support.constraint.ConstraintLayout;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -41,6 +38,17 @@ public class NotcieAdapter extends BaseAdapter {
         Glide.with(mContext).load(data.getLog()).into(imageNotcie);
         txt_xinx.setText(data.getTitle());
         txt_fraction.setText(String.valueOf(data.getFraction()) + "分");
+        int type = data.getType();
+        switch (type) {
+            case 1:
+                txt_notname.setText("课外学习");
+                break;
+            case 2:
+                txt_notname.setText("培训课程");
+                break;
+            case 3:
+                break;
+        }
 
         LinearLayout lin_not = (LinearLayout) holder.getView(R.id.lin_not);
         LinearLayout lin_tong = (LinearLayout) holder.getView(R.id.lin_tong);

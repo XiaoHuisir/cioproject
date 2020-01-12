@@ -52,15 +52,15 @@ public class PorfolioActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        Constant.CURTYPE = Constant.STUD_TYPE_0;
         allTypseFragment = new AllTypseFragment();
         trainTypesFragment = new TrainTypesFragment();
         lessonTypesFragment = new LessonTypesFragment();
         android.support.v4.app.FragmentTransaction transaction1 = getSupportFragmentManager().beginTransaction();
-        transaction1.add(R.id.fragmentBin, allTypseFragment)
-                .add(R.id.fragmentBin, trainTypesFragment)
-                .add(R.id.fragmentBin, lessonTypesFragment).commit();
-        allTypes();
+        transaction1.add(R.id.fragmentBin, allTypseFragment).commit();
+
     }
+
 
     @OnClick({R.id.image_return, R.id.btn_types_all, R.id.btn_types_train, R.id.btn_types_lesson})
     public void onViewClicked(View view) {
@@ -70,15 +70,14 @@ public class PorfolioActivity extends BaseActivity {
                 break;
             case R.id.btn_types_all:
                 Constant.CURTYPE = Constant.STUD_TYPE_0;
-
                 allTypes();
                 break;
             case R.id.btn_types_train:
-                Constant.CURTYPE = Constant.STUD_TYPE_1;
+                Constant.CURTYPE = Constant.STUD_TYPE_2;
                 trainTypes();
                 break;
             case R.id.btn_types_lesson:
-                Constant.CURTYPE = Constant.STUD_TYPE_2;
+                Constant.CURTYPE = Constant.STUD_TYPE_1;
                 lessonTypes();
                 break;
         }
@@ -89,36 +88,23 @@ public class PorfolioActivity extends BaseActivity {
         btnTrc.setBackgroundResource(R.drawable.text_bg_false);
         btnBeyond.setBackgroundResource(R.drawable.text_bg_false);
 
-        btnAlltypes.setBackgroundResource(R.drawable.text_bg_true);
-        android.support.v4.app.FragmentTransaction transaction1 = getSupportFragmentManager().beginTransaction();
-        transaction1.show(allTypseFragment)
-                .hide(trainTypesFragment)
-                .hide(lessonTypesFragment)
-                .commit();
+        allTypseFragment.onRefresh();
+
     }
 
     private void trainTypes() {
         btnAlltypes.setBackgroundResource(R.drawable.text_bg_false);
         btnTrc.setBackgroundResource(R.drawable.text_bg_true);
         btnBeyond.setBackgroundResource(R.drawable.text_bg_false);
+        allTypseFragment.onRefresh();
 
-        android.support.v4.app.FragmentTransaction transaction1 = getSupportFragmentManager().beginTransaction();
-        transaction1.show(trainTypesFragment)
-                .hide(allTypseFragment)
-                .hide(lessonTypesFragment)
-                .commit();
     }
 
     private void lessonTypes() {
         btnAlltypes.setBackgroundResource(R.drawable.text_bg_false);
         btnTrc.setBackgroundResource(R.drawable.text_bg_false);
         btnBeyond.setBackgroundResource(R.drawable.text_bg_true);
-
-        android.support.v4.app.FragmentTransaction transaction1 = getSupportFragmentManager().beginTransaction();
-        transaction1.show(lessonTypesFragment)
-                .hide(allTypseFragment)
-                .hide(trainTypesFragment)
-                .commit();
+        allTypseFragment.onRefresh();
     }
 
 }

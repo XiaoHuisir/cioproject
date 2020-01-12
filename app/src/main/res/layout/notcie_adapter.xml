@@ -75,6 +75,7 @@
                 android:textSize="@dimen/sp_12" />
 
             <TextView
+                android:visibility="gone"
                 android:id="@+id/txt_nottiem"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

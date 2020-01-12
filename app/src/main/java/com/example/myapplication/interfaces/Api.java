@@ -86,7 +86,7 @@ public interface Api {
 
     @POST("index/train/my_file_list")
     @FormUrlEncoded
-    Flowable<MyfilelistBean> myfilelist(@Header("x-access-token") String token, @Field("page") String page);
+    Flowable<MyfilelistBean> myfilelist(@Header("x-access-token") String token, @Field("page") int page);
 
 
     @POST("index/train/get_unread_notice_num")

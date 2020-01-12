@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.myapplication.R;
+import com.example.myapplication.app.Constant;
 import com.example.myapplication.base.BaseAdapter;
 import com.example.myapplication.bean.ToadayBean;
 import com.example.myapplication.utils.DateUtil;
@@ -43,8 +44,18 @@ public class TodayBeansAdapter extends BaseAdapter {
 //        String s1 = DateUtil.stampToDate(String.valueOf(data.getLen()));
         String s = DateUtil.formatTimeS(len);
         text_watchtime.setText("观看至"+s);
-
-
+        TextView text_timebeans = (TextView) holder.getView(R.id.text_timebeans);
+        int type = data.getType();
+        switch (type) {
+            case 1:
+                text_timebeans.setText("课外学习");
+                break;
+            case 2:
+                text_timebeans.setText("培训课程");
+                break;
+            case 3:
+                break;
+        }
         Glide.with(mContext).load(data.getLog()).into(ivtoday);
         textdata.setText(data.getTitle());
         textname.setText(data.getTeacher());

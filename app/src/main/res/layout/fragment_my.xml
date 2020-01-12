@@ -542,7 +542,7 @@
                         android:layout_marginLeft="@dimen/dp_2"
                         android:layout_marginBottom="@dimen/dp_7"
                         android:layout_toLeftOf="@id/iv_3"
-                        android:text="2个材料文件"
+                        android:text="材料文件"
                         android:textColor="#FF75788C"
                         android:textSize="@dimen/sp_12" />
 

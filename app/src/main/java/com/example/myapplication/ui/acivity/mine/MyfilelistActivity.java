@@ -2,6 +2,7 @@ package com.example.myapplication.ui.acivity.mine;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -26,6 +27,9 @@ import com.example.myapplication.presenter.mine.MyfilelistPresenter;
 import com.example.myapplication.ui.acivity.pdf.PdfActivity;
 import com.example.myapplication.utils.DownLoadUtils;
 import com.example.myapplication.utils.FileUtils;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,10 +40,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MyfilelistActivity extends BaseActivity implements MyfilelistConstract.View, MyfilelistAdapter.MyfilelistClick {
+public class MyfilelistActivity extends BaseActivity implements MyfilelistConstract.View, MyfilelistAdapter.MyfilelistClick, OnRefreshLoadMoreListener {
 
     @BindView(R.id.layout_bg)
     ConstraintLayout layoutBg;
+    @BindView(R.id.smartRefresh)
+    SmartRefreshLayout smartRefresh;
 
     @BindView(R.id.iv_myreturn)
     ImageView ivMyreturn;
@@ -58,6 +64,7 @@ public class MyfilelistActivity extends BaseActivity implements MyfilelistConstr
     PopupWindow popupWindow;
     ProgressBar progressBar;
     private MyfilelistBean.DataBean data;
+    int mCurrentPage = 1;
 
     @Override
     protected IBasePresenter getPresenter() {
@@ -75,22 +82,28 @@ public class MyfilelistActivity extends BaseActivity implements MyfilelistConstr
         recyclerMy.setLayoutManager(new LinearLayoutManager(context));
         myfilelistAdapter = new MyfilelistAdapter(dataBeanslist, this);
         recyclerMy.setAdapter(myfilelistAdapter);
-
+        smartRefresh.setOnRefreshLoadMoreListener(this);
     }
 
     @Override
     protected void initData() {
-        ((MyfilelistPresenter) mPresenter).getMyfilelist("1");
-
-
+        ((MyfilelistPresenter) mPresenter).getMyfilelist(mCurrentPage++);
     }
 
     @Override
     public void getMyfilelistReturn(MyfilelistBean result) {
+
         if (result.getStatus() == 1) {
             List<MyfilelistBean.DataBean> data = result.getData();
-            dataBeanslist.clear();
-            dataBeanslist.addAll(data);
+            if(mCurrentPage == 2){
+                smartRefresh.finishRefresh();
+                dataBeanslist.clear();
+                dataBeanslist.addAll(data);
+            } else {
+                smartRefresh.finishLoadMore();
+                dataBeanslist.addAll(data);
+            }
+
             myfilelistAdapter.notifyDataSetChanged();
         }
 
@@ -215,6 +228,17 @@ public class MyfilelistActivity extends BaseActivity implements MyfilelistConstr
                 }
             }).start();
         }
+    }
+
+    @Override
+    public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+        initData();
+    }
+
+    @Override
+    public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+        mCurrentPage = 1;
+        initData();
     }
 }
 
