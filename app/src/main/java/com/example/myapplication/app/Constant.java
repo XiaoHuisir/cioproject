@@ -19,6 +19,12 @@ public class Constant {
 
     public static final String PATH_CACHE = PATH_DATA + "/cilo";
 
+    public static String DEFAULT_SAVE_IMAGE_PATH = Environment
+            .getExternalStorageDirectory()
+            + File.separator
+            + "com.example.myapplication"
+            + File.separator + "user_img" + File.separator;
+
     public static final String PATH_PDF = MyApp.mApp.getFilesDir().getAbsolutePath() + "/pdfs/";
 
     public static String token = "";

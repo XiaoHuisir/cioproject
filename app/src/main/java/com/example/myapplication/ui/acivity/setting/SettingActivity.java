@@ -1,9 +1,14 @@
 package com.example.myapplication.ui.acivity.setting;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.icu.util.LocaleData;
+import android.net.Uri;
+import android.os.Build;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
+import android.support.v4.content.FileProvider;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Display;
@@ -32,24 +37,35 @@ import com.example.myapplication.interfaces.IBasePresenter;
 import com.example.myapplication.interfaces.usercenter.UsercenterConstract;
 import com.example.myapplication.presenter.usercenter.UpdateUserInfoPresenter;
 import com.example.myapplication.ui.acivity.login.LoginActivity;
+import com.example.myapplication.utils.ActionSheetDialog;
 import com.example.myapplication.utils.SharedPreferencesUtil;
+import com.example.myapplication.utils.ToastUtil;
+import com.example.myapplication.utils.ViewBigImageActivity;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
+import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.qiniu.android.http.ResponseInfo;
 import com.qiniu.android.storage.UpCompletionHandler;
 import com.qiniu.android.storage.UploadManager;
 import com.qiniu.android.storage.UploadOptions;
+import com.scwang.smartrefresh.layout.util.DensityUtil;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import org.json.JSONObject;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
+
+import static com.example.myapplication.app.Constant.PATH_CACHE;
 
 public class SettingActivity extends BaseActivity implements UsercenterConstract.UpdateView {
 
@@ -80,6 +96,8 @@ public class SettingActivity extends BaseActivity implements UsercenterConstract
     AlertDialog dialog;
     String imgPath;
     private String TAG = getClass().getSimpleName();
+    private File cameraFile;
+    private int REQUEST_CODE_CAMERA = 166;
 
     @Override
     protected IBasePresenter getPresenter() {
@@ -137,7 +155,7 @@ public class SettingActivity extends BaseActivity implements UsercenterConstract
                 startActivityForResult(intentZw, EDIT_ZW);
                 break;
             case R.id.iv_header:
-                showPicture();
+                showSelectDialog();
                 break;
             case R.id.setting_back:
                 finish();
@@ -152,6 +170,87 @@ public class SettingActivity extends BaseActivity implements UsercenterConstract
                 break;
 
         }
+    }
+
+    private void showSelectDialog() {
+        final ActionSheetDialog sheetDialog = new ActionSheetDialog(this)
+                .builder().setCancelable(true).setCanceledOnTouchOutside(true)
+                .addSheetItem("查看大图", ActionSheetDialog.SheetItemColor.BLACK, new ActionSheetDialog.OnSheetItemClickListener() {
+                    @Override
+                    public void onClick(int which) {
+                        if (!TextUtils.isEmpty(avatar)) {
+                            ArrayList<String> objects = new ArrayList<String>();
+                            objects.add(avatar);
+                            ViewBigImageActivity.goInto(SettingActivity.this,1,0,objects);
+                        }
+                    }
+                })
+                .addSheetItem("相册选取", ActionSheetDialog.SheetItemColor.BLACK, new ActionSheetDialog.OnSheetItemClickListener() {
+                    @Override
+                    public void onClick(int which) {
+                        RxPermissions rxPermissions = new RxPermissions(SettingActivity.this);
+                        rxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE
+                                , Manifest.permission.CAMERA)
+                                .subscribe(new Observer<Boolean>() {
+                                    @Override
+                                    public void onSubscribe(Disposable d) {
+
+                                    }
+
+                                    @Override
+                                    public void onNext(Boolean aBoolean) {
+                                        if (aBoolean) {
+                                            showPhoto();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onError(Throwable e) {
+
+                                    }
+
+                                    @Override
+                                    public void onComplete() {
+
+                                    }
+                                });
+
+                    }
+                })
+                .addSheetItem("相机拍摄", ActionSheetDialog.SheetItemColor.BLACK, new ActionSheetDialog.OnSheetItemClickListener() {
+                    @Override
+                    public void onClick(int which) {
+                        RxPermissions rxPermissions = new RxPermissions(SettingActivity.this);
+                        rxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                                Manifest.permission.READ_EXTERNAL_STORAGE,
+                                Manifest.permission.CAMERA)
+                                .subscribe(new Observer<Boolean>() {
+                                    @Override
+                                    public void onSubscribe(Disposable d) {
+
+                                    }
+
+                                    @Override
+                                    public void onNext(Boolean aBoolean) {
+                                        if (aBoolean) {
+                                            selectPicFromCamera();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onError(Throwable e) {
+
+                                    }
+
+                                    @Override
+                                    public void onComplete() {
+
+                                    }
+                                });
+                    }
+                });
+
+        sheetDialog.show();
     }
 
     /**
@@ -199,7 +298,7 @@ public class SettingActivity extends BaseActivity implements UsercenterConstract
                     dialog.dismiss();
                     break;
                 case R.id.txt_camera:
-                    showCamera();
+                    selectPicFromCamera();
                     dialog.dismiss();
                     break;
             }
@@ -207,18 +306,36 @@ public class SettingActivity extends BaseActivity implements UsercenterConstract
     };
 
     private void showPhoto() {
-//        PictureSelector.create(SettingActivity.this)
-//                .openGallery(PictureMimeType.ofImage())
-//                .maxSelectNum(1)
-//                .forResult(PictureConfig.CHOOSE_REQUEST);
+        PictureSelector.create(SettingActivity.this)
+                .openGallery(PictureMimeType.ofImage())
+                .maxSelectNum(1)
+                .forResult(PictureConfig.CHOOSE_REQUEST);
     }
 
-    private void showCamera() {
-//        PictureSelector.create(SettingActivity.this)
-//                .openCamera(PictureMimeType.ofImage())
-//                .maxSelectNum(1)
-//                .isCamera(true)
-//                .forResult(PictureConfig.REQUEST_CAMERA);
+    public void selectPicFromCamera() {
+
+        String filePath = Constant.DEFAULT_SAVE_IMAGE_PATH;
+        File imageParentFile = new File(filePath);
+        if (!imageParentFile.exists()) {
+            imageParentFile.mkdirs();
+        }
+        cameraFile = new File(imageParentFile, System.currentTimeMillis() + ".jpg");
+        cameraFile.getParentFile().mkdirs();
+        Uri imgUriOri = null;
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            imgUriOri = FileProvider.getUriForFile(this,
+                    getPackageName() + ".FileProvider", cameraFile);
+        } else {
+            imgUriOri = Uri.fromFile(cameraFile);
+        }
+
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, imgUriOri);
+        //添加权限
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        startActivityForResult(
+                intent, REQUEST_CODE_CAMERA);
+
     }
 
     @Override
@@ -243,15 +360,12 @@ public class SettingActivity extends BaseActivity implements UsercenterConstract
                 getToken();
             }
 
-        } else if (requestCode == PictureConfig.REQUEST_CAMERA) {
-            //相机返回
-            List<LocalMedia> list = PictureSelector.obtainMultipleResult(data);
-            if (list.size() > 0) {
-                imgPath = list.get(0).getPath();
+        } else if (requestCode == REQUEST_CODE_CAMERA) {
+            if (cameraFile != null && cameraFile.exists()) {
+                imgPath = cameraFile.getAbsolutePath();
                 getToken();
             }
         }
-
     }
 
     private void getToken() {
