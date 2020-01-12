@@ -1,101 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/swipeRefresh"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <RelativeLayout
+    <android.support.v4.widget.NestedScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/sv"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <LinearLayout
-            android:id="@+id/lin"
-            android:layout_alignParentTop="true"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_24"
-            android:visibility="gone"
-            android:background="#FFFFFFFF"
-            >
-
-            <TextView
-                android:id="@+id/txt_trainlesson"
-                android:layout_width="wrap_content"
-                android:layout_marginLeft="@dimen/dp_20"
-                android:layout_marginTop="@dimen/dp_4"
-                android:layout_height="wrap_content"
-                android:text="今天"
-                android:textColor="#FF333333"
-                android:textSize="@dimen/sp_14"
-                />
-        </LinearLayout>
-
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler_traintypeslesson"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/lin"
-            android:layout_marginTop="@dimen/dp_6"
-            android:nestedScrollingEnabled="false"/>
 
         <LinearLayout
-            android:id="@+id/lin1"
-            android:layout_below="@+id/recycler_traintypeslesson"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_24"
-            android:visibility="gone"
-            android:background="#FFFFFFFF"
-            >
-
-            <TextView
-                android:id="@+id/txt_seven_daylesson"
-                android:layout_width="wrap_content"
-                android:layout_marginLeft="@dimen/dp_20"
-                android:layout_marginTop="@dimen/dp_4"
-                android:layout_height="wrap_content"
-                android:text="最近七天"
-                android:textColor="#FF333333"
-                android:textSize="@dimen/sp_14"
-                />
-        </LinearLayout>
-
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyc_seven_daylesson"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/lin1"
-            android:layout_marginTop="@dimen/dp_6"
-            android:nestedScrollingEnabled="false"/>
+            android:orientation="vertical">
 
-        <LinearLayout
-            android:id="@+id/lin2"
-            android:layout_below="@+id/recyc_seven_daylesson"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_24"
-            android:visibility="gone"
-            android:background="#FFFFFFFF"
-            >
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/txt_day_agolesson"
-                android:layout_width="wrap_content"
-                android:layout_marginLeft="@dimen/dp_20"
-                android:layout_marginTop="@dimen/dp_4"
-                android:layout_height="wrap_content"
-                android:text="更早"
-                android:textColor="#FF333333"
-                android:textSize="@dimen/sp_14"
-                />
+                <LinearLayout
+                    android:id="@+id/lin"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_24"
+                    android:layout_alignParentTop="true"
+                    android:background="#FFFFFFFF"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/txt_trainlesson"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp_20"
+                        android:layout_marginTop="@dimen/dp_4"
+                        android:text="今天"
+                        android:textColor="#FF333333"
+                        android:textSize="@dimen/sp_14" />
+                </LinearLayout>
+
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycler_traintypeslesson"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/lin"
+                    android:layout_marginTop="@dimen/dp_6"
+                    android:nestedScrollingEnabled="false" />
+
+                <LinearLayout
+                    android:id="@+id/lin1"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_24"
+                    android:layout_below="@+id/recycler_traintypeslesson"
+                    android:background="#FFFFFFFF"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/txt_seven_daylesson"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp_20"
+                        android:layout_marginTop="@dimen/dp_4"
+                        android:text="最近七天"
+                        android:textColor="#FF333333"
+                        android:textSize="@dimen/sp_14" />
+                </LinearLayout>
+
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyc_seven_daylesson"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/lin1"
+                    android:layout_marginTop="@dimen/dp_6"
+                    android:nestedScrollingEnabled="false" />
+
+                <LinearLayout
+                    android:id="@+id/lin2"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_24"
+                    android:layout_below="@+id/recyc_seven_daylesson"
+                    android:background="#FFFFFFFF"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/txt_day_agolesson"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp_20"
+                        android:layout_marginTop="@dimen/dp_4"
+                        android:text="更早"
+                        android:textColor="#FF333333"
+                        android:textSize="@dimen/sp_14" />
+                </LinearLayout>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyc_day_agolesson"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/lin2"
+                    android:layout_marginTop="@dimen/dp_6"
+                    android:nestedScrollingEnabled="false" />
+
+            </RelativeLayout>
         </LinearLayout>
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyc_day_agolesson"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/lin2"
-            android:layout_marginTop="@dimen/dp_6"
-            android:nestedScrollingEnabled="false"/>
-
-    </RelativeLayout>
-
-</ScrollView>
+    </android.support.v4.widget.NestedScrollView>
+</android.support.v4.widget.SwipeRefreshLayout>

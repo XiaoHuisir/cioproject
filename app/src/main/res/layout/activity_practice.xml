@@ -41,14 +41,24 @@
         android:layout_height="@dimen/dp_0_5"
         android:background="@color/grey" />
 
-    <ScrollView
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/nv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:nestedScrollingEnabled="false">
+            android:layout_height="match_parent">
 
             <LinearLayout
                 android:id="@+id/linnot"
@@ -72,7 +82,8 @@
                 android:id="@+id/rv_notcieRecord"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/linnot" />
+                android:layout_below="@+id/linnot"
+                android:nestedScrollingEnabled="false"/>
 
             <TextView
                 android:id="@+id/txt"
@@ -87,9 +98,15 @@
                 android:id="@+id/rv_oktcieRecord"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@id/txt" />
+                android:layout_below="@id/txt"
+                android:nestedScrollingEnabled="false"/>
 
         </RelativeLayout>
-    </ScrollView>
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
 
 </LinearLayout>

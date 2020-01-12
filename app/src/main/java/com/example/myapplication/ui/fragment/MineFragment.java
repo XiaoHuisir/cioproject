@@ -2,6 +2,7 @@ package com.example.myapplication.ui.fragment;
 
 import android.content.Intent;
 import android.service.dreams.DreamService;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -82,6 +83,8 @@ public class MineFragment extends BaseFragment implements UsercenterConstract.Vi
     TextView txtOne;
     @BindView(R.id.relative_soos)
     RelativeLayout relativesoos;
+    @BindView(R.id.swipeRefresh)
+    SwipeRefreshLayout swipeRefreshLayout;
     private ArrayList<UserCenterBean.DataBean.HistoryBean> historyBeans;
     private RecordAdapter recordAdapter;
     UserCenterBean userCenterBean;
@@ -147,6 +150,23 @@ public class MineFragment extends BaseFragment implements UsercenterConstract.Vi
         recordAdapter = new RecordAdapter(historyBeans);
         recordAdapter.itemClick = this;
         record.setAdapter(recordAdapter);
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                ((UserCenterPresenter) mPresenter).usercenter();
+                ((UserCenterPresenter) mPresenter).getUnredNotice();
+
+                swipeRefreshLayout.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (swipeRefreshLayout != null){
+                            swipeRefreshLayout.setRefreshing(false);
+                        }
+                    }
+                } , 2000);
+            }
+        });
 
     }
 

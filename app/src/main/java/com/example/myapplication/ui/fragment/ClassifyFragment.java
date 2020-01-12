@@ -29,6 +29,7 @@ import com.example.myapplication.presenter.classify.ClassifyPresenter;
 import com.example.myapplication.ui.acivity.video.VideoActivity;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
 import java.lang.reflect.Array;
@@ -116,6 +117,9 @@ public class ClassifyFragment extends BaseFragment implements TypeIndexConstact.
         typeAdapter = new TypeAdapter(curriculumList, this);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         recyclerView.setAdapter(typeAdapter);
+
+        smartRefresh.setRefreshHeader(new ClassicsHeader(this.getActivity()));
+
 
         smartRefresh.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
