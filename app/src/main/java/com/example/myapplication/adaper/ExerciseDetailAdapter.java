@@ -183,6 +183,16 @@ public class ExerciseDetailAdapter extends RecyclerView.Adapter {
                 txtErrorNum.setText(String.valueOf(failNum));
                 txtRate.setText(String.valueOf(rate));
             }else{
+                int rightNum = getRightNum(data.getEvaluat_result());
+                int failNum = data.getEvaluat_result().size()-rightNum;
+                int rate = (int) ((Float.valueOf(rightNum)/Float.valueOf(data.getEvaluat_result().size()))*100);
+                txtExerciseNum.setText("试题数量："+data.getEvaluat_result().size());
+                txtRightNum.setText(String.valueOf(rightNum));
+                txtErrorNum.setText(String.valueOf(failNum));
+                txtRate.setText(String.valueOf(rate));
+                long date = (long)(data.getAdd_time())*1000;
+                String time = DateUtil.getStringByDate(date);
+                txtTime.setText(time);
                 txtTitle.setText(data.getTitle());
                 txtScore.setText(String.valueOf(data.getFraction()));
                 layoutLose.setVisibility(View.VISIBLE);

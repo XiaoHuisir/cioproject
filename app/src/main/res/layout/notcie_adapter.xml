@@ -119,12 +119,20 @@
 
         <TextView
             android:id="@+id/txt_tong"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="@dimen/dp_4"
             android:text="未通过"
             android:textColor="#FFEB2121"
             android:textSize="@dimen/sp_14" />
+
+        <ImageView
+            android:layout_gravity="center_vertical"
+            android:src="@mipmap/item_arrows"
+            android:layout_width="@dimen/dp_10"
+            android:layout_height="@dimen/dp_10" />
+
     </LinearLayout>
 </LinearLayout>

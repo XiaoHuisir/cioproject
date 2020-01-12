@@ -75,6 +75,7 @@
                 android:textSize="@dimen/sp_12" />
 
             <TextView
+                android:visibility="gone"
                 android:id="@+id/txt_nottiemok"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -116,13 +117,21 @@
             android:textSize="@dimen/sp_14" />
 
         <TextView
+            android:layout_weight="1"
             android:id="@+id/txt_tongok"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="@dimen/dp_4"
             android:text="已通过"
             android:textColor="#FF75788C"
             android:textSize="@dimen/sp_14" />
+
+        <ImageView
+            android:layout_gravity="center_vertical"
+            android:src="@mipmap/item_arrows"
+            android:layout_width="@dimen/dp_10"
+            android:layout_height="@dimen/dp_10" />
+
     </LinearLayout>
 </LinearLayout>

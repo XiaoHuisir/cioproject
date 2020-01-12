@@ -270,8 +270,8 @@ public class MineFragment extends BaseFragment implements
 
 
         List<UserCenterBean.DataBean.HistoryBean> history = result.getData().getHistory();
+        historyBeans.clear();
         historyBeans.addAll(history);
-        history.clear();
         recordAdapter.notifyDataSetChanged();
     }
 

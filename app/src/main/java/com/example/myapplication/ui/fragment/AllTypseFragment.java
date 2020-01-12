@@ -195,7 +195,8 @@ public class AllTypseFragment extends BaseFragment implements PorfolioConstract.
                     trainAdapter.notifyDataSetChanged();
                     lin1.setVisibility(View.VISIBLE);
                 }else {
-                    lin1.setVisibility(View.INVISIBLE);
+                    lin1.setVisibility(View.GONE);
+                    trainAdapter.notifyDataSetChanged();
                 }
                 List<ToadayBean.DataBean.DayAgoBean> day_ago = result.getData().getDay_ago();
                 if (day_ago.size() > 0) {
@@ -204,7 +205,8 @@ public class AllTypseFragment extends BaseFragment implements PorfolioConstract.
                     daAgoAdapter.notifyDataSetChanged();
                     lin2.setVisibility(View.VISIBLE);
                 }else {
-                    lin2.setVisibility(View.INVISIBLE);
+                    lin2.setVisibility(View.GONE);
+                    daAgoAdapter.notifyDataSetChanged();
                 }
                 List<ToadayBean.DataBean.TodayBean> today = result.getData().getToday();
                 if (today.size() > 0) {
@@ -213,7 +215,8 @@ public class AllTypseFragment extends BaseFragment implements PorfolioConstract.
                     todayBeansAdapter.notifyDataSetChanged();
                     lin.setVisibility(View.VISIBLE);
                 }else {
-                    lin.setVisibility(View.INVISIBLE);
+                    lin.setVisibility(View.GONE);
+                    todayBeansAdapter.notifyDataSetChanged();
                 }
             }
 
@@ -264,6 +267,9 @@ public class AllTypseFragment extends BaseFragment implements PorfolioConstract.
     }
 
     public void onRefresh() {
+        trainList.clear();
+        dayAgoBeans.clear();
+        todayBeans.clear();
         initData();
     }
 

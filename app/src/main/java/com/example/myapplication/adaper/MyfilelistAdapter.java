@@ -48,7 +48,7 @@ public class MyfilelistAdapter extends BaseAdapter {
             public void onClick(View v) {
                 Intent intent = new Intent();
                 intent.setClass(mContext, VideoActivity.class);
-                intent.putExtra("curriulum_id", data.getCurriculum_id());
+                intent.putExtra("curriulum_id", data.getCurriculum_id() + "");
                 mContext.startActivity(intent);
             }
         });

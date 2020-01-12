@@ -40,7 +40,17 @@ public class NotOkcieAdapter extends BaseAdapter {
         Glide.with(mContext).load(data.getLog()).into(imageNotcie);
         txt_xinx.setText(data.getTitle());
         txt_fraction.setText(String.valueOf(data.getFraction()) + "分");
-
+        int type = data.getType();
+        switch (type) {
+            case 1:
+                txt_notname.setText("课外学习");
+                break;
+            case 2:
+                txt_notname.setText("培训课程");
+                break;
+            case 3:
+                break;
+        }
 
         LinearLayout linbs = (LinearLayout) holder.getView(R.id.linok);
         linbs.setTag(String.valueOf(data.getCurriculum_id()));
