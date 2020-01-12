@@ -55,8 +55,6 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     protected void initView() {
-        targetBottomPosition = 0;
-        currentBottomPosition = 0;
         courseFragment = new CourseFragment();
         studyFragment = new StudyFragment();
 
@@ -88,7 +86,6 @@ public class HomeFragment extends BaseFragment {
                 if (currentBottomPosition == 0) {
                     return;
                 }
-                txt_course_1.setTextColor(getResources().getColor(R.color.red));
                 fragmentTransaction.hide(fragmentList.get(currentBottomPosition));
                 if (!fragmentList.get(targetBottomPosition).isAdded()) {
                     fragmentTransaction.add(R.id.fragmentBox, fragmentList.get(targetBottomPosition));
@@ -104,13 +101,10 @@ public class HomeFragment extends BaseFragment {
                     return;
                 }
                 fragmentTransaction.hide(fragmentList.get(currentBottomPosition));
-                Log.d("HomeFragment", "!fragmentList.get(targetBottomPosition).isAdded():" + !fragmentList.get(targetBottomPosition).isAdded());
                 if (!fragmentList.get(targetBottomPosition).isAdded()) {
                     fragmentTransaction.add(R.id.fragmentBox, fragmentList.get(targetBottomPosition));
-                    fragmentTransaction.show(fragmentList.get(targetBottomPosition)).commit();
-                }else {
-                    fragmentTransaction.show(fragmentList.get(targetBottomPosition)).commit();
                 }
+                fragmentTransaction.show(fragmentList.get(targetBottomPosition)).commit();
                 currentBottomPosition = 1;
                 txt_course_1.setTextColor(getResources().getColor(R.color.black));
                 txt_course_2.setTextColor(getResources().getColor(R.color.red));

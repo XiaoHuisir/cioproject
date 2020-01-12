@@ -40,6 +40,7 @@ import com.example.myapplication.utils.NumView;
 
 import org.greenrobot.greendao.annotation.JoinEntity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -47,7 +48,7 @@ import butterknife.ButterKnife;
 
 
 public class MainActivity extends BaseActivity implements View.OnClickListener,
-        IndexConstract.SearchView , RecordAdapter.RecordItemClick {
+        IndexConstract.SearchView, RecordAdapter.RecordItemClick {
 
 
     @BindView(R.id.tl)
@@ -70,6 +71,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
     private int numNot;
     boolean indxler = false;
 
+    private int currentBottomPosition;
+    private int targetBottomPosition;
+    private List<Fragment> fragmentList = new ArrayList<>();
+
     private void initFragment() {
         manager = getSupportFragmentManager();
         mTl.addTab(mTl.newTab().setText("课程").setIcon(R.drawable.home));
@@ -78,6 +83,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         homeFragment = new HomeFragment();
         classifyFragment = new ClassifyFragment();
         mineFragment = new MineFragment();
+
+        fragmentList.add(homeFragment);
+        fragmentList.add(classifyFragment);
+        fragmentList.add(mineFragment);
 
 
     }
@@ -90,8 +99,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
 
     @Override
     protected int getLayoutId() {
+        manager = getSupportFragmentManager();
         return R.layout.activity_main;
     }
+
+    public boolean isFirst = true;
 
     @Override
     protected void initView() {
@@ -100,12 +112,17 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         initFragment();
         txtSearch.setOnClickListener(this);
         layoutMsg.setOnClickListener(this);
+
+        manager.beginTransaction().add(R.id.fl, fragmentList.get(0)).commit();
+
         mTl.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 int position = tab.getPosition();
                 curType = position;
                 showFragment(position);
+
+
             }
 
             @Override
@@ -118,29 +135,57 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
 
             }
         });
-        showFragment(0);
+
+
 
     }
 
     @Override
     protected void initData() {
-        ((SearchPresenter)mPresenter).getUnredNotice();
+        ((SearchPresenter) mPresenter).getUnredNotice();
     }
 
 
     private void showFragment(int type) {
-        FragmentTransaction transaction = manager.beginTransaction();
+        FragmentTransaction fragmentTransaction = manager.beginTransaction();
         switch (type) {
             case 0:
-                transaction.replace(R.id.fl, homeFragment).commit();
+                targetBottomPosition = 0;
+                if (currentBottomPosition == 0) {
+                    return;
+                }
+                fragmentTransaction.hide(fragmentList.get(currentBottomPosition));
+                if (!fragmentList.get(targetBottomPosition).isAdded()) {
+                    fragmentTransaction.add(R.id.fl, fragmentList.get(targetBottomPosition));
+                }
+                fragmentTransaction.show(fragmentList.get(targetBottomPosition)).commit();
+                currentBottomPosition = 0;
                 layoutSearch.setVisibility(View.VISIBLE);
                 break;
             case 1:
-                transaction.replace(R.id.fl, classifyFragment).commit();
+                targetBottomPosition = 1;
+                if (currentBottomPosition == 1) {
+                    return;
+                }
+                fragmentTransaction.hide(fragmentList.get(currentBottomPosition));
+                if (!fragmentList.get(targetBottomPosition).isAdded()) {
+                    fragmentTransaction.add(R.id.fl, fragmentList.get(targetBottomPosition));
+                }
+                fragmentTransaction.show(fragmentList.get(targetBottomPosition)).commit();
+                currentBottomPosition = 1;
                 layoutSearch.setVisibility(View.VISIBLE);
                 break;
             case 2:
-                transaction.replace(R.id.fl, mineFragment).commit();
+                targetBottomPosition = 2;
+                if (currentBottomPosition == 2) {
+                    return;
+                }
+                fragmentTransaction.hide(fragmentList.get(currentBottomPosition));
+                if (!fragmentList.get(targetBottomPosition).isAdded()) {
+                    fragmentTransaction.add(R.id.fl, fragmentList.get(targetBottomPosition));
+                }
+                fragmentTransaction.show(fragmentList.get(targetBottomPosition)).commit();
+                currentBottomPosition = 2;
                 layoutSearch.setVisibility(View.GONE);
                 break;
         }
@@ -158,7 +203,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
                 //打开消息界面
 //                numWx.setNum(0);
                 numWx.setNum(0);
-                indxler=true;
+                indxler = true;
                 Intent notice = new Intent();
                 notice.setClass(context, NoticeListAcitivity.class);
                 startActivity(notice);
@@ -183,8 +228,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         if (bean.getStatus() == 1) {
 
             String notice_num = bean.getData().getNotice_num();
-            Constant.NUM_VIEW="111";
-           int noticenum = Integer.valueOf(notice_num).intValue();
+            Constant.NUM_VIEW = "111";
+            int noticenum = Integer.valueOf(notice_num).intValue();
 //            int notice_nums = Integer.parseInt(notice_num);
 
             if (noticenum == 0) {

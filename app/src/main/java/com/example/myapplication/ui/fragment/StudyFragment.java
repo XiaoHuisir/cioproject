@@ -114,7 +114,11 @@ public class StudyFragment extends BaseFragment implements IndexConstract.View, 
                                             indexAdapter.notifyDataSetChanged();
                                         }
                                     } else {
-                                        Toast.makeText(StudyFragment.this.getActivity(), "没有更多了", Toast.LENGTH_SHORT).show();
+                                        try {
+                                            Toast.makeText(StudyFragment.this.getActivity(), "没有更多了", Toast.LENGTH_SHORT).show();
+                                        }catch (Exception e){
+
+                                        }
                                     }
                                 }
 

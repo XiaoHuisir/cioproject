@@ -139,7 +139,11 @@ public class CourseFragment extends BaseFragment implements IndexConstract.View,
                                             indexAdapter.notifyDataSetChanged();
                                         }
                                     }else {
-                                        Toast.makeText(CourseFragment.this.getActivity(), "没有更多了", Toast.LENGTH_SHORT).show();
+                                        try {
+                                            Toast.makeText(CourseFragment.this.getActivity(), "没有更多了", Toast.LENGTH_SHORT).show();
+                                        }catch (Exception e){
+
+                                        }
                                     }
                                 }
 
