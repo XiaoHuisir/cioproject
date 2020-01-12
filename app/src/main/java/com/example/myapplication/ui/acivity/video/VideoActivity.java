@@ -543,8 +543,8 @@ public class VideoActivity extends BaseActivity implements CurriculumConstract.V
         String pdfname = curriculumBean.getData().getFile_data().get(position).getName();
         String url = curriculumBean.getData().getFile_data().get(position).getUrl();
         String path = Constant.PATH_PDF+pdfname;
-        boolean isDir = FileUtils.checkDir(Constant.PATH_PDF);
         int size = FileUtils.checkFile(Constant.PATH_PDF+pdfname);
+        boolean isDir = FileUtils.checkDir(Constant.PATH_PDF);
         //如果存在直接打开
         if(size > 0){
             fileName = pdfname;

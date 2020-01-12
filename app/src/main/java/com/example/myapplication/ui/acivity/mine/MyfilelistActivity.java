@@ -2,24 +2,35 @@ package com.example.myapplication.ui.acivity.mine;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.myapplication.R;
 import com.example.myapplication.adaper.MyfilelistAdapter;
+import com.example.myapplication.app.Constant;
 import com.example.myapplication.base.BaseActivity;
 import com.example.myapplication.bean.DownFileBean;
 import com.example.myapplication.bean.MyfilelistBean;
 import com.example.myapplication.interfaces.IBasePresenter;
 import com.example.myapplication.interfaces.contract.MyfilelistConstract;
+import com.example.myapplication.presenter.curriculum.CurriculumPresenter;
 import com.example.myapplication.presenter.mine.MyfilelistPresenter;
+import com.example.myapplication.ui.acivity.pdf.PdfActivity;
+import com.example.myapplication.utils.DownLoadUtils;
+import com.example.myapplication.utils.FileUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,6 +38,8 @@ import butterknife.OnClick;
 
 public class MyfilelistActivity extends BaseActivity implements MyfilelistConstract.View, MyfilelistAdapter.MyfilelistClick {
 
+    @BindView(R.id.layout_bg)
+    ConstraintLayout layoutBg;
 
     @BindView(R.id.iv_myreturn)
     ImageView ivMyreturn;
@@ -38,7 +51,13 @@ public class MyfilelistActivity extends BaseActivity implements MyfilelistConstr
     private String file_name;
     private String file_size;
     private String file_url;
-
+    int fileSize;
+    String fileName;
+    String filePath;
+    //下载
+    PopupWindow popupWindow;
+    ProgressBar progressBar;
+    private MyfilelistBean.DataBean data;
 
     @Override
     protected IBasePresenter getPresenter() {
@@ -80,10 +99,24 @@ public class MyfilelistActivity extends BaseActivity implements MyfilelistConstr
     //下载文件 TODO
     @Override
     public void getdownfileReturn(DownFileBean result) {
-        String insert_id = result.getData().getInsert_id();
-        Toast.makeText(context, "" + result.getStatus(), Toast.LENGTH_LONG).show();
-
+//        String insert_id = result.getData().getInsert_id();
+//        Toast.makeText(context, "" + result.getStatus(), Toast.LENGTH_LONG).show();
+        //打开显示页面
+        openPdfRead(fileName,filePath);
     }
+
+    /**
+     * 打开pdf的详情页
+     * @param path
+     */
+    private void openPdfRead(String name,String path){
+        Intent intent = new Intent();
+        intent.setClass(this, PdfActivity.class);
+        intent.putExtra("name",name);
+        intent.putExtra("pdf_path",path);
+        startActivity(intent);
+    }
+
 
     @OnClick({R.id.iv_myreturn})
     public void onViewClicked(View view) {
@@ -94,20 +127,93 @@ public class MyfilelistActivity extends BaseActivity implements MyfilelistConstr
         }
     }
 
-
+    /**
+     * pdf条目点击
+     * @param datas
+     */
     @Override
     public void myfilelistClick(MyfilelistBean.DataBean datas) {
-        if (datas != null) {
-            curriculum_id = datas.getCurriculum_id();
-            file_name = datas.getFile_name();
-            file_size = datas.getFile_size();
-            file_url = datas.getFile_url();
-            HashMap<String, String> map = new HashMap<>();
-            map.put("curriculum_id", String.valueOf(curriculum_id));
-            map.put("file_name", file_name);
-            map.put("file_size", file_size);
-            map.put("file_url", file_url);
-            ((MyfilelistPresenter) mPresenter).getdownfile(map);
+        data = datas;
+
+       String pdfname = datas.getFile_name();
+      String  url = datas.getFile_url();
+//        String pdfname = curriculumBean.getData().getFile_data().get(position).getName();
+//        String url = curriculumBean.getData().getFile_data().get(position).getUrl();
+//
+        String path = Constant.PATH_PDF+pdfname;
+        int size = FileUtils.checkFile(Constant.PATH_PDF+pdfname);
+        //如果存在直接打开
+        if(size > 0){
+            fileName = pdfname;
+            fileSize = size;
+            filePath = path;
+            sendDownFile(fileName,url,size);
+        }else{
+            showDown(url,pdfname,path);
+        }
+
+//        if (datas != null) {
+//            curriculum_id = datas.getCurriculum_id();
+//            file_name = datas.getFile_name();
+//            file_size = datas.getFile_size();
+//            file_url = datas.getFile_url();
+//            HashMap<String, String> map = new HashMap<>();
+//            map.put("curriculum_id", String.valueOf(curriculum_id));
+//            map.put("file_name", file_name);
+//            map.put("file_size", file_size);
+//            map.put("file_url", file_url);
+//            ((MyfilelistPresenter) mPresenter).getdownfile(map);
+//        }
+    }
+    private void sendDownFile(String fileName,String fileUrl,int size){
+        Map<String,String> map = new HashMap<>();
+        map.put("curriculum_id", String.valueOf(data.getCurriculum_id()));
+        map.put("file_name",fileName);
+        map.put("file_url",fileUrl);
+        map.put("file_size", String.valueOf(size));
+        ((MyfilelistPresenter) mPresenter).getdownfile(map);
+    }
+    private void showDown(final String url, final String name, final String path){
+        if(popupWindow == null){
+            View view = LayoutInflater.from(this).inflate(R.layout.layout_down_loading,null);
+            popupWindow = new PopupWindow();
+            popupWindow.setContentView(view);
+            popupWindow.setWidth(500);
+            popupWindow.setHeight(180);
+            progressBar = view.findViewById(R.id.loadingBar);
+            progressBar.setProgress(0);
+            popupWindow.setFocusable(true);
+            layoutBg.setVisibility(View.VISIBLE);
+            popupWindow.showAtLocation(layoutBg, Gravity.CENTER,0,0);
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    DownLoadUtils downLoadUtils = new DownLoadUtils();
+                    downLoadUtils.downFile(url, path, new DownLoadUtils.DownLoadListener() {
+                        @Override
+                        public void loading(final int loaded, final int total) {
+                            final int pre = (int) (((float)loaded)/((float)total)*100);
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    progressBar.setProgress(pre);
+                                    //下载完成
+                                    if(loaded == total){
+                                        fileSize = total;
+                                        fileName = name;
+                                        filePath = path;
+                                        popupWindow.dismiss();
+                                        popupWindow = null;
+                                        sendDownFile(fileName,url,fileSize);
+                                        layoutBg.setVisibility(View.GONE);
+                                    }
+                                }
+                            });
+
+                        }
+                    });
+                }
+            }).start();
         }
     }
 }

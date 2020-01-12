@@ -245,9 +245,9 @@ public class DateUtil {
     }
 
     private static void changeSeconds(long seconds, int temp, StringBuffer sb) {
-        sb.append((temp < 10) ? "0" + temp + " " : "分" + temp + "秒");
+        sb.append((temp < 10) ? "0" + temp + " " : " " + temp + " ");
         temp = (int) (seconds % 3600 % 60);
-        sb.append((temp < 10) ? "0" + temp : "分" + temp+"秒");
+        sb.append((temp < 1) ? "0" + temp : "分" + temp+"秒");
     }
 
 
@@ -263,7 +263,7 @@ public class DateUtil {
             s=s+"000";
         }
         String res;
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         //如果它本来就是long类型的,则不用写这一步
         long lt = new Long(s);
 //        Date date = new Date(lt * 1000);
