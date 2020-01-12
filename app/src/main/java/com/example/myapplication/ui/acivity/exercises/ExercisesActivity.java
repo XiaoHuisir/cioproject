@@ -164,7 +164,7 @@ public class ExercisesActivity extends BaseActivity implements ExercisesConstrac
         ExercisesBean.DataBean dataBean = currentExercises.getData().get(pos - 1);
         txtTitle.setText(dataBean.getTitle());
         txtScore.setText(String.valueOf(dataBean.getFraction()) + "分");
-        if (dataBean.getType() == 0) {
+        if (dataBean.getType() == 2) {
             txtAnswerType.setText("多选题");
             txtAnswerType.setBackgroundResource(R.drawable.txt_roundborder_org);
         } else {
@@ -200,7 +200,7 @@ public class ExercisesActivity extends BaseActivity implements ExercisesConstrac
                 exercisesAdapter.notifyDataSetChanged();
             } else {
                 //如果当前没有选中，需要判断是单选还是多选
-                if (dataBean.getType() == 0) {
+                if (dataBean.getType() == 2) {
                     dataBean.getOption().get(position).select = true;
                     exercisesAdapter.notifyDataSetChanged();
                 } else {

@@ -224,7 +224,7 @@ public class CourseFragment extends BaseFragment implements IndexConstract.View,
     }
 
     private void banners(final IndexBean result) {
-        if (result == null){
+        if (result == null || result.getData() == null){
             return;
         }
         List<IndexBean.DataBean.LbDataBean> lb_data = result.getData().getLb_data();

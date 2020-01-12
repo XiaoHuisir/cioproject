@@ -24,6 +24,7 @@ import com.example.myapplication.bean.NotcieRecordBean;
 import com.example.myapplication.interfaces.IBasePresenter;
 import com.example.myapplication.interfaces.contract.NoticeRecordsConstract;
 import com.example.myapplication.presenter.mine.NoticeRecordsPresenter;
+import com.example.myapplication.ui.acivity.exercises.EexerciseDetailAcivity;
 import com.example.myapplication.ui.acivity.exercises.ExercisesResultActivity;
 import com.example.myapplication.ui.acivity.video.VideoActivity;
 import com.example.myapplication.ui.fragment.CourseFragment;
@@ -223,7 +224,7 @@ public class PracticeActivity extends BaseActivity implements NoticeRecordsConst
     @Override
     public void tongclick(String id) {
         Intent intent = new Intent();
-        intent.setClass(context, ExercisesResultActivity.class);
+        intent.setClass(context, EexerciseDetailAcivity.class);
         intent.putExtra("evaluat_id", id);
         startActivity(intent);
     }
@@ -239,7 +240,7 @@ public class PracticeActivity extends BaseActivity implements NoticeRecordsConst
     @Override
     public void tongclickok(String id) {
         Intent intent = new Intent();
-        intent.setClass(context, ExercisesResultActivity.class);
+        intent.setClass(context, EexerciseDetailAcivity.class);
         intent.putExtra("evaluat_id", id);
         startActivity(intent);
     }

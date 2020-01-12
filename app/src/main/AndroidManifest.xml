@@ -25,9 +25,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:appComponentFactory">
-        <activity android:name=".ui.acivity.NewVideoActivity"
+        <activity
+            android:name=".ui.acivity.NewVideoActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
-            android:screenOrientation="portrait" ></activity>
+            android:screenOrientation="portrait"></activity>
         <activity android:name=".ui.acivity.search.SearchActivity" />
         <activity android:name=".ui.acivity.mine.NoticeListAcitivity" />
         <activity android:name=".ui.acivity.mine.NoticeDetailsActivity" />
@@ -59,6 +60,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.acivity.exercises.EexerciseDetailAcivity" />
     </application>
 
 </manifest>
