@@ -10,7 +10,6 @@ import com.example.myapplication.bean.IndexBean;
 import com.example.myapplication.bean.LoginBean;
 import com.example.myapplication.bean.MyfilelistBean;
 import com.example.myapplication.bean.NoticeListBean;
-import com.example.myapplication.bean.PorfolioBean;
 import com.example.myapplication.bean.SearchBean;
 import com.example.myapplication.bean.ToadayBean;
 import com.example.myapplication.bean.TokenBean;
@@ -18,10 +17,8 @@ import com.example.myapplication.bean.TypeIndexBean;
 import com.example.myapplication.bean.UnredNoticeBean;
 import com.example.myapplication.bean.UserCenterBean;
 import com.example.myapplication.bean.UserInfoUpdateBean;
+import com.example.myapplication.bean.VerBean;
 
-import org.json.JSONArray;
-
-import java.io.File;
 import java.util.Map;
 
 import io.reactivex.Flowable;
@@ -104,6 +101,10 @@ public interface Api {
     @POST("index/train/down_file")
     @FormUrlEncoded
     Flowable<DownFileBean> downfile(@Header("x-access-token") String token, @FieldMap Map<String, String> map);
+
+    @POST("index/train/version_update")
+    @FormUrlEncoded
+    Flowable<VerBean> getVersionInfo(@Header("x-access-token") String token);
 
 }
 

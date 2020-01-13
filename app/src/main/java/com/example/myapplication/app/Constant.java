@@ -20,6 +20,7 @@ public class Constant {
     public static final String PATH_CACHE = PATH_DATA + "/cilo";
 
     public static final String PATH_PDF = MyApp.mApp.getFilesDir().getAbsolutePath()+"/pdfs/";
+    public static final String PATH_APK = MyApp.mApp.getFilesDir().getAbsolutePath()+"/apks/";
 
     public static String token = "";
 
