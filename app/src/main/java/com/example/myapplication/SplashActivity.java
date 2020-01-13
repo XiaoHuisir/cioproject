@@ -25,13 +25,28 @@ public class SplashActivity extends BaseActivity implements VersionConstract.Vie
      * 处理初始化操作
      */
     @Override
-    public void initView(){
+    public void initView() {
+        String token = SharedPreferencesUtil.getToken(MyApp.mApp);
+        Intent intent = new Intent();
+        if (TextUtils.isEmpty(token)) {
+            intent.setClass(this, LoginActivity.class);
+        } else {
+            Constant.token = token;
+            intent.setClass(this, MainActivity.class);
 
+        }
+        startActivity(intent);
+        finish();
     }
 
     @Override
     protected IBasePresenter getPresenter() {
         return new VersionPersenter();
+    }
+
+    @Override
+    protected void initData() {
+//        ((VersionPersenter) mPresenter).getVersionInfo();
     }
 
     @Override
@@ -41,34 +56,34 @@ public class SplashActivity extends BaseActivity implements VersionConstract.Vie
 
     @Override
     public void getVersionReturn(VerBean result) {
-        if(result.getCode() == 10000){
-            if(result.getCode() == 1){
-                //popwindow提示
-                if(!TextUtils.isEmpty(result.getData().getVersion().getApk_url())){
-                    final String path = Constant.PATH_APK+"update.apk";
-                    DownLoadUtils downLoadUtils = new DownLoadUtils();
-                    downLoadUtils.downFile(result.getData().getVersion().getApk_url(), path, new DownLoadUtils.DownLoadListener() {
-                        @Override
-                        public void loading(int loaded, int total) {
-                            if(loaded == total){
-                                SystemUtils.installNormal(context,path);
-                            }
-                        }
-                    });
-                }
-            }else{
-                String token = SharedPreferencesUtil.getToken(MyApp.mApp);
-                Intent intent = new Intent();
-                if(TextUtils.isEmpty(token)){
-                    intent.setClass(this, LoginActivity.class);
-                }else{
-                    Constant.token = token;
-                    intent.setClass(this,MainActivity.class);
-
-                }
-                startActivity(intent);
-                finish();
-            }
-        }
+//        if (result.getCode() == 10000) {
+//            if (result.getStatus() == 1) {
+//                //popwindow提示
+//                if (!TextUtils.isEmpty(result.getData().getVersion().getApk_url())) {
+//                    final String path = Constant.PATH_APK + "update.apk";
+//                    DownLoadUtils downLoadUtils = new DownLoadUtils();
+//                    downLoadUtils.downFile(result.getData().getVersion().getApk_url(), path, new DownLoadUtils.DownLoadListener() {
+//                        @Override
+//                        public void loading(int loaded, int total) {
+//                            if (loaded == total) {
+//                                SystemUtils.installNormal(context, path);
+//                            }
+//                        }
+//                    });
+//                }
+//            } else {
+//                String token = SharedPreferencesUtil.getToken(MyApp.mApp);
+//                Intent intent = new Intent();
+//                if (TextUtils.isEmpty(token)) {
+//                    intent.setClass(this, LoginActivity.class);
+//                } else {
+//                    Constant.token = token;
+//                    intent.setClass(this, MainActivity.class);
+//
+//                }
+//                startActivity(intent);
+//                finish();
+//            }
+//        }
     }
 }

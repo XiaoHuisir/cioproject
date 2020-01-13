@@ -13,7 +13,6 @@
     <uses-permission android:name="android.permission.WRITE_MEDIA_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
 
     <application
         android:name=".app.MyApp"
@@ -26,6 +25,26 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:appComponentFactory">
+        <!--<service-->
+            <!--android:name=".DownloadService"-->
+            <!--android:enabled="true"-->
+            <!--android:exported="true"></service>-->
+
+        <activity
+            android:name=".ui.acivity.NewVideoActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" />
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.example.myapplication.FileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_path" />
+        </provider>
+
         <activity android:name=".ui.acivity.search.SearchActivity" />
         <activity android:name=".ui.acivity.mine.NoticeListAcitivity" />
         <activity android:name=".ui.acivity.mine.NoticeDetailsActivity" />
@@ -35,8 +54,8 @@
         <activity android:name=".ui.acivity.setting.SetNameActivity" />
         <activity android:name=".ui.acivity.setting.SettingActivity" />
         <activity android:name=".ui.acivity.exercises.ExercisesActivity" />
-        <activity android:name=".ui.acivity.exercises.ExercisesResultActivity"/>
-        <activity android:name=".ui.acivity.pdf.PdfActivity"/>
+        <activity android:name=".ui.acivity.exercises.ExercisesResultActivity" />
+        <activity android:name=".ui.acivity.pdf.PdfActivity" />
         <activity
             android:name=".MainActivity"
             android:windowSoftInputMode="adjustPan|stateHidden" />
@@ -49,26 +68,90 @@
             android:name=".ui.acivity.video.VideoActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.acivity.login.LoginActivity"/>
-        <activity
-            android:name=".SplashActivity"
-            android:launchMode="singleTask">
+        <activity android:name=".ui.acivity.login.LoginActivity" />
+        <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <provider
-            android:name="android.support.v4.content.FileProvider"
-            android:authorities="com.example.myapplication.fileprovider"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file" />
-        </provider>
+        <activity android:name=".ui.acivity.exercises.EexerciseDetailAcivity" />
+        <activity android:name=".utils.ViewBigImageActivity" />
     </application>
 
 </manifest>
+<!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--<manifest xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--xmlns:tools="http://schemas.android.com/tools"-->
+    <!--package="com.example.myapplication">-->
+
+    <!--<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />-->
+    <!--<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />-->
+    <!--<uses-permission android:name="android.permission.CAMERA" />-->
+    <!--<uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />-->
+    <!--<uses-permission android:name="android.permission.INTERNET" />-->
+    <!--<uses-permission android:name="android.permission.WRITE_SETTINGS" />-->
+    <!--<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />-->
+    <!--<uses-permission android:name="android.permission.WRITE_MEDIA_STORAGE" />-->
+    <!--<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />-->
+    <!--<uses-permission android:name="android.permission.RECORD_AUDIO" />-->
+    <!--<uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />-->
+
+    <!--<application-->
+        <!--android:name=".app.MyApp"-->
+        <!--android:allowBackup="true"-->
+        <!--android:appComponentFactory="app"-->
+        <!--android:icon="@drawable/icon"-->
+        <!--android:label="@string/app_name"-->
+        <!--android:networkSecurityConfig="@xml/network_config"-->
+        <!--android:roundIcon="@mipmap/ic_launcher_round"-->
+        <!--android:supportsRtl="true"-->
+        <!--android:theme="@style/AppTheme"-->
+        <!--tools:replace="android:appComponentFactory">-->
+        <!--<activity android:name=".ui.acivity.search.SearchActivity" />-->
+        <!--<activity android:name=".ui.acivity.mine.NoticeListAcitivity" />-->
+        <!--<activity android:name=".ui.acivity.mine.NoticeDetailsActivity" />-->
+        <!--<activity android:name=".ui.acivity.mine.MyfilelistActivity" />-->
+        <!--<activity android:name=".ui.acivity.PracticeActivity" />-->
+        <!--<activity android:name=".ui.acivity.PorfolioActivity" />-->
+        <!--<activity android:name=".ui.acivity.setting.SetNameActivity" />-->
+        <!--<activity android:name=".ui.acivity.setting.SettingActivity" />-->
+        <!--<activity android:name=".ui.acivity.exercises.ExercisesActivity" />-->
+        <!--<activity android:name=".ui.acivity.exercises.ExercisesResultActivity"/>-->
+        <!--<activity android:name=".ui.acivity.pdf.PdfActivity"/>-->
+        <!--<activity-->
+            <!--android:name=".MainActivity"-->
+            <!--android:windowSoftInputMode="adjustPan|stateHidden" />-->
+        <!--<activity android:name=".ui.acivity.course.CourseActivity" />-->
+        <!--<activity-->
+            <!--android:name=".ui.acivity.login.VerifyActivity"-->
+            <!--android:configChanges="orientation|screenSize|keyboardHidden"-->
+            <!--android:screenOrientation="portrait" />-->
+        <!--<activity-->
+            <!--android:name=".ui.acivity.video.VideoActivity"-->
+            <!--android:configChanges="orientation|screenSize|keyboardHidden"-->
+            <!--android:screenOrientation="portrait" />-->
+        <!--<activity android:name=".ui.acivity.login.LoginActivity"/>-->
+        <!--<activity-->
+            <!--android:name=".SplashActivity"-->
+            <!--android:launchMode="singleTask">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+        <!--</activity>-->
+
+        <!--<provider-->
+            <!--android:name="android.support.v4.content.FileProvider"-->
+            <!--android:authorities="com.example.myapplication.fileprovider"-->
+            <!--android:exported="false"-->
+            <!--android:grantUriPermissions="true">-->
+            <!--<meta-data-->
+                <!--android:name="android.support.FILE_PROVIDER_PATHS"-->
+                <!--android:resource="@xml/file" />-->
+        <!--</provider>-->
+    <!--</application>-->
+
+<!--</manifest>-->

@@ -51,5 +51,10 @@ public class SearchPresenter extends BasePresenter<IndexConstract.SearchView> im
                 }));
     }
 
+//    @Override
+//    public void getVersionInfo() {
+//
+//    }
+
 
 }
