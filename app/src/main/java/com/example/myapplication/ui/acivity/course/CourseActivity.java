@@ -3,13 +3,17 @@ package com.example.myapplication.ui.acivity.course;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.example.myapplication.R;
 import com.example.myapplication.adaper.IndexAdapter;
 import com.example.myapplication.app.Constant;
@@ -19,6 +23,12 @@ import com.example.myapplication.interfaces.IBasePresenter;
 import com.example.myapplication.interfaces.contract.IndexConstract;
 import com.example.myapplication.presenter.home.IndexPresenter;
 import com.example.myapplication.ui.acivity.video.VideoActivity;
+import com.example.myapplication.utils.CommonSubscriber;
+import com.example.myapplication.utils.HttpUtils;
+import com.example.myapplication.utils.NetDownResponse;
+import com.example.myapplication.utils.NetRequsetUtil;
+import com.example.myapplication.utils.RxUtils;
+import com.jcodecraeer.xrecyclerview.XRecyclerView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,7 +48,11 @@ public class CourseActivity extends BaseActivity implements IndexConstract.View,
     @BindView(R.id.layout_title)
     RelativeLayout layoutTitle;
     @BindView(R.id.recyclerView)
-    RecyclerView recyclerView;
+    XRecyclerView recyclerView;
+    @BindView(R.id.swipeRefresh)
+    SwipeRefreshLayout swipeRefreshLayout;
+    int page = 1;
+
 
     IndexAdapter indexAdapter;
     List<IndexBean.DataBean.CurriculumDataBean> list;
@@ -68,8 +82,75 @@ public class CourseActivity extends BaseActivity implements IndexConstract.View,
         list = new ArrayList<>();
         indexAdapter = new IndexAdapter(list);
         indexAdapter.itemClick = this;
+        recyclerView.setPullRefreshEnabled(false);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         recyclerView.setAdapter(indexAdapter);
+
+        recyclerView.setLoadingListener(new XRecyclerView.LoadingListener() {
+            @Override
+            public void onRefresh() {
+
+            }
+
+            @Override
+            public void onLoadMore() {
+                page = page + 1;
+
+
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("curriculum", String.valueOf(2));
+                jsonObject.put("type", String.valueOf(curType));
+                jsonObject.put("page",  page + "");
+
+                NetRequsetUtil.getInstance().netRequestPostJson("index/train/index",
+                        jsonObject.toString(), new NetDownResponse() {
+                            @Override
+                            public void success(String str) {
+                                IndexBean indexBean = JSON.parseObject(str, IndexBean.class);
+                                List<IndexBean.DataBean.CurriculumDataBean> curriculum_data = indexBean.getData().getCurriculum_data();
+                                if ( curriculum_data.size()> 0 ){
+                                    for (IndexBean.DataBean.CurriculumDataBean curriculum_datum : curriculum_data) {
+                                        list.add(curriculum_datum);
+                                        indexAdapter.notifyDataSetChanged();
+                                    }
+
+                                    recyclerView.loadMoreComplete();
+                                }else {
+                                    Toast.makeText(activity, "没有更多了", Toast.LENGTH_SHORT).show();
+                                    recyclerView.setNoMore(true);
+                                }
+                            }
+
+                            @Override
+                            public void errowithresponse(String str) {
+                                recyclerView.loadMoreComplete();
+                            }
+
+                            @Override
+                            public void erro() {
+                                recyclerView.loadMoreComplete();
+                            }
+
+                            @Override
+                            public void finish() {
+
+                            }
+                        });
+
+
+            }
+        });
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                page = 1;
+                swipeRefreshLayout.setRefreshing(true);
+                getIndex();
+            }
+        });
+
+
 
     }
 
@@ -85,7 +166,7 @@ public class CourseActivity extends BaseActivity implements IndexConstract.View,
         Map<String, String> map = new HashMap<String, String>();
         map.put("curriculum", String.valueOf(2));
         map.put("type", String.valueOf(curType));
-        map.put("page", "1");
+        map.put("page", page + "");
         ((IndexPresenter) mPresenter).getIndex(map);
     }
 
@@ -102,5 +183,6 @@ public class CourseActivity extends BaseActivity implements IndexConstract.View,
         list.clear();
         list.addAll(result.getData().getCurriculum_data());
         indexAdapter.notifyDataSetChanged();
+        swipeRefreshLayout.setRefreshing(false);
     }
 }

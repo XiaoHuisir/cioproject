@@ -2,6 +2,7 @@ package com.example.myapplication.ui.fragment;
 
 import android.content.Intent;
 import android.service.dreams.DreamService;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -20,10 +21,14 @@ import com.example.myapplication.adaper.IndexAdapter;
 import com.example.myapplication.adaper.RecordAdapter;
 import com.example.myapplication.app.Constant;
 import com.example.myapplication.base.BaseFragment;
+import com.example.myapplication.bean.DownFileBean;
+import com.example.myapplication.bean.MyfilelistBean;
 import com.example.myapplication.bean.UnredNoticeBean;
 import com.example.myapplication.bean.UserCenterBean;
 import com.example.myapplication.interfaces.IBasePresenter;
+import com.example.myapplication.interfaces.contract.MyfilelistConstract;
 import com.example.myapplication.interfaces.usercenter.UsercenterConstract;
+import com.example.myapplication.presenter.mine.MyfilelistPresenter;
 import com.example.myapplication.presenter.usercenter.UserCenterPresenter;
 import com.example.myapplication.ui.acivity.PorfolioActivity;
 import com.example.myapplication.ui.acivity.PracticeActivity;
@@ -31,18 +36,23 @@ import com.example.myapplication.ui.acivity.mine.MyfilelistActivity;
 import com.example.myapplication.ui.acivity.mine.NoticeListAcitivity;
 import com.example.myapplication.ui.acivity.setting.SettingActivity;
 import com.example.myapplication.ui.acivity.video.VideoActivity;
+import com.example.myapplication.utils.CommonSubscriber;
 import com.example.myapplication.utils.DateUtil;
+import com.example.myapplication.utils.HttpUtils;
 import com.example.myapplication.utils.NumView;
+import com.example.myapplication.utils.RxUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.disposables.CompositeDisposable;
 
 import static cn.jzvd.JZUtils.TAG;
 
-public class MineFragment extends BaseFragment implements UsercenterConstract.View, RecordAdapter.RecordItemClick {
+public class MineFragment extends BaseFragment implements
+        UsercenterConstract.View, RecordAdapter.RecordItemClick {
 
     @BindView(R.id.iv_setting)
     ImageView ivsetting;
@@ -82,6 +92,8 @@ public class MineFragment extends BaseFragment implements UsercenterConstract.Vi
     TextView txtOne;
     @BindView(R.id.relative_soos)
     RelativeLayout relativesoos;
+    @BindView(R.id.swipeRefresh)
+    SwipeRefreshLayout swipeRefreshLayout;
     private ArrayList<UserCenterBean.DataBean.HistoryBean> historyBeans;
     private RecordAdapter recordAdapter;
     UserCenterBean userCenterBean;
@@ -148,6 +160,23 @@ public class MineFragment extends BaseFragment implements UsercenterConstract.Vi
         recordAdapter.itemClick = this;
         record.setAdapter(recordAdapter);
 
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                ((UserCenterPresenter) mPresenter).usercenter();
+                ((UserCenterPresenter) mPresenter).getUnredNotice();
+
+                swipeRefreshLayout.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (swipeRefreshLayout != null){
+                            swipeRefreshLayout.setRefreshing(false);
+                        }
+                    }
+                } , 2000);
+            }
+        });
+
     }
 
     @Override
@@ -202,6 +231,7 @@ public class MineFragment extends BaseFragment implements UsercenterConstract.Vi
         txtSixteen.setText(String.valueOf(result.getData().getEnd_num()));
         txtFifteen.setText(String.valueOf(result.getData().getPass_num()));
         txtOne.setText(String.valueOf(result.getData().getNopass_num()));
+        txtMyfilelist.setText(result.getData().getFile_num()+ "个材料文件");
 
         if (!TextUtils.isEmpty(nickname)) {
 //            txttitlename.setText(nickname);
@@ -240,8 +270,8 @@ public class MineFragment extends BaseFragment implements UsercenterConstract.Vi
 
 
         List<UserCenterBean.DataBean.HistoryBean> history = result.getData().getHistory();
+        historyBeans.clear();
         historyBeans.addAll(history);
-        history.clear();
         recordAdapter.notifyDataSetChanged();
     }
 
@@ -253,4 +283,6 @@ public class MineFragment extends BaseFragment implements UsercenterConstract.Vi
         intent.putExtra("curriulum_id", id);
         startActivity(intent);
     }
+
+
 }

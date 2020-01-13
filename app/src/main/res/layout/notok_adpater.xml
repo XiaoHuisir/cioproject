@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <!--<LinearLayout-->
+        <!--android:id="@+id/lin_bsok"-->
+        <!--android:layout_width="@dimen/dp_328"-->
+        <!--android:layout_height="@dimen/dp_24"-->
+        <!--android:layout_gravity="center_horizontal"-->
+        <!--android:background="#FFFAFAFA">-->
+
+        <!--<ImageView-->
+            <!--android:layout_width="@dimen/dp_10"-->
+            <!--android:layout_height="@dimen/dp_10"-->
+            <!--android:layout_gravity="center_vertical"-->
+            <!--android:layout_marginLeft="@dimen/dp_55"-->
+            <!--android:background="#FF75788C" />-->
+
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center_vertical"-->
+            <!--android:layout_marginLeft="@dimen/dp_4"-->
+            <!--android:text="测试成绩需达80分以上方能通过课程练习"-->
+            <!--android:textColor="#FF75788C"-->
+            <!--android:textSize="@dimen/sp_12" />-->
+
+    <!--</LinearLayout>-->
+
+    <LinearLayout
+        android:id="@+id/linok"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/image_notcieok"
+                android:layout_width="@dimen/dp_64"
+                android:layout_height="@dimen/dp_80"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="@dimen/dp_16"
+                android:layout_marginTop="@dimen/dp_8"
+                android:background="@mipmap/pic_default"
+                android:scaleType="centerCrop" />
+
+            <TextView
+                android:id="@+id/txt_xinxok"
+                android:layout_width="@dimen/dp_252"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="@dimen/dp_12"
+                android:layout_marginTop="@dimen/dp_12"
+                android:layout_toRightOf="@id/image_notcieok"
+                android:text="新一代信息技术与企业数字化的转型"
+                android:textColor="#FF333333"
+                android:textSize="@dimen/sp_16" />
+
+            <TextView
+                android:id="@+id/txt_notnameok"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txt_xinxok"
+                android:layout_marginLeft="@dimen/dp_16"
+                android:layout_marginTop="@dimen/dp_19"
+                android:layout_toRightOf="@id/image_notcieok"
+                android:text="培训课程"
+                android:textColor="#FFD7AB70"
+                android:textSize="@dimen/sp_12" />
+
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/txt_nottiemok"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txt_xinxok"
+                android:layout_marginLeft="@dimen/dp_16"
+                android:layout_marginTop="@dimen/dp_19"
+                android:layout_toRightOf="@id/txt_notnameok"
+                android:text="累计学习：124分钟03秒"
+                android:textColor="#FF9CA0B5"
+                android:textSize="@dimen/sp_12" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lin_tongok"
+        android:layout_width="@dimen/dp_328"
+        android:layout_height="@dimen/dp_40"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dp_8"
+        android:background="#FFFAFAFA">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dp_8"
+            android:text="测试成绩："
+            android:textColor="#FF333333"
+            android:textSize="@dimen/sp_14" />
+
+        <TextView
+            android:id="@+id/txt_fractionok"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dp_4"
+            android:text="72分"
+            android:textColor="#FFEB2121"
+            android:textSize="@dimen/sp_14" />
+
+        <TextView
+            android:layout_weight="1"
+            android:id="@+id/txt_tongok"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dp_4"
+            android:text="已通过"
+            android:textColor="#FF75788C"
+            android:textSize="@dimen/sp_14" />
+
+        <ImageView
+            android:layout_gravity="center_vertical"
+            android:src="@mipmap/item_arrows"
+            android:layout_width="@dimen/dp_10"
+            android:layout_height="@dimen/dp_10" />
+
+    </LinearLayout>
+</LinearLayout>

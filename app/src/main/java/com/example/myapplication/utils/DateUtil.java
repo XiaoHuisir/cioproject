@@ -233,7 +233,7 @@ public class DateUtil {
         StringBuffer sb = new StringBuffer();
         if (seconds > 3600) {
             temp = (int) (seconds / 3600);
-            sb.append((seconds / 3600) < 10 ? "0" + temp + ":" : temp + ":");
+            sb.append((seconds / 3600) < 10 ? " " + temp + "分" : temp + "秒");
             temp = (int) (seconds % 3600 / 60);
             changeSeconds(seconds, temp, sb);
         } else {
@@ -245,9 +245,9 @@ public class DateUtil {
     }
 
     private static void changeSeconds(long seconds, int temp, StringBuffer sb) {
-        sb.append((temp < 10) ? "0" + temp + "" : "" + temp + "");
+        sb.append((temp < 10) ? "0" + temp + " " : " " + temp + " ");
         temp = (int) (seconds % 3600 % 60);
-        sb.append((temp < 10) ? "0" + temp : "分" + temp+"秒");
+        sb.append((temp < 1) ? "0" + temp : "分" + temp+"秒");
     }
 
 

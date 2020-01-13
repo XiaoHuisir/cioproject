@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_marginLeft="@dimen/dp_12"
-            android:layout_marginTop="@dimen/sp_16"
+            android:layout_marginTop="@dimen/dp_16"
             android:layout_toRightOf="@id/iv_today"
             android:ellipsize="end"
             android:maxLines="2"
@@ -53,10 +53,12 @@
 
         <TextView
             android:id="@+id/text_gs"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/dp_180"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:layout_height="wrap_content"
             android:layout_below="@id/text_data"
-            android:layout_marginLeft="@dimen/dp_4"
+            android:layout_marginLeft="@dimen/dp_8"
             android:layout_marginTop="@dimen/dp_8"
             android:layout_toRightOf="@id/text_name"
             android:text="CIO时代学院院长"

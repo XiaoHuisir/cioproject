@@ -5,6 +5,7 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -48,7 +49,7 @@ public class RecordAdapter extends BaseAdapter {
 
 
 
-        ConstraintLayout layout = (ConstraintLayout) holder.getView(R.id.record_constraint);
+        LinearLayout layout = (LinearLayout) holder.getView(R.id.record_constraint);
         layout.setTag(String.valueOf(data.getCurriculum_id()));
         layout.setOnClickListener(new View.OnClickListener() {
             @Override

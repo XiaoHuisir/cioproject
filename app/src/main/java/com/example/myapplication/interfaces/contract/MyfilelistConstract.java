@@ -18,7 +18,7 @@ public interface MyfilelistConstract {
         void getdownfileReturn(DownFileBean result);
     }
     interface Presenter extends IBasePresenter<MyfilelistConstract.View> {
-        void getMyfilelist(String type);
+        void getMyfilelist(int page);
         void getdownfile(@FieldMap Map<String,String> map);
     }
 

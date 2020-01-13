@@ -11,6 +11,10 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
+            android:layout_width="32dp"
+            android:layout_height="18dp"/>
+
+        <ImageView
             android:id="@+id/img_icon"
             android:layout_width="@dimen/dp_88"
             android:layout_height="@dimen/dp_112"
@@ -61,16 +65,19 @@
             android:textColor="#FF9CA0B5"
             android:textSize="@dimen/sp_14" />
 
-        <ImageView
+
+        <com.example.myapplication.utils.CircleBarView
             android:id="@+id/img_persent"
-            android:layout_width="@dimen/dp_16"
-            android:layout_height="@dimen/dp_16"
             android:layout_alignParentBottom="true"
             android:layout_marginLeft="@dimen/dp_10"
             android:layout_marginBottom="@dimen/dp_6"
             android:layout_toRightOf="@id/img_icon"
-            android:background="#FFFFFFFF"
-            android:src="@mipmap/schedule_point" />
+            android:layout_width="@dimen/dp_16"
+            android:layout_height="@dimen/dp_16"
+            app:progress_color="#E91E63"
+            app:bg_color="#E1E3ED"
+            app:bar_width="3dp"
+            app:start_angle="-90"/>
 
         <TextView
             android:id="@+id/txt_study_state"

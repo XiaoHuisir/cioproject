@@ -22,6 +22,8 @@ import com.example.myapplication.presenter.home.SearchPresenter;
 import com.example.myapplication.ui.acivity.video.VideoActivity;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.header.BezierRadarHeader;
+import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
 import java.lang.reflect.Array;
@@ -72,6 +74,8 @@ public class SearchFragment extends BaseFragment implements BaseAdapter.OnItemCl
         searchAdapter.setOnItemClickListener(this);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         recyclerView.setAdapter(searchAdapter);
+
+        smartRefresh.setRefreshHeader(new ClassicsHeader(this.getActivity()));
 
         smartRefresh.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override

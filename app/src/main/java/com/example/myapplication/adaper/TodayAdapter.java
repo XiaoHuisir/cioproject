@@ -39,10 +39,21 @@ public class TodayAdapter extends BaseAdapter {
         textdata.setText(data.getTitle());
         textname.setText(data.getTeacher());
         textgs.setText(data.getGs());
-        text_watchtime.setText(String.valueOf(data.getUpdate_time()));
+//        text_watchtime.setText(String.valueOf(data.getUpdate_time()));
         long len = (long)data.getLen();
         String lens = DateUtil.formatTimeS(len);
-
+        TextView text_timebeans = (TextView) holder.getView(R.id.text_time);
+        int type = data.getType();
+        switch (type) {
+            case 1:
+                text_timebeans.setText("课外学习");
+                break;
+            case 2:
+                text_timebeans.setText("培训课程");
+                break;
+            case 3:
+                break;
+        }
         text_watchtime.setText("观看至"+lens);
         ConstraintLayout layout = (ConstraintLayout) holder.getView(R.id.constraint_day);
         layout.setTag(String.valueOf(data.getCurriculum_id()));

@@ -9,6 +9,7 @@ import com.example.myapplication.bean.ExercisesBean;
 import com.example.myapplication.bean.IndexBean;
 import com.example.myapplication.bean.LoginBean;
 import com.example.myapplication.bean.MyfilelistBean;
+import com.example.myapplication.bean.NotcieRecordBean;
 import com.example.myapplication.bean.NoticeListBean;
 import com.example.myapplication.bean.SearchBean;
 import com.example.myapplication.bean.ToadayBean;
@@ -57,11 +58,11 @@ public interface Api {
     @Headers({
             "Content-type:application/json"
     })
-    Flowable<EvaluationSubmitBean>  submitEvaluation(@Header("x-access-token") String token, @Body RequestBody body);
+    Flowable<EvaluationSubmitBean> submitEvaluation(@Header("x-access-token") String token, @Body RequestBody body);
 
     @POST("index/train/evaluation_result_show")
     @FormUrlEncoded
-    Flowable<EvaluatShowResultBean>  showEvaluationResult(@Header("x-access-token") String token, @Field("evaluat_id") String evaluatId);
+    Flowable<EvaluatShowResultBean> showEvaluationResult(@Header("x-access-token") String token, @Field("evaluat_id") String evaluatId);
 
 
     //个人中心
@@ -71,7 +72,7 @@ public interface Api {
     @POST("index/train/userinfo_update")
     @FormUrlEncoded
     Flowable<UserInfoUpdateBean> updateUserInfo(@Header("x-access-token") String token, @Field("nickname") String nickname,
-                                                @Field("zw") String zw,@Field("avatar") String avatar);
+                                                @Field("zw") String zw, @Field("avatar") String avatar);
 
     @POST("index/user/get_token")
     Flowable<TokenBean> getToken(@Header("x-access-token") String token);
@@ -82,7 +83,7 @@ public interface Api {
 
     @POST("index/train/my_file_list")
     @FormUrlEncoded
-    Flowable<MyfilelistBean> myfilelist(@Header("x-access-token") String token, @Field("page") String page);
+    Flowable<MyfilelistBean> myfilelist(@Header("x-access-token") String token, @Field("page") int page);
 
 
     @POST("index/train/get_unread_notice_num")
@@ -102,6 +103,9 @@ public interface Api {
     @FormUrlEncoded
     Flowable<DownFileBean> downfile(@Header("x-access-token") String token, @FieldMap Map<String, String> map);
 
+    @POST("index/train/evaluation_record")
+    @FormUrlEncoded
+    Flowable<NotcieRecordBean> notice_records(@Header("x-access-token") String token, @Field("page") String page);
     @POST("index/train/version_update")
     @FormUrlEncoded
     Flowable<VerBean> getVersionInfo(@Header("x-access-token") String token);

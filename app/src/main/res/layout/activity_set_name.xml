@@ -7,9 +7,10 @@
     tools:context=".ui.acivity.setting.SetNameActivity">
 
     <RelativeLayout
+        android:id="@+id/relayout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_48"
-        android:layout_marginTop="@dimen/dp_30"
+        android:layout_marginTop="@dimen/dp_4"
         android:background="#E6FFFFFF"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -33,7 +34,6 @@
             android:text=""
             android:textColor="#FF212121"
             android:textSize="@dimen/sp_18" />
-
         <LinearLayout
             android:id="@+id/layout_save"
             android:layout_width="wrap_content"
@@ -44,8 +44,8 @@
             android:background="#FFEB2121"
             android:gravity="center"
             android:paddingLeft="@dimen/dp_20"
-            android:paddingRight="@dimen/dp_20"
             android:paddingTop="@dimen/dp_5"
+            android:paddingRight="@dimen/dp_20"
             android:paddingBottom="@dimen/dp_5">
 
             <TextView
@@ -54,23 +54,28 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_gravity="center"
+                android:gravity="center"
                 android:text="保存"
                 android:textColor="#FFFFFFFF"
-                android:textSize="@dimen/sp_15"
-                android:gravity="center"/>
+                android:textSize="@dimen/sp_15" />
         </LinearLayout>
 
 
     </RelativeLayout>
+    <TextView
+        app:layout_constraintTop_toBottomOf="@id/relayout"
+        android:layout_width="match_parent"
+        android:background="@color/grey"
+        android:layout_height="@dimen/dp_1" />
 
     <EditText
         android:id="@+id/ed_alter"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_48"
-        android:layout_marginTop="@dimen/dp_94"
+        android:layout_marginTop="@dimen/dp_16"
         android:background="#FFFFFFFF"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         android:paddingLeft="@dimen/dp_30"
-        android:singleLine="true"/>
+        android:singleLine="true"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/relayout" />
 </android.support.constraint.ConstraintLayout>

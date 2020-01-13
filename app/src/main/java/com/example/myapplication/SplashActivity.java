@@ -2,6 +2,7 @@ package com.example.myapplication;
 
 import android.content.Intent;
 import android.text.TextUtils;
+import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.example.myapplication.app.Constant;

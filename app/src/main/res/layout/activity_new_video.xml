@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/layout_page">
+
+
+    <com.example.myapplication.utils.MyJZVideoPlayerStandard
+        android:id="@+id/videoplayer"
+        android:layout_width="match_parent"
+        android:layout_height="200dp" />
+
+
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/layout_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="20dp">
+
+        <TextView
+            android:id="@+id/txt_title"
+            android:layout_width="@dimen/dp_226"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_16"
+            android:layout_marginTop="@dimen/dp_16"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text=""
+            android:textColor="#FF333333"
+            android:textSize="18sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <TextView
+            android:id="@+id/txt_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/dp_20"
+            android:drawableRight="@mipmap/course_popuping"
+            android:text="详情"
+            android:textSize="14sp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/txt_title" />
+
+        <TextView
+            android:id="@+id/txt_intro"
+            android:layout_width="@dimen/dp_20"
+            android:layout_height="@dimen/dp_20"
+            android:layout_marginRight="@dimen/dp_20"
+            android:background="@mipmap/close_blue"
+            android:padding="@dimen/dp_20"
+            android:textSize="14sp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/txt_title" />
+
+    </android.support.constraint.ConstraintLayout>
+
+    <RelativeLayout
+        android:id="@+id/relative_xq"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/layout_info">
+
+        <TextView
+            android:id="@+id/txt_name"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_16"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="@dimen/dp_16"
+            android:layout_marginTop="@dimen/dp_3"
+            android:text=""
+            android:textColor="#FF9CA0B5"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/txt_work"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_16"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="@dimen/dp_8"
+            android:layout_marginTop="@dimen/dp_3"
+            android:layout_toRightOf="@+id/txt_name"
+            android:text=""
+            android:textColor="#FF9CA0B5"
+            android:textSize="14sp" />
+
+        <View
+            android:id="@+id/vi"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_10"
+            android:layout_below="@id/txt_name"
+            android:layout_marginTop="@dimen/dp_16"
+            android:background="@color/txt_bg" />
+
+        <TextView
+            android:id="@+id/txt_study_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/vi"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:layout_marginTop="@dimen/dp_16"
+            android:text="培训资料"
+            android:textColor="#FF333333"
+            android:textSize="@dimen/sp_16" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txt_study_title"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="@dimen/dp_16"
+            android:layout_marginTop="@dimen/dp_16"
+            android:layout_marginRight="@dimen/dp_16"
+            android:scrollbars="none">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/pdf_recyclerview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false" />
+
+                <RelativeLayout
+                    android:id="@+id/img_material"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:visibility="gone"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent">
+
+                    <ImageView
+                        android:id="@+id/image_materials"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:scaleType="centerCrop"
+
+                        android:src="@mipmap/null_material" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/image_materials"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="@dimen/dp_4"
+                        android:text="暂时还没有相关资料"
+                        android:textColor="#FF9CA0B5"
+                        android:textSize="@dimen/sp_14" />
+                </RelativeLayout>
+
+            </RelativeLayout>
+        </ScrollView>
+    </RelativeLayout>
+
+
+    <ScrollView
+        android:id="@+id/linear_details"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_16"
+        android:orientation="vertical"
+        android:visibility="gone"
+
+        android:scrollbarThumbVertical="@android:color/transparent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="@dimen/dp_16"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginRight="@dimen/dp_16"
+        app:layout_constraintTop_toBottomOf="@+id/layout_info"
+        >
+        <!--android:scrollbars="none"-->
+        <RelativeLayout
+            android:nestedScrollingEnabled="false"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <RelativeLayout
+                android:id="@+id/rv"
+                android:layout_alignParentTop="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/image_log"
+                    android:layout_width="@dimen/dp_30"
+                    android:layout_height="@dimen/dp_30"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginTop="@dimen/dp_4"
+                    android:src="@color/red" />
+
+                <TextView
+                    android:id="@+id/tv_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="@dimen/dp_44"
+                    android:text="讲师"
+                    android:textColor="#FF999999"
+                    android:textSize="@dimen/sp_14" />
+
+                <TextView
+                    android:id="@+id/txt_teacher"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_4"
+                    android:layout_toRightOf="@id/tv_1"
+                    android:text="姚乐"
+                    android:textColor="#FF7A81A3"
+                    android:textSize="@dimen/sp_14" />
+
+                <TextView
+                    android:id="@+id/txt_gs"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/txt_teacher"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="@dimen/dp_44"
+                    android:layout_marginTop="@dimen/dp_4"
+                    android:text="CIO时代学院院长"
+                    android:textColor="#FF8C8C8C"
+                    android:textSize="@dimen/sp_12" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:layout_below="@+id/rv"
+                android:id="@+id/text_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="5"
+                android:maxHeight="@dimen/dp_108"
+                android:layout_marginTop="@dimen/dp_19"
+                android:text="姚乐，CIO时代学院院长，原Facton（公正通）联合创始人，首席技术官，中国区总裁，德州华人创业者协会会长，北京大学，俄亥俄州立大学。经济学、计算机硕士，MBA。20多年互联网及软件开发和管理经验。在美国、中国和欧洲都有丰富创业经历。"
+                android:textColor="#FF333333"
+                android:textSize="@dimen/sp_16" />
+
+            <TextView
+                android:id="@+id/txt_data"
+                android:layout_below="@+id/text_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_16"
+                android:text="课程学习内容："
+                android:textColor="#FF333333"
+                android:textSize="@dimen/sp_16" />
+
+            <TextView
+                android:id="@+id/txt_content"
+                android:layout_below="@+id/txt_data"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_8"
+                android:ellipsize="end"
+                android:maxLines="6"
+                android:maxHeight="@dimen/dp_108"
+                android:text="1.解析商业模式的长存之道“液态法则”；
+2.探讨新时代选择人才的标准以及束河聚集优秀人才；
+3.分析产品迭代背后的逻辑；
+4.分享真格的投资哲学以及如何从资本角度看商业模式创新的价值；
+5.总结商业模式变与不变的规律。"
+                android:textColor="#FF333333"
+                android:textSize="@dimen/sp_16" />
+        </RelativeLayout>
+
+    </ScrollView>
+
+
+    <RelativeLayout
+        android:id="@+id/layout_bottoms"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:layout_marginTop="@dimen/dp_5"
+            android:layout_marginRight="@dimen/dp_20"
+            android:layout_marginBottom="@dimen/dp_5"
+            android:background="@drawable/bg_round">
+
+            <LinearLayout
+                android:id="@+id/layout_exercises"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/txt_evalua"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="练习题"
+                    android:textColor="#FFD7AB70"
+                    android:textSize="@dimen/sp_16" />
+
+                <TextView
+                    android:id="@+id/txt_score"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_20"
+                    android:text="96分 已通过"
+                    android:textColor="@color/grey"
+                    android:textSize="@dimen/sp_16" />
+            </LinearLayout>
+        </RelativeLayout>
+    </RelativeLayout>
+
+
+</LinearLayout>

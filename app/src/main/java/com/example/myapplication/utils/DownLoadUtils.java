@@ -2,7 +2,6 @@ package com.example.myapplication.utils;
 
 import android.util.Log;
 
-import com.yalantis.ucrop.util.FileUtils;
 
 import java.io.File;
 import java.io.FileOutputStream;

@@ -1,5 +1,6 @@
 package com.example.myapplication.adaper;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -10,6 +11,8 @@ import com.bumptech.glide.Glide;
 import com.example.myapplication.R;
 import com.example.myapplication.base.BaseAdapter;
 import com.example.myapplication.bean.MyfilelistBean;
+import com.example.myapplication.ui.acivity.course.CourseActivity;
+import com.example.myapplication.ui.acivity.video.VideoActivity;
 
 import java.util.List;
 
@@ -29,7 +32,7 @@ public class MyfilelistAdapter extends BaseAdapter {
 
     @Override
     protected void bindData(BaseViewHolder holder, int positon, Object o) {
-        MyfilelistBean.DataBean data = (MyfilelistBean.DataBean) mDatas.get(positon);
+        final MyfilelistBean.DataBean data = (MyfilelistBean.DataBean) mDatas.get(positon);
 
         ImageView imageMyfile = (ImageView) holder.getView(R.id.image_myfile);
         TextView txtFilename = (TextView) holder.getView(R.id.txt_file_name);
@@ -40,6 +43,15 @@ public class MyfilelistAdapter extends BaseAdapter {
 
 
         holder.itemView.setTag(data);
+        txtTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(mContext, VideoActivity.class);
+                intent.putExtra("curriulum_id", data.getCurriculum_id() + "");
+                mContext.startActivity(intent);
+            }
+        });
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -49,6 +61,7 @@ public class MyfilelistAdapter extends BaseAdapter {
                 }
             }
         });
+
     }
 
 

@@ -28,7 +28,6 @@ import butterknife.OnClick;
 
 public class SetNameActivity extends BaseActivity implements UsercenterConstract.UpdateView {
 
-
     @BindView(R.id.txt_save)
     TextView txtSave;
     @BindView(R.id.ed_alter)

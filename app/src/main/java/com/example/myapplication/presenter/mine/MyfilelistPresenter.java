@@ -17,8 +17,8 @@ public class MyfilelistPresenter extends BasePresenter<MyfilelistConstract.View>
 
 
     @Override
-    public void getMyfilelist(String type) {
-        addSubscribe(HttpUtils.getMyServer(Constant.BaseUrl).myfilelist(Constant.token, type)
+    public void getMyfilelist(int page) {
+        addSubscribe(HttpUtils.getMyServer(Constant.BaseUrl).myfilelist(Constant.token, page)
                 .compose(RxUtils.<MyfilelistBean>rxScheduler())
                 .subscribeWith(new CommonSubscriber<MyfilelistBean>(mView) {
                     @Override

@@ -1,5 +1,8 @@
 package com.example.myapplication.ui.acivity.video;
 
+import android.app.ActivityManager;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
@@ -8,12 +11,17 @@ import android.graphics.drawable.ColorDrawable;
 import android.hardware.SensorManager;
 import android.media.MediaPlayer;
 import android.os.Build;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.telephony.PhoneStateListener;
+import android.telephony.TelephonyManager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +36,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSONObject;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
@@ -41,22 +50,30 @@ import com.example.myapplication.bean.DownFileBean;
 import com.example.myapplication.interfaces.IBasePresenter;
 import com.example.myapplication.interfaces.contract.CurriculumConstract;
 import com.example.myapplication.presenter.curriculum.CurriculumPresenter;
+import com.example.myapplication.ui.acivity.exercises.EexerciseDetailAcivity;
 import com.example.myapplication.ui.acivity.exercises.ExercisesActivity;
 import com.example.myapplication.ui.acivity.exercises.ExercisesResultActivity;
 import com.example.myapplication.ui.acivity.pdf.PdfActivity;
 import com.example.myapplication.utils.DownLoadUtils;
 import com.example.myapplication.utils.FileUtils;
+import com.example.myapplication.utils.MyJZVideoPlayerStandard;
+import com.example.myapplication.utils.NetDownResponse;
+import com.example.myapplication.utils.NetRequsetUtil;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.jzvd.JZMediaManager;
+import cn.jzvd.JZUtils;
 import cn.jzvd.JZVideoPlayer;
+import cn.jzvd.JZVideoPlayerManager;
 import cn.jzvd.JZVideoPlayerStandard;
 
 public class VideoActivity extends BaseActivity implements CurriculumConstract.View, BaseAdapter.OnItemClickListener {
@@ -64,7 +81,7 @@ public class VideoActivity extends BaseActivity implements CurriculumConstract.V
     @BindView(R.id.layout_bg)
     ConstraintLayout layoutBg;
     @BindView(R.id.videoplayer)
-    JZVideoPlayerStandard videoplayer;
+    MyJZVideoPlayerStandard videoplayer;
     @BindView(R.id.txt_title)
     TextView txtTitle;
     @BindView(R.id.txt_name)
@@ -79,8 +96,7 @@ public class VideoActivity extends BaseActivity implements CurriculumConstract.V
     TextView txtStudyTitle;
     @BindView(R.id.pdf_recyclerview)
     RecyclerView pdfRecyclerview;
-    @BindView(R.id.txt_sound)
-    TextView txtSound;
+
     @BindView(R.id.txt_intro)
     TextView txtIntro;
     @BindView(R.id.txt_video)
@@ -105,18 +121,14 @@ public class VideoActivity extends BaseActivity implements CurriculumConstract.V
     TextView txTeacher;
     @BindView(R.id.txt_gs)
     TextView txtGs;
-    @BindView(R.id.text_title)
-    TextView texTitle;
     @BindView(R.id.txt_content)
     TextView txtContent;
-    @BindView(R.id.image_back)
-    ImageView image_back;
     @BindView(R.id.relative_xq)
     RelativeLayout relative_xq;
 
     private static final int CODE_EXERCISES = 100;
 
-    String curriulumId;
+    static String  curriulumId;
     CurriculumBean curriculumBean;
 
     PdfAdapter pdfAdapter;
@@ -133,9 +145,13 @@ public class VideoActivity extends BaseActivity implements CurriculumConstract.V
     int fileSize;
     String fileName;
     String filePath;
+    public static VideoActivity instance;
+
+    public boolean isAudio;
 
     @Override
     protected IBasePresenter getPresenter() {
+        instance = this;
         return new CurriculumPresenter();
     }
 
@@ -158,6 +174,29 @@ public class VideoActivity extends BaseActivity implements CurriculumConstract.V
         relative_xq.setVisibility(View.VISIBLE);
         layoutbottoms.setVisibility(View.VISIBLE);
 //        txtStudyTitle.setVisibility(View.VISIBLE);
+
+
+        if (commonTimer != null) {
+            commonTimer.cancel();
+            commontask.cancel();
+        }
+
+
+
+        commontask = new TimerTask() {
+            @Override
+            public void run() {
+                    Message message = new Message();
+                    message.what = SEND_ADD_TIME;
+                    addTieHandler.sendMessage(message);
+            }
+        };
+        commonTimer = new Timer();
+        commonTimer.schedule(commontask, 0, 60 * 1000 * 5);
+
+
+
+
     }
 
     @Override
@@ -174,6 +213,8 @@ public class VideoActivity extends BaseActivity implements CurriculumConstract.V
         if (!TextUtils.isEmpty(video_url)) {
 
             videoplayer.setUp(video_url, JZVideoPlayerStandard.SCREEN_WINDOW_NORMAL, "");
+            Glide.with(VideoActivity.this).load(bean.getData().getCurriculum_data().getLog())
+            .into(videoplayer.img_teacher);
             //用于实现重力感应下切换横竖屏
             sensorManager = (SensorManager) context.getSystemService(SENSOR_SERVICE);
             JZVideoPlayer.FULLSCREEN_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;  //横向
@@ -198,14 +239,35 @@ public class VideoActivity extends BaseActivity implements CurriculumConstract.V
 
         int fraction = curriculumBean.getData().getRecord_data().getFraction();
         String str = "";
-        if (curriculumBean.getData().getRecord_data().getIs_pass() == 1) {
-            str = fraction + "分 已通过";
-            txtScore.setTextColor(Color.parseColor("#C7C7C7"));
-        } else {
-            str = fraction + "分 未通过";
-            txtScore.setTextColor(Color.parseColor("#FF0000"));
+
+        if (curriculumBean.getData().getHave_evaluat().equals("0")){
+            layoutbottoms.setVisibility(View.GONE);
+        }else {
+            if (curriculumBean.getData().getRecord_data().getId() == 0){
+                layoutbottoms.setVisibility(View.VISIBLE);
+                str = "未测试";
+                txtScore.setTextColor(Color.parseColor("#FF0000"));
+            }else {
+                layoutbottoms.setVisibility(View.VISIBLE);
+                if (curriculumBean.getData().getRecord_data().getIs_pass() == 1) {
+                    str = fraction + "分 已通过";
+                    txtScore.setTextColor(Color.parseColor("#C7C7C7"));
+                } else {
+                    str = fraction + "分 未通过";
+                    txtScore.setTextColor(Color.parseColor("#FF0000"));
+                }
+            }
+
+            txtScore.setText(str);
         }
-        txtScore.setText(str);
+
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ((CurriculumPresenter) mPresenter).getCurriculum(curriulumId);
     }
 
     /**
@@ -218,15 +280,12 @@ public class VideoActivity extends BaseActivity implements CurriculumConstract.V
         openPdfRead(fileName,filePath);
     }
 
-    @OnClick({R.id.image_back,R.id.txt_sound, R.id.txt_video, R.id.txt_detail, R.id.txt_evalua, R.id.layout_exercises, R.id.txt_intro})
+
+
+    @OnClick({R.id.txt_video, R.id.txt_detail, R.id.txt_evalua, R.id.layout_exercises, R.id.txt_intro})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.txt_sound:
-                selectSound();
-                break;case
-                    R.id.image_back:
-                finish();
-                break;
+
             case R.id.txt_video:
                 selectVideo();
                 break;
@@ -243,7 +302,16 @@ public class VideoActivity extends BaseActivity implements CurriculumConstract.V
                 break;
             case R.id.txt_intro:
                 relative_xq.setVisibility(View.VISIBLE);
-                layoutbottoms.setVisibility(View.VISIBLE);
+
+                if (curriculumBean.getData().getHave_evaluat().equals("0")){
+                    layoutbottoms.setVisibility(View.GONE);
+                }else {
+                    if (curriculumBean.getData().getRecord_data().getId() == 0) {
+                        layoutbottoms.setVisibility(View.VISIBLE);
+                    } else {
+                        layoutbottoms.setVisibility(View.VISIBLE);
+                    }
+                }
                 txtIntro.setVisibility(View.INVISIBLE);
 //                txtStudyTitle.setVisibility(View.VISIBLE);
                 txtDetail.setVisibility(View.VISIBLE);
@@ -258,17 +326,16 @@ public class VideoActivity extends BaseActivity implements CurriculumConstract.V
                 //evaluats();
                 break;
             case R.id.layout_exercises:
-                if(curriculumBean.getData().getHave_evaluat().equals("1")){
-                    //通过记录的id判断是否有测试过
-                    if(curriculumBean.getData().getRecord_data().getId() > 0){
-                        Intent intent = new Intent(this, ExercisesResultActivity.class);
-                        intent.putExtra("evaluat_id",String.valueOf(curriculumBean.getData().getRecord_data().getId()));
-                        startActivity(intent);
-                    }else{
-                        evaluats();
-                    }
-                }else{
-                    Toast.makeText(context, "没有考题", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent();
+
+                if (curriculumBean.getData().getRecord_data().getId() == 0 ) {
+                    intent.putExtra("evaluat_curriulum_id" , Integer.valueOf(curriculumBean.getData().getCurriculum_data().getId()) );
+                    intent.setClass(VideoActivity.this,ExercisesActivity.class);
+                    startActivity(intent);
+                } else {
+                    intent.putExtra("evaluat_id" , curriculumBean.getData().getRecord_data().getId() +"");
+                    intent.setClass(VideoActivity.this,EexerciseDetailAcivity.class);
+                    startActivity(intent);
                 }
                 break;
         }
@@ -291,14 +358,13 @@ public class VideoActivity extends BaseActivity implements CurriculumConstract.V
         txtGs.setText(details.getGs());
         Glide.with(context).load(details.getLog()).apply(RequestOptions.bitmapTransform(new CircleCrop())).into(imageLog);
         txTeacher.setText(details.getTeacher());
-        texTitle.setText(details.getTitle());
 
     }
 
     private void selectSound() {
         videoplayer.setVisibility(View.INVISIBLE);
         layoutSound.setVisibility(View.VISIBLE);
-        txtSound.setVisibility(View.GONE);
+
         if (videoplayer.isCurrentPlay()) {
             JZVideoPlayerStandard.goOnPlayOnPause();
             curPos = JZMediaManager.getCurrentPosition();
@@ -309,7 +375,6 @@ public class VideoActivity extends BaseActivity implements CurriculumConstract.V
     private void selectVideo() {
         videoplayer.setVisibility(View.VISIBLE);
         layoutSound.setVisibility(View.INVISIBLE);
-        txtSound.setVisibility(View.VISIBLE);
         if (mediaPlayer != null) {
             if (mediaPlayer.isPlaying()) {
                 curPos = mediaPlayer.getCurrentPosition();
@@ -373,29 +438,100 @@ public class VideoActivity extends BaseActivity implements CurriculumConstract.V
     @Override
     protected void onPause() {
         super.onPause();
-        if (videoplayer != null && videoplayer.isCurrentPlay()) {
-            JZVideoPlayerStandard.goOnPlayOnPause();
-        }
+        MyJZVideoPlayerStandard.goOnPlayOnPause();
+    }
 
-        if (mediaPlayer != null) {
-            if (mediaPlayer.isPlaying()) {
-                mediaPlayer.stop();
+    public void restartTime(){
+        addTimerTask = new TimerTask() {
+            @Override
+            public void run() {
+                Message message = new Message();
+                message.what = ADD_TIME;
+                addTieHandler.sendMessage(message);
             }
-        }
+        };
+        addTimeEr.schedule(addTimerTask, 100, 1000);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (videoplayer != null && videoplayer.isCurrentPlay()) {
-            JZVideoPlayerStandard.goOnPlayOnPause();
+        if (addTimeEr != null && addTimerTask != null) {
+            addTimeEr.cancel();
+            addTimerTask.cancel();
+        }
+        if (commonTimer != null) {
+            commonTimer.cancel();
+            commontask.cancel();
         }
 
-        if (mediaPlayer != null) {
-            if (mediaPlayer.isPlaying()) {
-                mediaPlayer.stop();
-            }
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("curriculum_id" ,curriulumId );
+        jsonObject.put("len" , courseAddTime);
+
+        NetRequsetUtil.getInstance().netRequestPostJson("index/train/curriculum_tj", jsonObject.toString(),
+                new NetDownResponse() {
+                    @Override
+                    public void success(String str) {
+                        courseAddTime = 0;
+                    }
+
+                    @Override
+                    public void errowithresponse(String str) {
+
+                    }
+
+                    @Override
+                    public void erro() {
+
+                    }
+
+                    @Override
+                    public void finish() {
+
+                    }
+                });
+
+        courseAddTime = 0;
+
+        long savedProgress = 0;
+        try {
+             savedProgress = JZMediaManager.getCurrentPosition();
+        }catch (Exception e){
+
         }
+
+
+        JZVideoPlayerStandard.releaseAllVideos();
+
+        JSONObject jsonObjec1t = new JSONObject();
+        jsonObjec1t.put("curriculum_id" , curriulumId);
+        jsonObjec1t.put("len" , savedProgress/1000);
+
+        NetRequsetUtil.getInstance().netRequestPostJson("index/train/record_curriculum_history", jsonObjec1t.toString(),
+                new NetDownResponse() {
+                    @Override
+                    public void success(String str) {
+                        Log.d("VideoActivity", "上传成功");
+                    }
+
+                    @Override
+                    public void errowithresponse(String str) {
+
+                    }
+
+                    @Override
+                    public void erro() {
+
+                    }
+
+                    @Override
+                    public void finish() {
+
+                    }
+                });
+
+        instance = null;
     }
 
     /**
@@ -408,8 +544,8 @@ public class VideoActivity extends BaseActivity implements CurriculumConstract.V
         String pdfname = curriculumBean.getData().getFile_data().get(position).getName();
         String url = curriculumBean.getData().getFile_data().get(position).getUrl();
         String path = Constant.PATH_PDF+pdfname;
-        boolean isDir = FileUtils.checkDir(Constant.PATH_PDF);
         int size = FileUtils.checkFile(Constant.PATH_PDF+pdfname);
+        boolean isDir = FileUtils.checkDir(Constant.PATH_PDF);
         //如果存在直接打开
         if(size > 0){
             fileName = pdfname;
@@ -486,4 +622,76 @@ public class VideoActivity extends BaseActivity implements CurriculumConstract.V
         intent.putExtra("pdf_path",path);
         startActivity(intent);
     }
+
+
+    private Timer commonTimer;
+    private TimerTask commontask;
+    private static final int ADD_TIME = 0;
+    private static final int SEND_ADD_TIME = 1;
+    private Handler addTieHandler = new AddTimeHandler();
+    private static double courseAddTime = 0;
+    private Timer addTimeEr = new Timer();
+    private TimerTask addTimerTask;
+
+
+
+    //计时handler回调
+    static class AddTimeHandler extends Handler {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case ADD_TIME:
+                    if (JZVideoPlayerManager.getSecondFloor() != null) {
+                        int currentState = JZVideoPlayerManager.getSecondFloor().currentState;
+                        boolean isPaused = currentState == JZVideoPlayer.CURRENT_STATE_PAUSE;
+                        if (!isPaused) {
+                            courseAddTime++;
+                        }
+                    } else {
+                        courseAddTime++;
+                    }
+                    break;
+                case SEND_ADD_TIME:
+                    JSONObject jsonObject = new JSONObject();
+                    jsonObject.put("curriculum_id" ,curriulumId );
+                    jsonObject.put("len" , courseAddTime);
+
+                    NetRequsetUtil.getInstance().netRequestPostJson("index/train/curriculum_tj", jsonObject.toString(),
+                            new NetDownResponse() {
+                                @Override
+                                public void success(String str) {
+                                    courseAddTime = 0;
+                                }
+
+                                @Override
+                                public void errowithresponse(String str) {
+
+                                }
+
+                                @Override
+                                public void erro() {
+
+                                }
+
+                                @Override
+                                public void finish() {
+
+                                }
+                            });
+                    break;
+            }
+            super.handleMessage(msg);
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
 }
