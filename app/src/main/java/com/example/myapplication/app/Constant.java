@@ -27,7 +27,6 @@ public class Constant {
             + "com.example.myapplication"
             + File.separator + "user_img" + File.separator;
 
-    public static final String PATH_PDF = MyApp.mApp.getFilesDir().getAbsolutePath() + "/pdfs/";
 
     public static String token = "";
 
