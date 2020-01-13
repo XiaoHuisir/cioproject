@@ -2,9 +2,10 @@ package com.example.myapplication.bean;
 
 public class VerBean {
 
+
     /**
      * status : 1
-     * data : {"version":{"status":1,"version_code":"1.0","apk_url":"http://images.ciotimes.com/com.IwaiwangApp.apk","upgrade_content":"测试"}}
+     * data : {"version":{"status":1,"version_code":"1.0","apk_url":"http://images.ciotimes.com/com.IwaiwangApp.apk","upgrade_content":"测试的2322333444"}}
      * msg :
      * code : 10000
      */
@@ -48,7 +49,7 @@ public class VerBean {
 
     public static class DataBean {
         /**
-         * version : {"status":1,"version_code":"1.0","apk_url":"http://images.ciotimes.com/com.IwaiwangApp.apk","upgrade_content":"测试"}
+         * version : {"status":1,"version_code":"1.0","apk_url":"http://images.ciotimes.com/com.IwaiwangApp.apk","upgrade_content":"测试的2322333444"}
          */
 
         private VersionBean version;
@@ -66,7 +67,7 @@ public class VerBean {
              * status : 1
              * version_code : 1.0
              * apk_url : http://images.ciotimes.com/com.IwaiwangApp.apk
-             * upgrade_content : 测试
+             * upgrade_content : 测试的2322333444
              */
 
             private int status;
