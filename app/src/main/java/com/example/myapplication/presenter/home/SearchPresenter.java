@@ -5,6 +5,7 @@ import com.example.myapplication.base.BasePresenter;
 import com.example.myapplication.bean.IndexBean;
 import com.example.myapplication.bean.SearchBean;
 import com.example.myapplication.bean.UnredNoticeBean;
+import com.example.myapplication.bean.VerBean;
 import com.example.myapplication.interfaces.contract.IndexConstract;
 import com.example.myapplication.utils.CommonSubscriber;
 import com.example.myapplication.utils.HttpUtils;
@@ -45,6 +46,22 @@ public class SearchPresenter extends BasePresenter<IndexConstract.SearchView> im
                         if (result != null) {
                             if (mView != null) {
                                 mView.getUnredNoticeReturn(result);
+                            }
+                        }
+                    }
+                }));
+    }
+
+    @Override
+    public void getVersion() {
+        addSubscribe(HttpUtils.getMyServer(Constant.BaseUrl).getVersionInfo(Constant.token)
+                .compose(RxUtils.<VerBean>rxScheduler())
+                .subscribeWith(new CommonSubscriber<VerBean>(mView) {
+                    @Override
+                    public void onNext(VerBean result) {
+                        if (result != null) {
+                            if (mView != null) {
+                                mView.getVersionReturn(result);
                             }
                         }
                     }

@@ -16,6 +16,7 @@ import com.example.myapplication.base.BaseAdapter;
 import com.example.myapplication.base.BaseFragment;
 import com.example.myapplication.bean.SearchBean;
 import com.example.myapplication.bean.UnredNoticeBean;
+import com.example.myapplication.bean.VerBean;
 import com.example.myapplication.interfaces.IBasePresenter;
 import com.example.myapplication.interfaces.contract.IndexConstract;
 import com.example.myapplication.presenter.home.SearchPresenter;
@@ -155,6 +156,11 @@ public class SearchFragment extends BaseFragment implements BaseAdapter.OnItemCl
 
     @Override
     public void getUnredNoticeReturn(UnredNoticeBean bean) {
+
+    }
+
+    @Override
+    public void getVersionReturn(VerBean result) {
 
     }
 

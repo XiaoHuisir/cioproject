@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,6 +10,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.text.TextUtils;
@@ -26,6 +28,7 @@ import com.example.myapplication.bean.IndexBean;
 import com.example.myapplication.bean.SearchBean;
 import com.example.myapplication.bean.UnredNoticeBean;
 import com.example.myapplication.bean.UserCenterBean;
+import com.example.myapplication.bean.VerBean;
 import com.example.myapplication.interfaces.IBasePresenter;
 import com.example.myapplication.interfaces.contract.IndexConstract;
 import com.example.myapplication.interfaces.usercenter.UsercenterConstract;
@@ -36,7 +39,9 @@ import com.example.myapplication.ui.fragment.HomeFragment;
 import com.example.myapplication.ui.fragment.MineFragment;
 import com.example.myapplication.ui.fragment.ClassifyFragment;
 import com.example.myapplication.ui.fragment.StudyFragment;
+import com.example.myapplication.utils.DownLoadUtils;
 import com.example.myapplication.utils.NumView;
+import com.example.myapplication.utils.SystemUtils;
 
 import org.greenrobot.greendao.annotation.JoinEntity;
 
@@ -143,6 +148,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
     @Override
     protected void initData() {
         ((SearchPresenter) mPresenter).getUnredNotice();
+        ((SearchPresenter) mPresenter).getVersion();
     }
 
 
@@ -238,5 +244,46 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
                 numWx.setNum(noticenum);
             }
         }
+    }
+
+    private VerBean verBean;
+    @Override
+    public void getVersionReturn(VerBean result) {
+        if(result.getCode() == 10000){
+            if(result.getCode() == 1){
+                //popwindow提示
+                verBean = result;
+                showUpdateDialog();
+            }
+        }
+    }
+
+    private void showUpdateDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("更新");
+        builder.setNegativeButton("关闭", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        })
+        .setPositiveButton("下载", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if(!TextUtils.isEmpty(verBean.getData().getVersion().getApk_url())){
+                    final String path = Constant.PATH_APK+"update.apk";
+                    DownLoadUtils downLoadUtils = new DownLoadUtils();
+                    downLoadUtils.downFile(verBean.getData().getVersion().getApk_url(), path, new DownLoadUtils.DownLoadListener() {
+                        @Override
+                        public void loading(int loaded, int total) {
+                            if(loaded == total){
+                                SystemUtils.installNormal(context,path);
+                            }
+                        }
+                    });
+                }
+            }
+        });
+        builder.create().show();
     }
 }

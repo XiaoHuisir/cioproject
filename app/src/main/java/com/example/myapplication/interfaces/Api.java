@@ -107,7 +107,6 @@ public interface Api {
     @FormUrlEncoded
     Flowable<NotcieRecordBean> notice_records(@Header("x-access-token") String token, @Field("page") String page);
     @POST("index/train/version_update")
-    @FormUrlEncoded
     Flowable<VerBean> getVersionInfo(@Header("x-access-token") String token);
 
 }
