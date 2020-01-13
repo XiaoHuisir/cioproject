@@ -24,6 +24,7 @@ public class MyApp extends Application {
         super.onCreate();
         Log.e("MyApplication", "onCreate: ");
         mApp = this;
+
     }
     //static 代码段可以防止内存泄露
     static {
