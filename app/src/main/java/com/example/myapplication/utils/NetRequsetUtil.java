@@ -308,6 +308,95 @@ public class NetRequsetUtil {
         });
     }
 
+    //更新app(带进度)
+    public void upApk(final String url, final String filename, final DownResponseInterface downResponseInterface) {
+
+
+        final Handler handler = new Handler(new Handler.Callback() {
+            @Override
+            public boolean handleMessage(Message msg) {
+                switch (msg.what) {
+                    case 101:
+                        downResponseInterface.erro();
+                        break;
+                    case 102:
+                        downResponseInterface.successFinish();
+                        break;
+                    case 103:
+                        //进度从0到100
+                        downResponseInterface.progress(Integer.valueOf(String.valueOf(msg.obj)));
+                        break;
+                }
+                return false;
+            }
+        });
+
+        Request request = new Request.Builder().url(url)
+                .addHeader("x-access-token", Constant.token).build();
+
+        okHttpClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.d("NetRequsetUtil", "e:" + e);
+                handler.sendEmptyMessage(101);
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                try {
+                    long contentLength = response.body().contentLength();
+                    FileOutputStream fileOutputStream = null;
+                    InputStream is = response.body().byteStream();
+                    if (is != null) {
+
+                        File apkFile = new File(Environment.getExternalStorageDirectory(), filename);
+                        if (apkFile.exists()) {
+                            apkFile.delete();
+                        }
+
+                        File file = new File(
+                                Environment.getExternalStorageDirectory(), filename);
+                        fileOutputStream = new FileOutputStream(file);
+                        //这个是缓冲区，即一次读取10个比特，我弄的小了点，因为在本地，所以数值太大一下就下载完了,
+                        //看不出progressbar的效果。
+                        byte[] buf = new byte[1024];
+                        int len = -1;
+                        long process = 0;
+                        long time = System.currentTimeMillis();
+                        while ((len = is.read(buf)) != -1) {
+                            if (System.currentTimeMillis() - time > 100) {
+                                time = System.currentTimeMillis();
+                                Message msg = Message.obtain();
+                                msg.what = 103;
+                                msg.obj =  process * 100 / contentLength;
+                                handler.sendMessage(msg);
+                            }
+                            process += len;
+                            fileOutputStream.write(buf, 0, len);
+                        }
+
+                        Message msg = Message.obtain();
+                        msg.what = 103;
+                        msg.obj = 100;
+                        handler.sendMessage(msg);
+
+                        fileOutputStream.flush();
+
+                        if (fileOutputStream != null) {
+                            fileOutputStream.close();
+                        }
+
+                        handler.sendEmptyMessage(102);
+                    }
+                } catch (Exception e) {
+                    Log.d("NetRequsetUtil", "e:" + e);
+                    handler.sendEmptyMessage(101);
+                }
+
+            }
+        });
+    }
+
 
     public void cancel() {
         if (okHttpClient == null) return;
@@ -317,6 +406,5 @@ public class NetRequsetUtil {
         for (Call call : okHttpClient.dispatcher().runningCalls()) {
             call.cancel();
         }
-
     }
 }
