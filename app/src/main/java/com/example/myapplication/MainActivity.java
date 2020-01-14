@@ -17,6 +17,7 @@ import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -79,6 +80,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
     private int currentBottomPosition;
     private int targetBottomPosition;
     private List<Fragment> fragmentList = new ArrayList<>();
+    private PopupWindow popupWindow;
 
     private void initFragment() {
         manager = getSupportFragmentManager();
@@ -140,7 +142,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
 
             }
         });
-
 
 
     }
@@ -206,6 +207,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
                 startActivity(intent);
                 break;
             case R.id.layout_msg:
+//                showUpdateDialog();
                 //打开消息界面
 //                numWx.setNum(0);
                 numWx.setNum(0);
@@ -247,43 +249,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
     }
 
     private VerBean verBean;
+
     @Override
     public void getVersionReturn(VerBean result) {
-        if(result.getCode() == 10000){
-            if(result.getCode() == 1){
-                //popwindow提示
-                verBean = result;
-                showUpdateDialog();
-            }
-        }
+////        //TODO  更新
+
     }
 
-    private void showUpdateDialog(){
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle("更新");
-        builder.setNegativeButton("关闭", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
 
-            }
-        })
-        .setPositiveButton("下载", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                if(!TextUtils.isEmpty(verBean.getData().getVersion().getApk_url())){
-                    final String path = Constant.PATH_APK+"update.apk";
-                    DownLoadUtils downLoadUtils = new DownLoadUtils();
-                    downLoadUtils.downFile(verBean.getData().getVersion().getApk_url(), path, new DownLoadUtils.DownLoadListener() {
-                        @Override
-                        public void loading(int loaded, int total) {
-                            if(loaded == total){
-                                SystemUtils.installNormal(context,path);
-                            }
-                        }
-                    });
-                }
-            }
-        });
-        builder.create().show();
-    }
 }
