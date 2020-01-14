@@ -348,7 +348,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
                     File file = new File(Environment.getExternalStorageDirectory(), "iww.apk");
                     Uri apkUri =
                             FileProvider.getUriForFile(MainActivity.this,
-                                    "com.example.myapplication.fileprovider",
+                                    "com.example.myapplication.FileProvider",
                                     file);
                     //添加这一句表示对目标应用临时授权该Uri所代表的文件
                     intent1.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
