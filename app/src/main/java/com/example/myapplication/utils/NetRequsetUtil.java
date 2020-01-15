@@ -111,7 +111,6 @@ public class NetRequsetUtil {
 
     //不传递参数时候的get请求
     public void netRequestGet(final String url, final NetDownResponse netDownResponse) {
-
         final Handler handler = new Handler(new Handler.Callback() {
             @Override
             public boolean handleMessage(Message msg) {

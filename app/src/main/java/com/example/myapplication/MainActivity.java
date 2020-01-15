@@ -1,6 +1,8 @@
 package com.example.myapplication;
 
 
+import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -23,6 +25,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -56,6 +59,7 @@ import com.example.myapplication.utils.DownResponseInterface;
 import com.example.myapplication.utils.NetDownResponse;
 import com.example.myapplication.utils.NetRequsetUtil;
 import com.example.myapplication.utils.NumView;
+import com.example.myapplication.utils.SharedPreferencesUtil;
 import com.example.myapplication.utils.SystemUtils;
 
 import org.greenrobot.greendao.annotation.JoinEntity;
@@ -96,6 +100,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
     private int targetBottomPosition;
     private List<Fragment> fragmentList = new ArrayList<>();
     private PopupWindow popupWindow;
+    private VerBean.DataBean.VersionBean version;
+    private String apk_url;
+    private int status;
+    private UpDataBean upDataBean;
+    private int version_code;
+    private  boolean booleandelet=false;
 
     private void initFragment() {
         manager = getSupportFragmentManager();
@@ -129,14 +139,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
 
     @Override
     protected void initView() {
-
-
         initFragment();
         txtSearch.setOnClickListener(this);
         layoutMsg.setOnClickListener(this);
-
         manager.beginTransaction().add(R.id.fl, fragmentList.get(0)).commit();
-
         mTl.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -162,20 +168,74 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         NetRequsetUtil.getInstance().netRequestGet("index/train/version_update", new NetDownResponse() {
             @Override
             public void success(String str) {
-                final UpDataBean upDataBean = JSON.parseObject(str, UpDataBean.class);
-                int version_code =Integer.valueOf(upDataBean.getData().getVersion().getVersion_code()) ;
-                if (version_code > getVersion()){
-                    //安装应用
-                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                    builder.setMessage("有新版本请更新").setNegativeButton("更新", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            startDownload(upDataBean.getData().getVersion().getApk_url());
-                        }
-                    });
-                    builder.show();
+                upDataBean = JSON.parseObject(str, UpDataBean.class);
+                if (upDataBean != null) {
+                    if (upDataBean.getData().getVersion().getStatus() == 0) {
+//                        Toast.makeText(context, "以是最新版本", Toast.LENGTH_LONG).show();
+                    } else {
+                        final String version_code1 = upDataBean.getData().getVersion().getVersion_code();
+                        version_code = Integer.valueOf(version_code1);
+
+                            if (version_code > getVersion()) {
+                                LayoutInflater inflater = getLayoutInflater();
+                                //引入自定义好的对话框.xml布局
+                                View layout = inflater.inflate(R.layout.alertdialog_layout, null);
+                                //实列提示对话框对象，并将加载的试图对象设置给对话框对象
+                                final AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).setTitle(" ").setView(layout).show();
+                                final RelativeLayout update = layout.findViewById(R.id.relative_update);
+                                TextView datas = layout.findViewById(R.id.txt_data);
+                                String upgrade_content = upDataBean.getData().getVersion().getUpgrade_content();
+                                if (upgrade_content != null) datas.setText(upgrade_content); //内容
+                                update.setOnClickListener(new View.OnClickListener() {  //更新
+                                    @Override
+                                    public void onClick(View v) {
+                                        alertDialog.dismiss();
+                                        checkPermission();
+//                                    checkIsAndroidO();
+                                        startDownload(upDataBean.getData().getVersion().getApk_url());
+
+                                    }
+                                });
+//                                RelativeLayout onhint = layout.findViewById(R.id.relative_onhint);
+//
+//                                onhint.setOnClickListener(new View.OnClickListener() {
+//                                    @Override
+//                                    public void onClick(View v) {
+//                                        booleandelet = true;
+////                                        SharedPreferencesUtil.addUpdate(context,Integer.valueOf(upDataBean.getData().getVersion().getVersion_code()));
+//                                        alertDialog.dismiss();
+//
+//                                    }
+//                                });
+                                RelativeLayout cancel = layout.findViewById(R.id.relative_cancel);
+                                cancel.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        alertDialog.dismiss();
+                                    }
+                                });
+                            }
+
+                        //-----
+//                            //安装应用
+//                            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+//                            builder.setMessage("更新说明").setTitle(upDataBean.getData().getVersion().getUpgrade_content());
+//                            builder.setMessage("有新版本请更新").setNegativeButton("更新", new DialogInterface.OnClickListener() {
+//                                @Override
+//                                public void onClick(DialogInterface dialog, int which) {
+//
+//                                    checkPermission();
+////                                    checkIsAndroidO();
+//                                    startDownload(upDataBean.getData().getVersion().getApk_url());
+//                                    Toast.makeText(context, "" + upDataBean.getData().getVersion().getUpgrade_content(), Toast.LENGTH_LONG).show();
+//                                }
+//                            });
+//
+//                            builder.show();
+                    }
                 }
             }
+
 
             @Override
             public void errowithresponse(String str) {
@@ -192,16 +252,56 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
 
             }
         });
+    }
 
+    //动态权限
+    public void checkPermission() {
+        boolean isGranted = true;
+        if (android.os.Build.VERSION.SDK_INT >= 23) {
+            if (context.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                //如果没有写sd卡权限
+                isGranted = false;
+            }
+            if (context.checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                isGranted = false;
+            }
+            Log.i("cbs", "isGranted == " + isGranted);
+            if (!isGranted) {
+                ((Activity) context).requestPermissions(
+                        new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission
+                                .ACCESS_FINE_LOCATION,
+                                Manifest.permission.READ_EXTERNAL_STORAGE,
+                                Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                        102);
+            }
+        }
+    }
 
+    /**
+     * 判断是否是8.0系统,是的话需要获取此权限，判断开没开，没开的话处理未知应用来源权限问题,否则直接安装
+     */
+    private void checkIsAndroidO() {
+        if (android.os.Build.VERSION.SDK_INT >= 26) {
+            boolean b = this.getPackageManager().canRequestPackageInstalls();
+            if (b) {
+                //publicApk();//安装应用的逻辑(写自己的就可以)
+                startDownload(upDataBean.getData().getVersion().getApk_url());
+            } else {
+                //请求安装未知应用来源的权限
+                startDownload(upDataBean.getData().getVersion().getApk_url());
+                this.requestPermissions(new String[]{Manifest.permission.REQUEST_INSTALL_PACKAGES}, 102);
+            }
+        } else {
+            //publicApk();
+            startDownload(upDataBean.getData().getVersion().getApk_url());
+        }
     }
 
     @Override
     protected void initData() {
         ((SearchPresenter) mPresenter).getUnredNotice();
-        ((SearchPresenter) mPresenter).getVersion();
+//        ((SearchPresenter) mPresenter).getVersion();
     }
-
 
     private void showFragment(int type) {
         FragmentTransaction fragmentTransaction = manager.beginTransaction();
@@ -256,10 +356,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
                 intent.setClass(context, SearchActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.layout_msg:
-//                showUpdateDialog();
-                //打开消息界面
-//                numWx.setNum(0);
+            case R.id.layout_msg:       //打开消息界面
+
                 numWx.setNum(0);
                 indxler = true;
                 Intent notice = new Intent();
@@ -302,7 +400,34 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
 
     @Override
     public void getVersionReturn(VerBean result) {
-////        //TODO  更新
+        ////        //TODO  更新
+//        if (result.getData() != null) {
+//            version = result.getData().getVersion();
+//            if (version != null) {
+//                status = version.getStatus();
+//                apk_url = version.getApk_url();
+//                if (status == 0) {
+//                    Toast.makeText(context, "已是最新版本", Toast.LENGTH_LONG).show();
+//                } else {
+//                    int versions = Integer.valueOf(version.getVersion_code());
+//                    if (versions > getVersion()) {
+//                        //安装应用
+//                        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+//                        builder.setTitle(version.getUpgrade_content());
+//                        builder.setMessage("有新版本请更新").setPositiveButton("更新", new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int which) {
+//                                startDownload(apk_url);
+//                                Toast.makeText(context, "" + version.getUpgrade_content(), Toast.LENGTH_LONG).show();
+//                            }
+//                        });
+////                        builder.setMessage().setPositiveButton()
+//                        builder.show();
+//                    }
+//                }
+//            }
+//        }
+
 
     }
 
@@ -344,7 +469,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
                 //Android获取一个用于打开APK文件的intent
                 Intent intent1 = new Intent(Intent.ACTION_VIEW);
                 intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                if(Build.VERSION.SDK_INT>=24) {
+                if (Build.VERSION.SDK_INT >= 24) {
                     File file = new File(Environment.getExternalStorageDirectory(), "iww.apk");
                     Uri apkUri =
                             FileProvider.getUriForFile(MainActivity.this,
@@ -353,8 +478,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
                     //添加这一句表示对目标应用临时授权该Uri所代表的文件
                     intent1.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                     intent1.setDataAndType(apkUri, "application/vnd.android.package-archive");
-                }else{
-                    intent1.setDataAndType(Uri.fromFile(new File(Environment.getExternalStorageDirectory(),"iww.apk")),
+                } else {
+                    intent1.setDataAndType(Uri.fromFile(new File(Environment.getExternalStorageDirectory(), "iww.apk")),
                             "application/vnd.android.package-archive");
                 }
                 MainActivity.this.startActivity(intent1);
@@ -374,7 +499,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
             }
         });
     }
-
 
 
 }

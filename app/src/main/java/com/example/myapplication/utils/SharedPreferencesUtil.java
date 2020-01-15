@@ -81,4 +81,19 @@ public class SharedPreferencesUtil {
     public static String getPw(Context context){
         return context.getSharedPreferences("user",Context.MODE_PRIVATE).getString("pw","");
     }
+
+    /**
+     * 保存版本号不再提示更新
+     * @param status
+     * */
+    public  static  void  addUpdate(Context context,int status ){
+        context.getSharedPreferences("version",Context.MODE_PRIVATE).edit();
+        editor.putInt("status",status);
+        editor.commit();
+    }
+    public  static  int  getUpdate(Context context){
+        return  context.getSharedPreferences("version",Context.MODE_PRIVATE).getInt("status",0);
+    }
+
+
 }
