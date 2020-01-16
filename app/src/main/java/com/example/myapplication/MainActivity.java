@@ -65,11 +65,23 @@ import com.example.myapplication.utils.SystemUtils;
 import org.greenrobot.greendao.annotation.JoinEntity;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executors;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import okhttp3.Call;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 
 public class MainActivity extends BaseActivity implements View.OnClickListener,
@@ -139,6 +151,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
 
     @Override
     protected void initView() {
+        checkPermission();
         initFragment();
         txtSearch.setOnClickListener(this);
         layoutMsg.setOnClickListener(this);
@@ -177,6 +190,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
                         version_code = Integer.valueOf(version_code1);
 
                             if (version_code > getVersion()) {
+
                                 LayoutInflater inflater = getLayoutInflater();
                                 //引入自定义好的对话框.xml布局
                                 View layout = inflater.inflate(R.layout.alertdialog_layout, null);
@@ -190,9 +204,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
                                     @Override
                                     public void onClick(View v) {
                                         alertDialog.dismiss();
-                                        checkPermission();
-//                                    checkIsAndroidO();
-                                        startDownload(upDataBean.getData().getVersion().getApk_url());
+//
+                                    checkIsAndroidO();
+//                                        startDownload(upDataBean.getData().getVersion().getApk_url());
 
                                     }
                                 });
@@ -215,27 +229,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
                                     }
                                 });
                             }
-
-                        //-----
-//                            //安装应用
-//                            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-//                            builder.setMessage("更新说明").setTitle(upDataBean.getData().getVersion().getUpgrade_content());
-//                            builder.setMessage("有新版本请更新").setNegativeButton("更新", new DialogInterface.OnClickListener() {
-//                                @Override
-//                                public void onClick(DialogInterface dialog, int which) {
-//
-//                                    checkPermission();
-////                                    checkIsAndroidO();
-//                                    startDownload(upDataBean.getData().getVersion().getApk_url());
-//                                    Toast.makeText(context, "" + upDataBean.getData().getVersion().getUpgrade_content(), Toast.LENGTH_LONG).show();
-//                                }
-//                            });
-//
-//                            builder.show();
                     }
                 }
             }
-
 
             @Override
             public void errowithresponse(String str) {
@@ -254,48 +250,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         });
     }
 
-    //动态权限
-    public void checkPermission() {
-        boolean isGranted = true;
-        if (android.os.Build.VERSION.SDK_INT >= 23) {
-            if (context.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                //如果没有写sd卡权限
-                isGranted = false;
-            }
-            if (context.checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                isGranted = false;
-            }
-            Log.i("cbs", "isGranted == " + isGranted);
-            if (!isGranted) {
-                ((Activity) context).requestPermissions(
-                        new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission
-                                .ACCESS_FINE_LOCATION,
-                                Manifest.permission.READ_EXTERNAL_STORAGE,
-                                Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                        102);
-            }
-        }
-    }
 
-    /**
-     * 判断是否是8.0系统,是的话需要获取此权限，判断开没开，没开的话处理未知应用来源权限问题,否则直接安装
-     */
-    private void checkIsAndroidO() {
-        if (android.os.Build.VERSION.SDK_INT >= 26) {
-            boolean b = this.getPackageManager().canRequestPackageInstalls();
-            if (b) {
-                //publicApk();//安装应用的逻辑(写自己的就可以)
-                startDownload(upDataBean.getData().getVersion().getApk_url());
-            } else {
-                //请求安装未知应用来源的权限
-                startDownload(upDataBean.getData().getVersion().getApk_url());
-                this.requestPermissions(new String[]{Manifest.permission.REQUEST_INSTALL_PACKAGES}, 102);
-            }
-        } else {
-            //publicApk();
-            startDownload(upDataBean.getData().getVersion().getApk_url());
-        }
-    }
 
     @Override
     protected void initData() {
@@ -370,9 +325,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
 
     @Override
     public void click(String id) {
-
     }
-
 
     @Override
     public void searchResult(List<SearchBean.DataBean.CurriculumDataBean> result) {
@@ -395,9 +348,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
             }
         }
     }
-
-    private VerBean verBean;
-
     @Override
     public void getVersionReturn(VerBean result) {
         ////        //TODO  更新
@@ -452,53 +402,203 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
 
     private void startDownload(String down_url) {
         //进度条，在下载的时候实时更新进度，提高用户友好度
+
         progressDialog = new ProgressDialog(MainActivity.this);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
         progressDialog.setProgressNumberFormat(" ");
         progressDialog.setTitle("正在下载");
         progressDialog.setMessage("请稍候...");
         progressDialog.setProgress(0);
+        downurlapk(down_url);
         progressDialog.setMax(100);
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
 
-        NetRequsetUtil.getInstance().upApk(down_url, "iww.apk", new DownResponseInterface() {
+
+    }
+
+    private void downurlapk(final String url) {
+        Executors.newCachedThreadPool().execute(new Runnable() {
             @Override
-            public void successFinish() {
-                progressDialog.dismiss();
-                //Android获取一个用于打开APK文件的intent
-                Intent intent1 = new Intent(Intent.ACTION_VIEW);
-                intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                if (Build.VERSION.SDK_INT >= 24) {
-                    File file = new File(Environment.getExternalStorageDirectory(), "iww.apk");
-                    Uri apkUri =
-                            FileProvider.getUriForFile(MainActivity.this,
-                                    "com.example.myapplication.FileProvider",
-                                    file);
-                    //添加这一句表示对目标应用临时授权该Uri所代表的文件
-                    intent1.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                    intent1.setDataAndType(apkUri, "application/vnd.android.package-archive");
-                } else {
-                    intent1.setDataAndType(Uri.fromFile(new File(Environment.getExternalStorageDirectory(), "iww.apk")),
-                            "application/vnd.android.package-archive");
+            public void run() {
+                try {
+                OkHttpClient client = new OkHttpClient.Builder().build();
+                Request request = new Request.Builder()
+                        .url(url)
+                        .get()
+                        .build();
+                Call call = client.newCall(request);
+                Response response = null;
+
+                    response = call.execute();
+
+                //获取下载的内容输入流
+                ResponseBody body = response.body();
+                InputStream inputStream = body.byteStream();
+                final long lengh = body.contentLength();
+//                System.out.println("文件大小" + lengh);
+                // 文件保存到本地
+                File file1 = Environment.getExternalStorageDirectory();
+                File file = new File(file1, "iww.apk");
+                FileOutputStream outputStream = new FileOutputStream(file);
+                int lien = 0;
+                int losing = 0;
+                byte[] bytes = new byte[2048];
+                while ((lien = inputStream.read(bytes)) != -1) {
+                    outputStream.write(bytes, 0, lien);
+
+                    losing += lien;
+                    final float i = losing * 1.0f / lengh;
+//                    runOnUiThread(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            int ii = (int) (i * 100);
+//                            progressDialog.setProgress(ii);
+//                            System.out.println("下载进度" + ii);
+//                            if (ii==100){
+//
+//                            }
+//                        }
+//                    });
+//                    使用rxjava切换线程
+                    UpdateAppearanceProgress(i,url);
                 }
-                MainActivity.this.startActivity(intent1);
-            }
 
-            @Override
-            public void progress(int progress) {
-                Log.d("MainAcprogress", "progress:" + progress);
-                progressDialog.setProgress(progress);
-
-            }
-
-            @Override
-            public void erro() {
-                progressDialog.dismiss();
-                Toast.makeText(MainActivity.this, "下载失败", Toast.LENGTH_SHORT).show();
+                outputStream.flush();
+                inputStream.close();
+                inputStream.notify();
+                inputStream.notifyAll();
+                outputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
+    private void UpdateAppearanceProgress(final float i, final String urls) {
+        Observable.just(i)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<Float>() {
+                    @Override
+                    public void accept(Float aFloat) throws Exception {
+                        int ii = (int) (aFloat * 100);
+                        progressDialog.setProgress(ii);
+                        if (ii==50){
+                            progressDialog.setMessage("正在努力加载...");
+                        }
+                        if (ii==80){
+                            progressDialog.setMessage("即将完成...");
+                        }
+                        if (ii==99){
+                            progressDialog.setMessage("下载完成准备安装...");
+                        }
+                        if (ii==100){
+                                    progressDialog.dismiss();
 
+                            //Android获取一个用于打开APK文件的intent
+                            Intent intent1 = new Intent(Intent.ACTION_VIEW);
+                            intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            if (Build.VERSION.SDK_INT >= 24) {
+                                File file = new File(Environment.getExternalStorageDirectory(), "iww.apk");
+                                Uri apkUri =
+                                        FileProvider.getUriForFile(MainActivity.this,
+                                                "com.example.myapplication.FileProvider",
+                                                file);
+                                //添加这一句表示对目标应用临时授权该Uri所代表的文件
+                                intent1.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                                intent1.setDataAndType(apkUri, "application/vnd.android.package-archive");
+                            } else {
+                                intent1.setDataAndType(Uri.fromFile(new File(Environment.getExternalStorageDirectory(), "iww.apk")),
+                                        "application/vnd.android.package-archive");
+                            }
+                            MainActivity.this.startActivity(intent1);
+//                            NetRequsetUtil.getInstance().upApk(urls, "iww.apk", new DownResponseInterface() {
+//                                @Override
+//                                public void successFinish() {
+//                                    progressDialog.dismiss();
+//                                    //Android获取一个用于打开APK文件的intent
+//                                    Intent intent1 = new Intent(Intent.ACTION_VIEW);
+//                                    intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                                    if (Build.VERSION.SDK_INT >= 24) {
+//                                        File file = new File(Environment.getExternalStorageDirectory(), "iww.apk");
+//                                        Uri apkUri =
+//                                                FileProvider.getUriForFile(MainActivity.this,
+//                                                        "com.example.myapplication.FileProvider",
+//                                                        file);
+//                                        //添加这一句表示对目标应用临时授权该Uri所代表的文件
+//                                        intent1.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+//                                        intent1.setDataAndType(apkUri, "application/vnd.android.package-archive");
+//                                    } else {
+//                                        intent1.setDataAndType(Uri.fromFile(new File(Environment.getExternalStorageDirectory(), "iww.apk")),
+//                                                "application/vnd.android.package-archive");
+//                                    }
+//                                    MainActivity.this.startActivity(intent1);
+//                                }
+//
+//                                @Override
+//                                public void progress(int progress) {
+//                                    Log.d("MainAcprogress", "progress:" + progress);
+//
+//                                    progressDialog.setProgress(progress);
+//
+//                                }
+//
+//                                @Override
+//                                public void erro() {
+//                                    progressDialog.dismiss();
+//                                    Toast.makeText(MainActivity.this, "下载失败", Toast.LENGTH_SHORT).show();
+//                                }
+//                            });
+                                progressDialog.notifyAll();
+                        }
+                    }
+                });
+
+    }
+
+    //动态权限
+    public void checkPermission() {
+        boolean isGranted = true;
+        if (android.os.Build.VERSION.SDK_INT >= 23) {
+            if (context.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                //如果没有写sd卡权限
+                isGranted = false;
+            }
+            if (context.checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                isGranted = false;
+            }
+            Log.i("cbs", "isGranted == " + isGranted);
+            if (!isGranted) {
+                ((Activity) context).requestPermissions(
+                        new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission
+                                .ACCESS_FINE_LOCATION,
+                                Manifest.permission.READ_EXTERNAL_STORAGE,
+                                Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                        102);
+            }
+        }
+    }
+
+    /**
+     * 判断是否是8.0系统,是的话需要获取此权限，判断开没开，没开的话处理未知应用来源权限问题,否则直接安装
+     */
+    private void checkIsAndroidO() {
+        checkPermission();
+        if (android.os.Build.VERSION.SDK_INT >= 26) {
+            boolean b = this.getPackageManager().canRequestPackageInstalls();
+            if (b) {
+                //publicApk();//安装应用的逻辑(写自己的就可以)
+                startDownload(upDataBean.getData().getVersion().getApk_url());
+            } else {
+                //请求安装未知应用来源的权限
+                startDownload(upDataBean.getData().getVersion().getApk_url());
+                this.requestPermissions(new String[]{
+                        Manifest.permission.REQUEST_INSTALL_PACKAGES}, 102);
+            }
+        } else {
+            //publicApk();
+            startDownload(upDataBean.getData().getVersion().getApk_url());
+        }
+    }
 
 }

@@ -358,12 +358,12 @@ public class NetRequsetUtil {
                         fileOutputStream = new FileOutputStream(file);
                         //这个是缓冲区，即一次读取10个比特，我弄的小了点，因为在本地，所以数值太大一下就下载完了,
                         //看不出progressbar的效果。
-                        byte[] buf = new byte[1024];
+                        byte[] buf = new byte[3072];
                         int len = -1;
                         long process = 0;
                         long time = System.currentTimeMillis();
                         while ((len = is.read(buf)) != -1) {
-                            if (System.currentTimeMillis() - time > 100) {
+                            if (System.currentTimeMillis() - time > 1) {
                                 time = System.currentTimeMillis();
                                 Message msg = Message.obtain();
                                 msg.what = 103;
@@ -395,6 +395,7 @@ public class NetRequsetUtil {
             }
         });
     }
+
 
 
     public void cancel() {
