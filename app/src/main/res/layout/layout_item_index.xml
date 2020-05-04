@@ -66,7 +66,7 @@
             android:textSize="@dimen/sp_14" />
 
 
-        <com.example.myapplication.utils.CircleBarView
+        <com.example.iwapp.utils.CircleBarView
             android:id="@+id/img_persent"
             android:layout_alignParentBottom="true"
             android:layout_marginLeft="@dimen/dp_10"

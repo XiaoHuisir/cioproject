@@ -44,7 +44,7 @@
             app:layout_constraintTop_toTopOf="@id/img_teacher" />
     </android.support.constraint.ConstraintLayout>
 
-    <com.example.myapplication.utils.MyJZVideoPlayerStandard
+    <com.example.iwapp.utils.MyJZVideoPlayerStandard
         android:id="@+id/videoplayer"
         android:layout_width="match_parent"
         android:layout_height="200dp"

@@ -52,7 +52,7 @@
                     android:layout_marginRight="@dimen/dp_10"
                     android:src="@mipmap/icon_message" />
 
-                <com.example.myapplication.utils.NumView
+                <com.example.iwapp.utils.NumView
                     android:id="@+id/num_wx"
                     android:layout_width="@dimen/dp_15"
                     android:layout_height="@dimen/dp_15"

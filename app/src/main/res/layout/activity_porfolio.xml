@@ -69,8 +69,8 @@
             android:layout_marginLeft="@dimen/dp_96"
 
             android:text="培训课程"
-            android:textColor="@color/col_grays"
             android:textSize="@dimen/sp_14"
+            android:textColor="@color/col_grays"
 
             android:background="@drawable/text_bg_false"/>
 

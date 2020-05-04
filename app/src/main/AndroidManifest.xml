@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.myapplication">
+    package="com.example.iwapp">
     <!-- 安装首先需要用户手动给予存储权限 -->
     <!--<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />-->
     <!-- 安装应用的权限（8.0及以上会需要用户手动打开允许安装未知应用的权限，但在provider_paths的配置路径里，
@@ -20,7 +20,7 @@
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <application
-        android:name=".app.MyApp"
+        android:name="com.example.iwapp.app.MyApp"
         android:allowBackup="true"
         android:appComponentFactory="app"
         android:icon="@drawable/icon"
@@ -36,13 +36,13 @@
             <!--android:exported="true"></service>-->
 
         <activity
-            android:name=".ui.acivity.NewVideoActivity"
+            android:name="com.example.iwapp.ui.acivity.NewVideoActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
-            android:authorities="com.example.myapplication.FileProvider"
+            android:authorities="com.example.iwapp.FileProvider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
@@ -50,39 +50,39 @@
                 android:resource="@xml/file_path" />
         </provider>
 
-        <activity android:name=".ui.acivity.search.SearchActivity" />
-        <activity android:name=".ui.acivity.mine.NoticeListAcitivity" />
-        <activity android:name=".ui.acivity.mine.NoticeDetailsActivity" />
-        <activity android:name=".ui.acivity.mine.MyfilelistActivity" />
-        <activity android:name=".ui.acivity.PracticeActivity" />
-        <activity android:name=".ui.acivity.PorfolioActivity" />
-        <activity android:name=".ui.acivity.setting.SetNameActivity" />
-        <activity android:name=".ui.acivity.setting.SettingActivity" />
-        <activity android:name=".ui.acivity.exercises.ExercisesActivity" />
-        <activity android:name=".ui.acivity.exercises.ExercisesResultActivity" />
-        <activity android:name=".ui.acivity.pdf.PdfActivity" />
+        <activity android:name="com.example.iwapp.ui.acivity.search.SearchActivity" />
+        <activity android:name="com.example.iwapp.ui.acivity.mine.NoticeListAcitivity" />
+        <activity android:name="com.example.iwapp.ui.acivity.mine.NoticeDetailsActivity" />
+        <activity android:name="com.example.iwapp.ui.acivity.mine.MyfilelistActivity" />
+        <activity android:name="com.example.iwapp.ui.acivity.PracticeActivity" />
+        <activity android:name="com.example.iwapp.ui.acivity.PorfolioActivity" />
+        <activity android:name="com.example.iwapp.ui.acivity.setting.SetNameActivity" />
+        <activity android:name="com.example.iwapp.ui.acivity.setting.SettingActivity" />
+        <activity android:name="com.example.iwapp.ui.acivity.exercises.ExercisesActivity" />
+        <activity android:name="com.example.iwapp.ui.acivity.exercises.ExercisesResultActivity" />
+        <activity android:name="com.example.iwapp.ui.acivity.pdf.PdfActivity" />
         <activity
-            android:name=".MainActivity"
+            android:name="com.example.iwapp.MainActivity"
             android:windowSoftInputMode="adjustPan|stateHidden" />
-        <activity android:name=".ui.acivity.course.CourseActivity" />
+        <activity android:name="com.example.iwapp.ui.acivity.course.CourseActivity" />
         <activity
-            android:name=".ui.acivity.login.VerifyActivity"
+            android:name="com.example.iwapp.ui.acivity.login.VerifyActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.acivity.video.VideoActivity"
+            android:name="com.example.iwapp.ui.acivity.video.VideoActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.acivity.login.LoginActivity" />
-        <activity android:name=".SplashActivity">
+        <activity android:name="com.example.iwapp.ui.acivity.login.LoginActivity" />
+        <activity android:name="com.example.iwapp.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.acivity.exercises.EexerciseDetailAcivity" />
-        <activity android:name=".utils.ViewBigImageActivity" />
+        <activity android:name="com.example.iwapp.ui.acivity.exercises.EexerciseDetailAcivity" />
+        <activity android:name="com.example.iwapp.utils.ViewBigImageActivity" />
 
     </application>
 
